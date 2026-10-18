@@ -1,0 +1,61 @@
+@startuml
+title <size:24>Component View: EcoRecicla AQP - API REST</size>\n<size:24>Nivel 3: Módulos internos de la API REST.</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+Person(Municipalidad, "Municipalidad", $descr="Supervisa el impacto ambiental y las métricas de reciclaje.", $tags="", $link="")
+
+System(Serviciodemapasyrutas, "Servicio de mapas y rutas", $descr="Provee geolocalización y optimización.", $tags="", $link="")
+System(WhatsApp, "WhatsApp", $descr="Envía notificaciones a los usuarios.", $tags="", $link="")
+
+System_Boundary("EcoReciclaAQP_boundary", "EcoRecicla AQP", $tags="") {
+  Container_Boundary("EcoReciclaAQP.APIREST_boundary", "API REST", $tags="") {
+    Component(EcoReciclaAQP.APIREST.MóduloReportes, "Módulo Reportes", $techn="Node.js Express Router", $descr="Consultas públicas de solicitudes, rutas y puntos.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIREST.MóduloRutas, "Módulo Rutas", $techn="Node.js Express Router", $descr="Gestión y asignación de rutas.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIREST.MóduloSolicitudes, "Módulo Solicitudes", $techn="Node.js Express Router", $descr="Manejo de recojos y adaptadores externos.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIREST.MóduloPuntosyCanjes, "Módulo Puntos y Canjes", $techn="Node.js Express Router", $descr="Acreditación de puntos por material.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIREST.MóduloIdentidadyDistritos, "Módulo Identidad y Distritos", $techn="Node.js Express Router", $descr="Gestión de usuarios y validación geográfica base.", $tags="", $link="")
+  }
+
+  Container(EcoReciclaAQP.AppVecino, "App Vecino", $techn="PWA / React", $descr="Interfaz web progresiva para reportar reciclaje.", $tags="", $link="")
+  Container(EcoReciclaAQP.AppReciclador, "App Reciclador", $techn="PWA / React", $descr="Interfaz web progresiva para gestionar rutas.", $tags="", $link="")
+  ContainerDb(EcoReciclaAQP.BasedeDatos, "Base de Datos", $techn="PostgreSQL", $descr="Almacena usuarios, solicitudes, puntos y rutas.", $tags="", $link="")
+}
+
+Rel(Municipalidad, EcoReciclaAQP.APIREST.MóduloReportes, "Consulta reportes generales", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.AppVecino, EcoReciclaAQP.APIREST.MóduloIdentidadyDistritos, "Inicia sesión", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.AppVecino, EcoReciclaAQP.APIREST.MóduloSolicitudes, "Registra solicitudes", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.AppReciclador, EcoReciclaAQP.APIREST.MóduloIdentidadyDistritos, "Inicia sesión", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.AppReciclador, EcoReciclaAQP.APIREST.MóduloRutas, "Consulta rutas", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.AppReciclador, EcoReciclaAQP.APIREST.MóduloSolicitudes, "Actualiza estado", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloReportes, EcoReciclaAQP.APIREST.MóduloSolicitudes, "Consulta pública de solicitudes", $techn="", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloReportes, EcoReciclaAQP.APIREST.MóduloRutas, "Consulta pública de rutas", $techn="", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloReportes, EcoReciclaAQP.APIREST.MóduloPuntosyCanjes, "Consulta pública de puntos", $techn="", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloRutas, EcoReciclaAQP.APIREST.MóduloSolicitudes, "Consulta pendientes y asigna solicitud", $techn="", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, EcoReciclaAQP.APIREST.MóduloIdentidadyDistritos, "Valida referencias", $techn="", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, EcoReciclaAQP.APIREST.MóduloPuntosyCanjes, "Acredita puntos", $techn="", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloPuntosyCanjes, EcoReciclaAQP.APIREST.MóduloIdentidadyDistritos, "Consulta distrito", $techn="", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloReportes, EcoReciclaAQP.BasedeDatos, "Lee", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloRutas, EcoReciclaAQP.BasedeDatos, "Lee y escribe", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, EcoReciclaAQP.BasedeDatos, "Lee y escribe", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloPuntosyCanjes, EcoReciclaAQP.BasedeDatos, "Lee y escribe", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloIdentidadyDistritos, EcoReciclaAQP.BasedeDatos, "Lee y escribe", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, Serviciodemapasyrutas, "Llama al adaptador de MapasGeocodificacion", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, WhatsApp, "Llama al puerto de Notificacion", $techn="HTTPS/JSON", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml

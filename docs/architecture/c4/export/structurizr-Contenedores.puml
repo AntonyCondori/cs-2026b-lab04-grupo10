@@ -1,0 +1,45 @@
+@startuml
+title <size:24>Container View: EcoRecicla AQP</size>\n<size:24>Nivel 2: Contenedores de EcoRecicla AQP.</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+Person(Vecino, "Vecino", $descr="Ciudadano de Arequipa que separa sus residuos y solicita recojos.", $tags="", $link="")
+Person(Reciclador, "Reciclador", $descr="Recolector formalizado que atiende las solicitudes de recojo.", $tags="", $link="")
+Person(Municipalidad, "Municipalidad", $descr="Supervisa el impacto ambiental y las métricas de reciclaje.", $tags="", $link="")
+System(Serviciodemapasyrutas, "Servicio de mapas y rutas", $descr="Provee geolocalización y optimización.", $tags="", $link="")
+System(WhatsApp, "WhatsApp", $descr="Envía notificaciones a los usuarios.", $tags="", $link="")
+
+System_Boundary("EcoReciclaAQP_boundary", "EcoRecicla AQP", $tags="") {
+  Container(EcoReciclaAQP.OptimizadordeRutas, "Optimizador de Rutas", $techn="Node.js Cron", $descr="Tarea asíncrona para calcular la mejor ruta.", $tags="", $link="")
+  Container(EcoReciclaAQP.APIREST, "API REST", $techn="Node.js / Express", $descr="Monolito modular que gestiona todo el dominio del sistema.", $tags="", $link="")
+  Container(EcoReciclaAQP.AppVecino, "App Vecino", $techn="PWA / React", $descr="Interfaz web progresiva para reportar reciclaje.", $tags="", $link="")
+  Container(EcoReciclaAQP.AppReciclador, "App Reciclador", $techn="PWA / React", $descr="Interfaz web progresiva para gestionar rutas.", $tags="", $link="")
+  ContainerDb(EcoReciclaAQP.BasedeDatos, "Base de Datos", $techn="PostgreSQL", $descr="Almacena usuarios, solicitudes, puntos y rutas.", $tags="", $link="")
+}
+
+Rel(Vecino, EcoReciclaAQP.AppVecino, "Solicita recojos", $techn="HTTPS", $tags="", $link="")
+Rel(Reciclador, EcoReciclaAQP.AppReciclador, "Revisa rutas asignadas", $techn="HTTPS", $tags="", $link="")
+Rel(Municipalidad, EcoReciclaAQP.APIREST, "Consulta reportes generales", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.AppVecino, EcoReciclaAQP.APIREST, "Inicia sesión", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.AppReciclador, EcoReciclaAQP.APIREST, "Inicia sesión", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST, EcoReciclaAQP.BasedeDatos, "Lee", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.OptimizadordeRutas, EcoReciclaAQP.BasedeDatos, "Lee solicitudes y actualiza rutas", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST, Serviciodemapasyrutas, "Llama al adaptador de MapasGeocodificacion", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST, WhatsApp, "Llama al puerto de Notificacion", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.OptimizadordeRutas, Serviciodemapasyrutas, "Solicita optimización de rutas", $techn="HTTPS/JSON", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml

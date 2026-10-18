@@ -1,0 +1,38 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["Dynamic View: EcoRecicla AQP - API REST"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    4["<div style='font-weight: bold'>Servicio de mapas y rutas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Provee geolocalización y<br />optimización.</div>"]
+    style 4 fill:#999999,stroke:#6b6b6b,color:#ffffff
+
+    subgraph 6 ["EcoRecicla AQP"]
+      style 6 fill:#ffffff,stroke:#0b4884,color:#0b4884
+
+      subgraph 11 ["API REST"]
+        style 11 fill:#ffffff,stroke:#2e6295,color:#2e6295
+
+        14["<div style='font-weight: bold'>Módulo Solicitudes</div><div style='font-size: 70%; margin-top: 0px'>[Component: Node.js Express Router]</div><div style='font-size: 80%; margin-top:10px'>Manejo de recojos y<br />adaptadores externos.</div>"]
+        style 14 fill:#85bbf0,stroke:#5d82a8,color:#000000
+      end
+
+      7["<div style='font-weight: bold'>App Vecino</div><div style='font-size: 70%; margin-top: 0px'>[Container: PWA / React]</div><div style='font-size: 80%; margin-top:10px'>Interfaz web progresiva para<br />reportar reciclaje.</div>"]
+      style 7 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      9[("<div style='font-weight: bold'>Base de Datos</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Almacena usuarios,<br />solicitudes, puntos y rutas.</div>")]
+      style 9 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    end
+
+    4["<div style='font-weight: bold'>Servicio de mapas y rutas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Provee geolocalización y<br />optimización.</div>"]
+    style 4 fill:#999999,stroke:#6b6b6b,color:#ffffff
+    7["<div style='font-weight: bold'>App Vecino</div><div style='font-size: 70%; margin-top: 0px'>[Container: PWA / React]</div><div style='font-size: 80%; margin-top:10px'>Interfaz web progresiva para<br />reportar reciclaje.</div>"]
+    style 7 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    9[("<div style='font-weight: bold'>Base de Datos</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Almacena usuarios,<br />solicitudes, puntos y rutas.</div>")]
+    style 9 fill:#438dd5,stroke:#2e6295,color:#ffffff
+
+    7-. "<div>1. POST /solicitudes<br />(dirección y residuos)</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->14
+    14-. "<div>2. Geocodifica la dirección</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->4
+    14-. "<div>3. Guarda la solicitud como<br />PENDIENTE</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->9
+    14-. "<div>4. 201 Created: confirmación<br />del recojo</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->7
+
+  end

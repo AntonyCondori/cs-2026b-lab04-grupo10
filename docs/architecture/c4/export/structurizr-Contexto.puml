@@ -1,0 +1,32 @@
+@startuml
+title <size:24>System Context View: EcoRecicla AQP</size>\n<size:24>Nivel 1: EcoRecicla AQP y su entorno.</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+
+Person(Vecino, "Vecino", $descr="Ciudadano de Arequipa que separa sus residuos y solicita recojos.", $tags="", $link="")
+Person(Reciclador, "Reciclador", $descr="Recolector formalizado que atiende las solicitudes de recojo.", $tags="", $link="")
+Person(Municipalidad, "Municipalidad", $descr="Supervisa el impacto ambiental y las métricas de reciclaje.", $tags="", $link="")
+System(Serviciodemapasyrutas, "Servicio de mapas y rutas", $descr="Provee geolocalización y optimización.", $tags="", $link="")
+System(WhatsApp, "WhatsApp", $descr="Envía notificaciones a los usuarios.", $tags="", $link="")
+System(EcoReciclaAQP, "EcoRecicla AQP", $descr="Plataforma que conecta vecinos con recicladores.", $tags="", $link="")
+
+Rel(Vecino, EcoReciclaAQP, "Solicita recojos", $techn="HTTPS", $tags="", $link="")
+Rel(Reciclador, EcoReciclaAQP, "Revisa rutas asignadas", $techn="HTTPS", $tags="", $link="")
+Rel(Municipalidad, EcoReciclaAQP, "Consulta reportes generales", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP, Serviciodemapasyrutas, "Llama al adaptador de MapasGeocodificacion", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP, WhatsApp, "Llama al puerto de Notificacion", $techn="HTTPS/JSON", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+title <size:24>Dynamic View: EcoRecicla AQP - API REST</size>\n<size:24>Dinámico: el vecino solicita un recojo (HU-01, camino exitoso).</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+System(Serviciodemapasyrutas, "Servicio de mapas y rutas", $descr="Provee geolocalización y optimización.", $tags="", $link="")
+
+System_Boundary("EcoReciclaAQP_boundary", "EcoRecicla AQP", $tags="") {
+  Container_Boundary("EcoReciclaAQP.APIREST_boundary", "API REST", $tags="") {
+    Component(EcoReciclaAQP.APIREST.MóduloSolicitudes, "Módulo Solicitudes", $techn="Node.js Express Router", $descr="Manejo de recojos y adaptadores externos.", $tags="", $link="")
+  }
+
+  Container(EcoReciclaAQP.AppVecino, "App Vecino", $techn="PWA / React", $descr="Interfaz web progresiva para reportar reciclaje.", $tags="", $link="")
+  ContainerDb(EcoReciclaAQP.BasedeDatos, "Base de Datos", $techn="PostgreSQL", $descr="Almacena usuarios, solicitudes, puntos y rutas.", $tags="", $link="")
+}
+
+System(Serviciodemapasyrutas, "Servicio de mapas y rutas", $descr="Provee geolocalización y optimización.", $tags="", $link="")
+Container(EcoReciclaAQP.AppVecino, "App Vecino", $techn="PWA / React", $descr="Interfaz web progresiva para reportar reciclaje.", $tags="", $link="")
+ContainerDb(EcoReciclaAQP.BasedeDatos, "Base de Datos", $techn="PostgreSQL", $descr="Almacena usuarios, solicitudes, puntos y rutas.", $tags="", $link="")
+
+Rel(EcoReciclaAQP.AppVecino, EcoReciclaAQP.APIREST.MóduloSolicitudes, "1: POST /solicitudes (dirección y residuos)", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, Serviciodemapasyrutas, "2: Geocodifica la dirección", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, EcoReciclaAQP.BasedeDatos, "3: Guarda la solicitud como PENDIENTE", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, EcoReciclaAQP.AppVecino, "4: 201 Created: confirmación del recojo", $techn="HTTPS/JSON", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml
