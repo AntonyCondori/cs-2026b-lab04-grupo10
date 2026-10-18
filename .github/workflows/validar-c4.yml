@@ -1,0 +1,33 @@
+name: Validar modelo C4
+
+on:
+  push:
+    paths:
+      - "docs/architecture/c4/**"
+      - ".github/workflows/validar-c4.yml"
+  pull_request:
+    paths:
+      - "docs/architecture/c4/**"
+      - ".github/workflows/validar-c4.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Obtener archivos del repositorio
+        uses: actions/checkout@v4
+
+      - name: Validar workspace.dsl
+        run: |
+          docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            -v "$GITHUB_WORKSPACE:/workspace:ro" \
+            structurizr/structurizr@sha256:721136283c2f9cf1ba69037bc9de136c579d66fdcb2d771cb60546ec68def1a5 \
+            validate \
+            -workspace /workspace/docs/architecture/c4/workspace.dsl
