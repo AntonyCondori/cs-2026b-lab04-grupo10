@@ -126,3 +126,10 @@ exportaciones de texto; falta actualizar el PNG.
 Pendiente: contrastar la lista oficial de revisión, actualizar las
 imágenes afectadas, registrar la revisión cruzada de otro grupo
 y crear la etiqueta v0.6-c4 sobre la versión final.
+
+### Revisión cruzada
+
+Revisamos la documentación C4 del Grupo 01 — CitaSalud Arequipa
+y publicamos nuestras observaciones y sugerencias.
+
+- [Issue de revisión cruzada](https://github.com/Diego-Schreiber/cs-2026b-lab04-grupo01/issues/2)
