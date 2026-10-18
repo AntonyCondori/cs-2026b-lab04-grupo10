@@ -90,3 +90,39 @@ stateDiagram-v2
 C1 (mensajes y operaciones), C2 (transiciones y operaciones), C3 (multiplicidades), C4 (paquetes sin ciclos, coherentes con el ADR-001) y C5 (nombres del dominio). Los hallazgos y falsos positivos de la revisión con IA están en [consistencia.md](docs/design/consistencia.md).
 
 Etiqueta de entrega: `v0.5-diseno`.
+
+## Modelo C4 — Laboratorio 06
+
+Documentamos la arquitectura de EcoRecicla AQP mediante cinco vistas:
+contexto, contenedores, componentes, dinámica y despliegue.
+
+### Diagrama de contexto
+
+![Contexto de EcoRecicla AQP](docs/architecture/c4/img/structurizr-Contexto.png)
+
+La imagen corresponde a la exportación previa del equipo.
+Las descripciones corregidas ya están en el modelo y las
+exportaciones de texto; falta actualizar el PNG.
+
+### Documentación
+
+- [Modelo Structurizr DSL](docs/architecture/c4/workspace.dsl)
+- [Inventario de elementos](docs/architecture/c4/inventario.md)
+- [Revisión inicial del modelo](docs/architecture/c4/revision-c4.md)
+- [Explicación no técnica](docs/architecture/c4/explicacion.md)
+- [Bitácora de IA](docs/architecture/c4/bitacora-ia.md)
+- [Comparación de herramientas](docs/architecture/c4/comparacion.md)
+
+### Vistas
+
+- [Contexto](docs/architecture/c4/img/structurizr-Contexto.png)
+- [Contenedores](docs/architecture/c4/img/structurizr-Contenedores.png)
+- [Componentes](docs/architecture/c4/img/structurizr-Componentes.png)
+- [Dinámica: solicitar recojo](docs/architecture/c4/img/structurizr-SolicitarRecojo.png)
+- [Despliegue](docs/architecture/c4/img/structurizr-Despliegue.png)
+
+### Estado de entrega
+
+Pendiente: contrastar la lista oficial de revisión, actualizar las
+imágenes afectadas, registrar la revisión cruzada de otro grupo
+y crear la etiqueta v0.6-c4 sobre la versión final.
