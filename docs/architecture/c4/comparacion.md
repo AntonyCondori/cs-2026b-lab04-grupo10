@@ -8,8 +8,8 @@ La secuencia UML del Lab 05 muestra detalles que la vista dinámica omite: las c
 
 | Criterio | A mano (C4-PlantUML) | Modelo exportado (Structurizr DSL) |
 |---|---|---|
-| Tiempo invertido | [COMPLETAR: minutos que tardó Daniel] | [COMPLETAR: minutos de validar + exportar + renderizar] |
-| Errores encontrados | [COMPLETAR: ej. `Rel` con identificador mal escrito, sin leyenda, etc.] | [COMPLETAR: ej. identificadores inexistentes que `validate` detectó] |
+| Tiempo invertido | Unos 5 min (estimado) para escribir y renderizar 1 diagrama de contexto | Unos 10 s (estimado) para validar y exportar las 5 vistas, más la instalación única del CLI |
+| Errores encontrados | Ninguno de sintaxis; el diagrama se renderizó a la primera | `validate` sin errores. Al revisar la exportación, el contexto salió con etiquetas técnicas ("Llama al adaptador de MapasGeocodificacion", "Llama al puerto de Notificacion") que no cumplen la lista de revisión de E1 |
 | Cambia el nombre de un contenedor | Hay que editar cada archivo `.puml` donde aparezca y es fácil olvidar alguno | Se cambia el nombre en una línea de `workspace.dsl` y se regeneran las 5 vistas con `export` |
 | Coherencia entre vistas | Depende de la disciplina del equipo | Garantizada: todas las vistas salen del mismo modelo |
 | Descripciones (`Rel`) | Se escriben una vez por diagrama | Se declaran una vez y se reutilizan |
@@ -19,5 +19,6 @@ La secuencia UML del Lab 05 muestra detalles que la vista dinámica omite: las c
 ## Hallazgos de la exportación
 
 - Mermaid y C4-PlantUML exportaron las 5 vistas (Contexto, Contenedores, Componentes, SolicitarRecojo, Despliegue).
-- La exportación a C4-PlantUML no aplica el color gris de la etiqueta "Externo"; los sistemas externos salen con el azul de sistema. [VERIFICAR en tu render]
+- La exportación a C4-PlantUML no aplica el color gris de la etiqueta "Externo": en el PNG, el Servicio de mapas y WhatsApp salen con el mismo azul que un sistema propio. En el modelo la etiqueta existe, pero el exportador no la traduce al color.
 - En la vista de despliegue, el nodo Nginx aparece sin flechas porque el modelo no define relaciones para él.
+- En las vistas de Contenedores y Despliegue, las flechas entre contenedores heredan la etiqueta de la primera relación entre componentes (por ejemplo "Inicia sesión" o "Lee"), porque el modelo solo define relaciones a nivel de componente.
