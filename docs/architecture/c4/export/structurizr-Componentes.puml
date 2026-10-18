@@ -53,8 +53,8 @@ Rel(EcoReciclaAQP.APIREST.MóduloRutas, EcoReciclaAQP.BasedeDatos, "Lee y escrib
 Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, EcoReciclaAQP.BasedeDatos, "Lee y escribe", $techn="SQL/TCP", $tags="", $link="")
 Rel(EcoReciclaAQP.APIREST.MóduloPuntosyCanjes, EcoReciclaAQP.BasedeDatos, "Lee y escribe", $techn="SQL/TCP", $tags="", $link="")
 Rel(EcoReciclaAQP.APIREST.MóduloIdentidadyDistritos, EcoReciclaAQP.BasedeDatos, "Lee y escribe", $techn="SQL/TCP", $tags="", $link="")
-Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, Serviciodemapasyrutas, "Llama al adaptador de MapasGeocodificacion", $techn="HTTPS/JSON", $tags="", $link="")
-Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, WhatsApp, "Llama al puerto de Notificacion", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, Serviciodemapasyrutas, "Consulta la ubicación de la dirección", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST.MóduloSolicitudes, WhatsApp, "Envía notificaciones del recojo", $techn="HTTPS/JSON", $tags="", $link="")
 
 SHOW_LEGEND(true)
 hide stereotypes

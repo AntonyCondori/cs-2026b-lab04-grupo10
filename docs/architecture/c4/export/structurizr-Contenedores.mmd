@@ -37,8 +37,8 @@ graph LR
     8-. "<div>Inicia sesión</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->11
     11-. "<div>Lee</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->9
     10-. "<div>Lee solicitudes y actualiza<br />rutas</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->9
-    11-. "<div>Llama al adaptador de<br />MapasGeocodificacion</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->4
-    11-. "<div>Llama al puerto de<br />Notificacion</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->5
+    11-. "<div>Consulta la ubicación de la<br />dirección</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->4
+    11-. "<div>Envía notificaciones del<br />recojo</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->5
     10-. "<div>Solicita optimización de<br />rutas</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->4
 
   end
