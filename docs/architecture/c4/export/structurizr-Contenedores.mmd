@@ -10,34 +10,35 @@ graph LR
     style 2 fill:#08427b,stroke:#052e56,color:#ffffff
     3["<div style='font-weight: bold'>Municipalidad</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Supervisa el impacto<br />ambiental y las métricas de<br />reciclaje.</div>"]
     style 3 fill:#08427b,stroke:#052e56,color:#ffffff
-    10["<div style='font-weight: bold'>Servicio de mapas y rutas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Provee geolocalización y<br />optimización de rutas.</div>"]
-    style 10 fill:#999999,stroke:#6b6b6b,color:#ffffff
-    11["<div style='font-weight: bold'>WhatsApp</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Envía notificaciones y<br />alertas a los usuarios.</div>"]
-    style 11 fill:#999999,stroke:#6b6b6b,color:#ffffff
+    4["<div style='font-weight: bold'>Servicio de mapas y rutas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Provee geolocalización y<br />optimización.</div>"]
+    style 4 fill:#999999,stroke:#6b6b6b,color:#ffffff
+    5["<div style='font-weight: bold'>WhatsApp</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Envía notificaciones a los<br />usuarios.</div>"]
+    style 5 fill:#999999,stroke:#6b6b6b,color:#ffffff
 
-    subgraph 4 ["EcoRecicla AQP"]
-      style 4 fill:#ffffff,stroke:#0b4884,color:#0b4884
+    subgraph 6 ["EcoRecicla AQP"]
+      style 6 fill:#ffffff,stroke:#0b4884,color:#0b4884
 
-      5["<div style='font-weight: bold'>App Vecino</div><div style='font-size: 70%; margin-top: 0px'>[Container: PWA / React]</div><div style='font-size: 80%; margin-top:10px'>Interfaz web progresiva para<br />que los ciudadanos reporten<br />reciclaje.</div>"]
-      style 5 fill:#438dd5,stroke:#2e6295,color:#ffffff
-      6["<div style='font-weight: bold'>App Reciclador</div><div style='font-size: 70%; margin-top: 0px'>[Container: PWA / React]</div><div style='font-size: 80%; margin-top:10px'>Interfaz web progresiva para<br />gestionar rutas.</div>"]
-      style 6 fill:#438dd5,stroke:#2e6295,color:#ffffff
-      7["<div style='font-weight: bold'>API REST</div><div style='font-size: 70%; margin-top: 0px'>[Container: Node.js / Express]</div><div style='font-size: 80%; margin-top:10px'>Monolito modular que gestiona<br />solicitudes, usuarios y<br />rutas.</div>"]
+      10["<div style='font-weight: bold'>Optimizador de Rutas</div><div style='font-size: 70%; margin-top: 0px'>[Container: Node.js Cron]</div><div style='font-size: 80%; margin-top:10px'>Tarea asíncrona para calcular<br />la mejor ruta.</div>"]
+      style 10 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      11["<div style='font-weight: bold'>API REST</div><div style='font-size: 70%; margin-top: 0px'>[Container: Node.js / Express]</div><div style='font-size: 80%; margin-top:10px'>Monolito modular que gestiona<br />todo el dominio del sistema.</div>"]
+      style 11 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      7["<div style='font-weight: bold'>App Vecino</div><div style='font-size: 70%; margin-top: 0px'>[Container: PWA / React]</div><div style='font-size: 80%; margin-top:10px'>Interfaz web progresiva para<br />reportar reciclaje.</div>"]
       style 7 fill:#438dd5,stroke:#2e6295,color:#ffffff
-      8[("<div style='font-weight: bold'>Base de Datos</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Almacena la información de<br />usuarios, solicitudes y<br />rutas.</div>")]
+      8["<div style='font-weight: bold'>App Reciclador</div><div style='font-size: 70%; margin-top: 0px'>[Container: PWA / React]</div><div style='font-size: 80%; margin-top:10px'>Interfaz web progresiva para<br />gestionar rutas.</div>"]
       style 8 fill:#438dd5,stroke:#2e6295,color:#ffffff
-      9["<div style='font-weight: bold'>Optimizador de Rutas</div><div style='font-size: 70%; margin-top: 0px'>[Container: Node.js]</div><div style='font-size: 80%; margin-top:10px'>Tarea asíncrona para calcular<br />la mejor ruta diaria.</div>"]
+      9[("<div style='font-weight: bold'>Base de Datos</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Almacena usuarios,<br />solicitudes, puntos y rutas.</div>")]
       style 9 fill:#438dd5,stroke:#2e6295,color:#ffffff
     end
 
-    1-. "<div>Solicita el recojo de<br />material reciclable</div><div style='font-size: 70%'>[HTTPS]</div>" .->5
-    2-. "<div>Revisa rutas asignadas y<br />confirma recojos</div><div style='font-size: 70%'>[HTTPS]</div>" .->6
-    3-. "<div>Consulta reportes de impacto<br />ambiental</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->7
-    5-. "<div>Hace llamadas a</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->7
-    6-. "<div>Hace llamadas a</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->7
-    7-. "<div>Lee y escribe datos</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->8
-    9-. "<div>Lee solicitudes y actualiza<br />rutas</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->8
-    9-. "<div>Solicita optimización de<br />rutas</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->10
-    7-. "<div>Envía notificaciones de<br />estado de recojo</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->11
+    1-. "<div>Solicita recojos</div><div style='font-size: 70%'>[HTTPS]</div>" .->7
+    2-. "<div>Revisa rutas asignadas</div><div style='font-size: 70%'>[HTTPS]</div>" .->8
+    3-. "<div>Consulta reportes generales</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->11
+    7-. "<div>Inicia sesión</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->11
+    8-. "<div>Inicia sesión</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->11
+    11-. "<div>Lee</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->9
+    10-. "<div>Lee solicitudes y actualiza<br />rutas</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->9
+    11-. "<div>Llama al adaptador de<br />MapasGeocodificacion</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->4
+    11-. "<div>Llama al puerto de<br />Notificacion</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->5
+    10-. "<div>Solicita optimización de<br />rutas</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->4
 
   end
