@@ -60,8 +60,8 @@ workspace "EcoRecicla AQP" "Modelo C4 de la plataforma de recolección de materi
         ecorecicla.optimizador -> ecorecicla.db "Lee solicitudes y actualiza rutas" "SQL/TCP"
 
         // 8. Relaciones hacia Sistemas Externos
-        ecorecicla.api.solicitudes -> mapas "Llama al adaptador de MapasGeocodificacion" "HTTPS/JSON"
-        ecorecicla.api.solicitudes -> whatsapp "Llama al puerto de Notificacion" "HTTPS/JSON"
+        ecorecicla.api.solicitudes -> mapas "Consulta la ubicación de la dirección" "HTTPS/JSON"
+        ecorecicla.api.solicitudes -> whatsapp "Envía notificaciones del recojo" "HTTPS/JSON"
         ecorecicla.optimizador -> mapas "Solicita optimización de rutas" "HTTPS/JSON"
         // 9. Despliegue (E5): un solo servidor en la nube (ADR-001, R-03)
         produccion = deploymentEnvironment "Producción" {

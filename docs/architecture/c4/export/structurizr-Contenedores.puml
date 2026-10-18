@@ -36,8 +36,8 @@ Rel(EcoReciclaAQP.AppVecino, EcoReciclaAQP.APIREST, "Inicia sesión", $techn="HT
 Rel(EcoReciclaAQP.AppReciclador, EcoReciclaAQP.APIREST, "Inicia sesión", $techn="HTTPS/JSON", $tags="", $link="")
 Rel(EcoReciclaAQP.APIREST, EcoReciclaAQP.BasedeDatos, "Lee", $techn="SQL/TCP", $tags="", $link="")
 Rel(EcoReciclaAQP.OptimizadordeRutas, EcoReciclaAQP.BasedeDatos, "Lee solicitudes y actualiza rutas", $techn="SQL/TCP", $tags="", $link="")
-Rel(EcoReciclaAQP.APIREST, Serviciodemapasyrutas, "Llama al adaptador de MapasGeocodificacion", $techn="HTTPS/JSON", $tags="", $link="")
-Rel(EcoReciclaAQP.APIREST, WhatsApp, "Llama al puerto de Notificacion", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST, Serviciodemapasyrutas, "Consulta la ubicación de la dirección", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIREST, WhatsApp, "Envía notificaciones del recojo", $techn="HTTPS/JSON", $tags="", $link="")
 Rel(EcoReciclaAQP.OptimizadordeRutas, Serviciodemapasyrutas, "Solicita optimización de rutas", $techn="HTTPS/JSON", $tags="", $link="")
 
 SHOW_LEGEND(true)
