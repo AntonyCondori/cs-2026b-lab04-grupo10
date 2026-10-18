@@ -1,0 +1,5 @@
+# Bitácora de uso de IA — EcoRecicla AQP
+
+| # | Fecha | Herramienta | Prompt (resumen) | Qué propuso la IA | Qué verificamos o corregimos | Decisión |
+|---|-------|-------------|------------------|-------------------|------------------------------|----------|
+| 1 | 17/10 | Gemini | Prompt IA 1: Generar el borrador completo del modelo en Structurizr DSL usando el inventario de EcoRecicla AQP y el ADR-001 (Monolito modular Node.js/PostgreSQL) | Borrador del `workspace.dsl` con todos los niveles (Contexto, Contenedores, Componentes, Dinámica y Despliegue) incluyendo las relaciones iniciales | Para el E1, verificamos y aislamos únicamente el nivel de Contexto (Nivel 1). Corregimos que los sistemas externos tuvieran la etiqueta "Externo" y validamos que las relaciones usen verbos de intención sin mostrar tecnologías internas, cumpliendo el checklist oficial | Aceptada (con ajustes manuales para cumplir la guía paso a paso) |
