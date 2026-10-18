@@ -63,6 +63,23 @@ workspace "EcoRecicla AQP" "Modelo C4 de la plataforma de recolección de materi
         ecorecicla.api.solicitudes -> mapas "Llama al adaptador de MapasGeocodificacion" "HTTPS/JSON"
         ecorecicla.api.solicitudes -> whatsapp "Llama al puerto de Notificacion" "HTTPS/JSON"
         ecorecicla.optimizador -> mapas "Solicita optimización de rutas" "HTTPS/JSON"
+        // 9. Despliegue (E5): un solo servidor en la nube (ADR-001, R-03)
+        produccion = deploymentEnvironment "Producción" {
+            deploymentNode "Dispositivo del usuario" "Celular o PC de vecinos y recicladores" "Android / navegador web" {
+                containerInstance ecorecicla.appVecino
+                containerInstance ecorecicla.appReciclador
+            }
+            deploymentNode "Servidor en la nube" "Un solo servidor, sin alta disponibilidad (ADR-001); tamaño por cotizar (R-03)" "Ubuntu Server LTS" {
+                infrastructureNode "Nginx" "Proxy inverso y terminación HTTPS" "Nginx"
+                deploymentNode "Entorno de ejecución" "" "Node.js" {
+                    containerInstance ecorecicla.api
+                    containerInstance ecorecicla.optimizador
+                }
+                deploymentNode "Motor de base de datos" "" "PostgreSQL" {
+                    containerInstance ecorecicla.db
+                }
+            }
+        }
     }
 
     views {
@@ -77,6 +94,19 @@ workspace "EcoRecicla AQP" "Modelo C4 de la plataforma de recolección de materi
         }
         
         component ecorecicla.api "Componentes" "Nivel 3: Módulos internos de la API REST." {
+            include *
+            autolayout lr
+        }
+
+        dynamic ecorecicla.api "SolicitarRecojo" "Dinámico: el vecino solicita un recojo (HU-01, camino exitoso)." {
+            ecorecicla.appVecino -> ecorecicla.api.solicitudes "POST /solicitudes (dirección y residuos)"
+            ecorecicla.api.solicitudes -> mapas "Geocodifica la dirección"
+            ecorecicla.api.solicitudes -> ecorecicla.db "Guarda la solicitud como PENDIENTE"
+            ecorecicla.api.solicitudes -> ecorecicla.appVecino "201 Created: confirmación del recojo"
+            autolayout lr
+        }
+
+        deployment ecorecicla produccion "Despliegue" "Despliegue en producción (MVP): un solo servidor en la nube." {
             include *
             autolayout lr
         }
@@ -108,6 +138,10 @@ workspace "EcoRecicla AQP" "Modelo C4 de la plataforma de recolección de materi
             }
             element "Web Browser" {
                 shape WebBrowser
+            }
+            element "Infrastructure Node" {
+                background #ffffff
+                color #000000
             }
         }
     }
