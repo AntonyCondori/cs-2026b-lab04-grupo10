@@ -1,0 +1,5 @@
+# Bitácora de uso de IA — EcoRecicla AQP
+
+| # | Fecha | Herramienta | Prompt (resumen) | Qué propuso la IA | Qué verificamos o corregimos | Decisión |
+|---|-------|-------------|------------------|-------------------|------------------------------|----------|
+| 1 | 25/10 | Gemini | **Prompt IA 1 (Detector de olores):** Actúa como revisor de código experto (Fowler). Contexto: `servicio.py` y métricas de Radon. Identifica olores, propón patrones GoF, principio SOLID y costo. | Detectó 6 olores y propuso: State (estados), Decorator (reintentos/bonos), Strategy (puntos), Chain (guardrails), Observer (avisos) y Abstract Factory (dependencias). | Se debatió la utilidad de Abstract Factory para nuestro MVP. Introducía mucha indirección innecesaria para un problema que se resuelve inyectando dependencias. | 5 patrones aceptados. Abstract Factory rechazado con justificación en `olores.md` por ser sobreingeniería ("patternitis"). |
