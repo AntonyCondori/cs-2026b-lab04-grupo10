@@ -2,7 +2,7 @@ import pytest
 import importlib
 from src.solicitudes.externos import LLMApiSimulada
 
-@pytest.fixture(params=["antes.servicio", "despues.servicio"])
+@pytest.fixture(params=["antes.servicio", "servicio"])
 def m(request):
     try:
         return importlib.import_module(f"src.solicitudes.{request.param}")

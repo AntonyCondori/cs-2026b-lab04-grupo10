@@ -21,3 +21,10 @@ class WhatsAppSDK:
     """Simula un SDK de mensajería clásico."""
     def send(self, phone: str, message: str) -> bool:
         return True
+
+class MinamPuntosAPI:
+    """Simula una API externa del Ministerio del Ambiente para validar puntajes."""
+    def consultar_puntos(self, material: str) -> int:
+        if material.lower() == "carton":
+            return 5
+        return 0
