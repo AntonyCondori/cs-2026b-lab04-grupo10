@@ -1,0 +1,96 @@
+src/solicitudes/__init__.py
+    LOC: 0
+    LLOC: 0
+    SLOC: 0
+    Comments: 0
+    Single comments: 0
+    Multi: 0
+    Blank: 0
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+src/solicitudes/servicio.py
+    LOC: 58
+    LLOC: 47
+    SLOC: 48
+    Comments: 0
+    Single comments: 0
+    Multi: 0
+    Blank: 10
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+src/solicitudes/ia.py
+    LOC: 57
+    LLOC: 36
+    SLOC: 38
+    Comments: 0
+    Single comments: 0
+    Multi: 0
+    Blank: 19
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+src/solicitudes/puntos.py
+    LOC: 38
+    LLOC: 26
+    SLOC: 26
+    Comments: 4
+    Single comments: 4
+    Multi: 0
+    Blank: 8
+    - Comment Stats
+        (C % L): 11%
+        (C % S): 15%
+        (C + M % L): 11%
+src/solicitudes/externos.py
+    LOC: 30
+    LLOC: 28
+    SLOC: 22
+    Comments: 2
+    Single comments: 4
+    Multi: 0
+    Blank: 4
+    - Comment Stats
+        (C % L): 7%
+        (C % S): 9%
+        (C + M % L): 7%
+src/solicitudes/guardrails.py
+    LOC: 38
+    LLOC: 25
+    SLOC: 25
+    Comments: 0
+    Single comments: 0
+    Multi: 0
+    Blank: 13
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+src/solicitudes/dominio.py
+    LOC: 177
+    LLOC: 145
+    SLOC: 124
+    Comments: 11
+    Single comments: 8
+    Multi: 5
+    Blank: 40
+    - Comment Stats
+        (C % L): 6%
+        (C % S): 9%
+        (C + M % L): 9%
+** Total **
+    LOC: 398
+    LLOC: 307
+    SLOC: 283
+    Comments: 17
+    Single comments: 16
+    Multi: 5
+    Blank: 94
+    - Comment Stats
+        (C % L): 4%
+        (C % S): 6%
+        (C + M % L): 6%
