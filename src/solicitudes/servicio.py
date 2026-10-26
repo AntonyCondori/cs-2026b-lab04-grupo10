@@ -1,3 +1,4 @@
+from src.solicitudes.ia import crear_clasificador
 from src.solicitudes.antes.servicio import Solicitud
 from src.solicitudes.externos import LLMApiSimulada, WhatsAppSDK, MinamPuntosAPI
 from src.solicitudes.puntos import (
@@ -7,6 +8,7 @@ from src.solicitudes.puntos import (
 class ServicioSolicitudes:
     def __init__(self, ia_api=None, ws_api=None, fabrica=None):
         self.ia = ia_api or LLMApiSimulada()
+        self.clasificador = crear_clasificador(api=self.ia)
         self.whatsapp = ws_api or WhatsAppSDK()
         self.eventos = []
         
@@ -30,16 +32,12 @@ class ServicioSolicitudes:
 
         for intento in range(3):
             try:
-                respuesta_ia = self.ia.predecir_categoria(solicitud.descripcion_residuo)
-                categoria = respuesta_ia["result"]
+                categoria = self.clasificador.clasificar(solicitud.descripcion_residuo)
                 break
             except TimeoutError:
                 if intento == 2:
                     solicitud.estado = "CANCELADO"
                     return solicitud.estado
-
-        if "S/" in categoria or "PELIGROSO" in categoria:
-            raise ValueError("Guardrail: La IA devolvió datos prohibidos o precios inventados")
 
         calculadora = self.fabrica.crear(categoria)
         puntos_base = calculadora.calcular()
