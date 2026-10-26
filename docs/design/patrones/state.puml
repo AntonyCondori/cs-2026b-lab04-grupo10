@@ -1,0 +1,29 @@
+@startuml state
+title Ciclo de vida de la solicitud: State
+class Solicitud <<contexto>> {
+  -_estado: EstadoSolicitud
+  +estado: str
+  +iniciar()
+  +completar(puntos)
+  +cancelar()
+  ~cambiar_a(nuevo)
+}
+abstract class EstadoSolicitud <<State>> {
+  +iniciar(solicitud)
+  +completar(solicitud, puntos)
+  +cancelar(solicitud)
+}
+class Pendiente
+class Completado
+class Cancelado
+class EstadoDesconocido
+Solicitud o--> EstadoSolicitud : estado actual
+EstadoSolicitud <|-- Pendiente
+EstadoSolicitud <|-- Completado
+EstadoSolicitud <|-- Cancelado
+EstadoSolicitud <|-- EstadoDesconocido
+note right of EstadoSolicitud
+  Por defecto toda transición lanza ValueError.
+  Cada estado redefine SOLO las permitidas.
+end note
+@enduml
