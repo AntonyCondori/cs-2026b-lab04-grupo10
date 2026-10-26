@@ -1,0 +1,20 @@
+@startuml
+title EcoRecicla AQP - strategy
+skinparam classAttributeIconSize 0
+abstract class ProveedorLLM <<Strategy>> {
+  + clasificar(descripcion)
+}
+class LLMSimuladoAdapter <<ConcreteStrategy>>
+class ServicioSolicitudes <<Context>>
+ProveedorLLM <|-- LLMSimuladoAdapter
+ServicioSolicitudes --> ProveedorLLM : clasificador
+
+abstract class CalculadoraPuntos <<Strategy>> {
+  + calcular()
+}
+class CalculadoraPlastico <<ConcreteStrategy>>
+class CalculadoraVidrio <<ConcreteStrategy>>
+CalculadoraPuntos <|-- CalculadoraPlastico
+CalculadoraPuntos <|-- CalculadoraVidrio
+ServicioSolicitudes ..> CalculadoraPuntos : utiliza
+@enduml

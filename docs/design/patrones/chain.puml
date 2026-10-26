@@ -1,0 +1,22 @@
+@startuml
+title EcoRecicla AQP - chain
+skinparam classAttributeIconSize 0
+abstract class Guardrail <<Handler>> {
+  + validar(categoria)
+  {abstract} comprobar(categoria)
+}
+class FormatoValido <<ConcreteHandler>>
+class SinPrecios <<ConcreteHandler>>
+class SinPeligrosos <<ConcreteHandler>>
+
+Guardrail <|-- FormatoValido
+Guardrail <|-- SinPrecios
+Guardrail <|-- SinPeligrosos
+Guardrail --> "0..1" Guardrail : siguiente
+
+note bottom of Guardrail
+  Orden configurado:
+  FormatoValido, SinPrecios, SinPeligrosos.
+  Una excepcion detiene la cadena.
+end note
+@enduml

@@ -1,0 +1,47 @@
+digraph "classes_EcoRecicla" {
+rankdir=BT
+charset="utf-8"
+"solicitudes.puntos.CalculadoraPlastico" [color="black", fontcolor="black", label=<{CalculadoraPlastico|<br ALIGN="LEFT"/>|calcular(): int<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.puntos.CalculadoraPuntos" [color="black", fontcolor="black", label=<{CalculadoraPuntos|<br ALIGN="LEFT"/>|<I>calcular</I>(): int<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.puntos.CalculadoraVidrio" [color="black", fontcolor="black", label=<{CalculadoraVidrio|<br ALIGN="LEFT"/>|calcular(): int<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.ia.ConCache" [color="black", fontcolor="black", label=<{ConCache|cache : dict<br ALIGN="LEFT"/>interno<br ALIGN="LEFT"/>|clasificar(descripcion)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.ia.ConGuardrails" [color="black", fontcolor="black", label=<{ConGuardrails|cadena<br ALIGN="LEFT"/>interno<br ALIGN="LEFT"/>|clasificar(descripcion)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.Coordenadas" [color="black", fontcolor="black", label=<{Coordenadas|latitud : float<br ALIGN="LEFT"/>longitud : float<br ALIGN="LEFT"/>|}>, shape="record", style="solid"];
+"solicitudes.dominio.DetalleResiduo" [color="black", fontcolor="black", label=<{DetalleResiduo|descripcion : str<br ALIGN="LEFT"/>peso_kg : float<br ALIGN="LEFT"/>tipo : str<br ALIGN="LEFT"/>|es_valido(): bool<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.Direccion" [color="black", fontcolor="black", label=<{Direccion|coordenadas : Coordenadas \| None<br ALIGN="LEFT"/>texto : str<br ALIGN="LEFT"/>|esta_geocodificada(): bool<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.ErrorGeocodificacion" [color="black", fontcolor="red", label=<{ErrorGeocodificacion|mensaje : str<br ALIGN="LEFT"/>|}>, shape="record", style="solid"];
+"solicitudes.dominio.ErrorValidacion" [color="black", fontcolor="red", label=<{ErrorValidacion|mensaje : str<br ALIGN="LEFT"/>|}>, shape="record", style="solid"];
+"solicitudes.dominio.EstadoSolicitud" [color="black", fontcolor="black", label=<{EstadoSolicitud|name<br ALIGN="LEFT"/>|}>, shape="record", style="solid"];
+"solicitudes.puntos.FabricaCalculadoras" [color="black", fontcolor="black", label=<{FabricaCalculadoras|<br ALIGN="LEFT"/>|crear(categoria: str): CalculadoraPuntos<br ALIGN="LEFT"/>registrar(categoria: str, creador)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.guardrails.FormatoValido" [color="black", fontcolor="black", label=<{FormatoValido|<br ALIGN="LEFT"/>|comprobar(categoria)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.GoogleMapsAdapter" [color="black", fontcolor="black", label=<{GoogleMapsAdapter|<br ALIGN="LEFT"/>|<I>geocodificar</I>(direccion: str): Coordenadas<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.guardrails.Guardrail" [color="black", fontcolor="black", label=<{Guardrail|siguiente : NoneType<br ALIGN="LEFT"/>|<I>comprobar</I>(categoria)<br ALIGN="LEFT"/>validar(categoria)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.externos.LLMApiSimulada" [color="black", fontcolor="black", label=<{LLMApiSimulada|fallas : int<br ALIGN="LEFT"/>llamadas : int<br ALIGN="LEFT"/>|predecir_categoria(texto: str): dict<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.ia.LLMSimuladoAdapter" [color="black", fontcolor="black", label=<{LLMSimuladoAdapter|api<br ALIGN="LEFT"/>|clasificar(descripcion)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.MapasGeocodificacionPort" [color="black", fontcolor="black", label=<{MapasGeocodificacionPort|<br ALIGN="LEFT"/>|<I>geocodificar</I>(direccion: str): Coordenadas<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.puntos.MinamCartonAdapter" [color="black", fontcolor="black", label=<{MinamCartonAdapter|<br ALIGN="LEFT"/>|calcular(): int<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.externos.MinamPuntosAPI" [color="black", fontcolor="black", label=<{MinamPuntosAPI|<br ALIGN="LEFT"/>|consultar_puntos(material: str): int<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.NotificacionPort" [color="black", fontcolor="black", label=<{NotificacionPort|<br ALIGN="LEFT"/>|<I>notificar_error_ubicacion</I>(vecino_id: str, motivo: str): None<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.ia.ProveedorLLM" [color="black", fontcolor="black", label=<{ProveedorLLM|<br ALIGN="LEFT"/>|<I>clasificar</I>(descripcion: str): str<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.servicio.ServicioSolicitudes" [color="black", fontcolor="black", label=<{ServicioSolicitudes|clasificador<br ALIGN="LEFT"/>eventos : list<br ALIGN="LEFT"/>fabrica<br ALIGN="LEFT"/>ia<br ALIGN="LEFT"/>whatsapp<br ALIGN="LEFT"/>|procesar_recojo(solicitud: Solicitud, campana: str): str<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.guardrails.SinPeligrosos" [color="black", fontcolor="black", label=<{SinPeligrosos|<br ALIGN="LEFT"/>|comprobar(categoria)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.guardrails.SinPrecios" [color="black", fontcolor="black", label=<{SinPrecios|<br ALIGN="LEFT"/>|comprobar(categoria)<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.SolicitarRecojoService" [color="black", fontcolor="black", label=<{SolicitarRecojoService|mapas<br ALIGN="LEFT"/>notificacion<br ALIGN="LEFT"/>repositorio<br ALIGN="LEFT"/>|solicitar_recojo(vecino_id: str, texto_direccion: str, detalles: list[DetalleResiduo]): Solicitud<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.Solicitud" [color="black", fontcolor="black", label=<{Solicitud|detalles : list[DetalleResiduo]<br ALIGN="LEFT"/>direccion<br ALIGN="LEFT"/>estado : EstadoSolicitud \| None<br ALIGN="LEFT"/>fecha_creacion : datetime<br ALIGN="LEFT"/>id : str<br ALIGN="LEFT"/>motivo_rechazo : str \| None<br ALIGN="LEFT"/>peso_real_kg : float \| None<br ALIGN="LEFT"/>puntos : int \| None<br ALIGN="LEFT"/>reciclador_id : str \| None<br ALIGN="LEFT"/>vecino_id : str<br ALIGN="LEFT"/>|acreditar_puntos(puntos: int): None<br ALIGN="LEFT"/>agregar_detalle(detalle: DetalleResiduo): None<br ALIGN="LEFT"/>asignar(reciclador_id: str): None<br ALIGN="LEFT"/>asignar_coordenadas(coordenadas: Coordenadas): None<br ALIGN="LEFT"/>crear(vecino_id: str, direccion: Direccion, detalles: list[DetalleResiduo]): Solicitud<br ALIGN="LEFT"/>marcar_pendiente(): None<br ALIGN="LEFT"/>obtener_peso_total(): float<br ALIGN="LEFT"/>rechazar(motivo: str): None<br ALIGN="LEFT"/>registrar_pesaje(peso_kg: float): None<br ALIGN="LEFT"/>registrar_recojo(): None<br ALIGN="LEFT"/>validar_detalles(): None<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.SolicitudRepository" [color="black", fontcolor="black", label=<{SolicitudRepository|<br ALIGN="LEFT"/>|<I>guardar</I>(solicitud: Solicitud): None<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.externos.WhatsAppSDK" [color="black", fontcolor="black", label=<{WhatsAppSDK|<br ALIGN="LEFT"/>|send(phone: str, message: str): bool<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"solicitudes.dominio.GoogleMapsAdapter" -> "solicitudes.dominio.MapasGeocodificacionPort" [arrowhead="empty", arrowtail="none"];
+"solicitudes.guardrails.FormatoValido" -> "solicitudes.guardrails.Guardrail" [arrowhead="empty", arrowtail="none"];
+"solicitudes.guardrails.SinPeligrosos" -> "solicitudes.guardrails.Guardrail" [arrowhead="empty", arrowtail="none"];
+"solicitudes.guardrails.SinPrecios" -> "solicitudes.guardrails.Guardrail" [arrowhead="empty", arrowtail="none"];
+"solicitudes.ia.ConCache" -> "solicitudes.ia.ProveedorLLM" [arrowhead="empty", arrowtail="none"];
+"solicitudes.ia.ConGuardrails" -> "solicitudes.ia.ProveedorLLM" [arrowhead="empty", arrowtail="none"];
+"solicitudes.ia.LLMSimuladoAdapter" -> "solicitudes.ia.ProveedorLLM" [arrowhead="empty", arrowtail="none"];
+"solicitudes.puntos.CalculadoraPlastico" -> "solicitudes.puntos.CalculadoraPuntos" [arrowhead="empty", arrowtail="none"];
+"solicitudes.puntos.CalculadoraVidrio" -> "solicitudes.puntos.CalculadoraPuntos" [arrowhead="empty", arrowtail="none"];
+"solicitudes.puntos.MinamCartonAdapter" -> "solicitudes.puntos.CalculadoraPuntos" [arrowhead="empty", arrowtail="none"];
+"solicitudes.dominio.Solicitud" -> "solicitudes.dominio.Direccion" [arrowhead="vee", arrowtail="none", fontcolor="green", label="direccion", style="solid"];
+"solicitudes.dominio.SolicitarRecojoService" -> "solicitudes.dominio.MapasGeocodificacionPort" [arrowhead="vee", arrowtail="none", fontcolor="green", label="mapas", style="solid"];
+"solicitudes.dominio.SolicitarRecojoService" -> "solicitudes.dominio.NotificacionPort" [arrowhead="vee", arrowtail="none", fontcolor="green", label="notificacion", style="solid"];
+"solicitudes.dominio.SolicitarRecojoService" -> "solicitudes.dominio.SolicitudRepository" [arrowhead="vee", arrowtail="none", fontcolor="green", label="repositorio", style="solid"];
+}

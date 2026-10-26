@@ -9,3 +9,13 @@
 | 5 | 25/10 | (Claude) | Aplica ÚNICAMENTE el patrón State a `procesar_recojo`: clase base que prohíba todas las transiciones y una subclase por estado. No cambies el comportamiento observable. | `EstadoSolicitud` base + `Pendiente`, `Completado`, `Cancelado` y un contexto `Solicitud` que delega. | Al cambiar `Solicitud`, `test_open_closed_nuevo_material...` **falló** con `AttributeError: 'Solicitud' has no attribute 'iniciar'`: la prueba seguía usando la `Solicitud` antigua (con `estado` como `str`). Se actualizó la prueba para importar la nueva. Las 10 pruebas de caracterización pasaron en `antes` y `servicio`. | Aceptada con corrección detectada por las pruebas. |
 | 6 | 25/10 | (Claude) | Reemplaza las notificaciones "a mano" por un Observer con 2 suscriptores (WhatsApp y auditoría). | `PublicadorEventos`, `NotificadorWhatsApp`, `AuditoriaSolicitudes`. | Se verificó que `servicio.eventos` conserva el mismo contenido y orden que antes, y que el mensaje de WhatsApp es idéntico. Se añadió prueba de suscriptor nuevo sin tocar el servicio. | Aceptada. |
 | 7 | 25/10 | (Claude) | Extrae las campañas (`RECICLA_VERANO`, `DIA_TIERRA`) a un Decorator. | `ConMultiplicador`, `ConBonoFijo` y un diccionario global `CAMPANAS`. | El diccionario global se **rechazó**: es estado global y dificulta las pruebas. Se cambió por `RegistroCampanas` inyectable. Se probó que el orden de apilado altera el resultado (70 vs 120). | Aceptada con modificaciones. |
+
+## Interacciones de Diego: E5 y E6
+
+| Etapa | Herramienta | Solicitud | Propuesta o resultado | Verificacion y decision |
+|---|---|---|---|---|
+| E5 | ChatGPT | Separar la clasificacion de residuos del servicio. | ProveedorLLM, LLMSimuladoAdapter y ensamblaje inyectable. | Se incorporaron la interfaz y el adaptador para trabajar con el simulador existente. |
+| E5 | ChatGPT | Agregar cache y validaciones de salida. | ConCache, ConGuardrails y una cadena de tres manejadores. | Se agregaron pruebas de cache, formato, precios y residuos peligrosos. |
+| E5 | ChatGPT | Corregir el NameError al recopilar las pruebas. | Se identifico que self.ia se habia colocado en src/solicitudes/__init__.py. | Se vacio ese archivo y se ubicaron las instrucciones en el metodo __init__ de ServicioSolicitudes. |
+| E6 | ChatGPT | Medir la complejidad y las SLOC antes y despues. | Ejecuciones de Radon guardadas en mediciones/. | procesar_recojo paso de 14 a 9. Se conservaron las salidas originales como evidencia. |
+| E6 | ChatGPT | Interpretar las diferencias de las mediciones. | Separar los totales ejecutados de la comparacion con alcance equiparado. | Se documento que 54 y 283 SLOC correspondian a alcances distintos; el total equiparado fue 200 y 283. |

@@ -1,0 +1,29 @@
+@startuml
+title EcoRecicla AQP - decorator
+skinparam classAttributeIconSize 0
+abstract class ProveedorLLM <<Component>> {
+  + clasificar(descripcion)
+}
+class LLMSimuladoAdapter <<ConcreteComponent>>
+class ConCache <<Decorator>> {
+  - cache
+  + clasificar(descripcion)
+}
+class ConGuardrails <<Decorator>> {
+  + clasificar(descripcion)
+}
+abstract class Guardrail
+
+ProveedorLLM <|-- LLMSimuladoAdapter
+ProveedorLLM <|-- ConCache
+ProveedorLLM <|-- ConGuardrails
+ConCache --> ProveedorLLM : interno
+ConGuardrails --> ProveedorLLM : interno
+ConGuardrails --> Guardrail : cadena
+
+note bottom of ConCache
+  Ensamblaje:
+  ConCache envuelve a ConGuardrails.
+  Solo se guardan resultados validados.
+end note
+@enduml

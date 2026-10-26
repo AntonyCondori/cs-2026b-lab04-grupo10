@@ -1,0 +1,20 @@
+@startuml
+title EcoRecicla AQP - factory
+skinparam classAttributeIconSize 0
+class FabricaCalculadoras <<RegistryFactory>> {
+  - _creadores
+  + registrar(categoria, creador)
+  + crear(categoria)
+}
+abstract class CalculadoraPuntos <<Product>>
+class CalculadoraPlastico <<ConcreteProduct>>
+class CalculadoraVidrio <<ConcreteProduct>>
+class MinamCartonAdapter <<ConcreteProduct>>
+class ServicioSolicitudes <<Client>>
+
+CalculadoraPuntos <|-- CalculadoraPlastico
+CalculadoraPuntos <|-- CalculadoraVidrio
+CalculadoraPuntos <|-- MinamCartonAdapter
+ServicioSolicitudes --> FabricaCalculadoras : fabrica
+FabricaCalculadoras ..> CalculadoraPuntos : crea mediante registro
+@enduml
