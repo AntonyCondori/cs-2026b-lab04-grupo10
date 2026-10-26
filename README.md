@@ -133,3 +133,66 @@ Revisamos la documentación C4 del Grupo 01 — CitaSalud Arequipa
 y publicamos nuestras observaciones y sugerencias.
 
 - [Issue de revisión cruzada](https://github.com/Diego-Schreiber/cs-2026b-lab04-grupo01/issues/2)
+
+## Patrones de diseño (Lab 07)
+
+Separamos el cálculo de puntos y la clasificación de residuos mediante
+interfaces y composición. La IA y los servicios externos se simulan
+durante las pruebas.
+
+### Olores, patrones y pruebas
+
+| Olor o necesidad | Patrón | Prueba |
+|---|---|---|
+| Reglas de puntos acopladas al servicio | Strategy | test_open_closed_nuevo_material_sin_modificar_el_servicio |
+| Incorporar nuevas calculadoras | Fábrica por registro | test_open_closed_nuevo_material_sin_modificar_el_servicio |
+| Adaptar la interfaz del simulador | Adapter | test_clasificacion_valida |
+| Cambiar el proveedor de IA | Strategy | test_strategy_permite_otro_proveedor |
+| Evitar llamadas repetidas | Decorator | test_cache_evitar_llamadas_repetidas |
+| Separar las validaciones de salida | Chain of Responsibility | test_guardrails_bloquean_salidas_invalidas |
+
+### Métricas
+
+| Indicador | Antes | Después |
+|---|---:|---:|
+| Complejidad de procesar_recojo | C (14) | B (9) |
+| Complejidad del constructor | A (3) | A (4) |
+| SLOC de servicio.py | 54 | 48 |
+| SLOC con alcance equiparado | 200 | 283 |
+
+El alcance equiparado incluye externos.py y dominio.py en ambas versiones.
+Las métricas corresponden al estado actual y deben actualizarse si cambia
+la implementación.
+
+La complejidad del método principal disminuyó, a cambio de incorporar
+más clases y archivos. Rechazamos Abstract Factory porque no necesitamos
+familias de productos relacionados; la fábrica por registro cubre el caso.
+
+### Documentación
+
+- [ADR-005](docs/architecture/adr/005-patrones-diseno.md)
+- [Métricas y trade-off](docs/design/patrones/metricas.md)
+- [Bitácora de IA](docs/design/patrones/bitacora-ia.md)
+- [Strategy](docs/design/patrones/strategy.puml)
+- [Adapter](docs/design/patrones/adapter.puml)
+- [Fábrica por registro](docs/design/patrones/factory.puml)
+- [Decorator](docs/design/patrones/decorator.puml)
+- [Chain of Responsibility](docs/design/patrones/chain.puml)
+- [Diagrama de clases](docs/design/clases.puml)
+
+### Ejecución de pruebas
+
+Con el entorno virtual activado:
+
+```bash
+python -m pip install pytest
+python -m pytest -v
+```
+
+### Pendientes de cierre
+
+- Integrar State y Observer y completar sus diagramas.
+- Completar el contraste de los diagramas con pyreverse.
+- Registrar la revisión cruzada del Pull Request.
+- Confirmar las métricas de la versión integrada.
+- Crear la etiqueta v0.7-patrones sobre la versión final revisada.
