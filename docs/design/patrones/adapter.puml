@@ -1,0 +1,25 @@
+@startuml
+title EcoRecicla AQP - adapter
+skinparam classAttributeIconSize 0
+abstract class ProveedorLLM <<Target>> {
+  + clasificar(descripcion)
+}
+class LLMSimuladoAdapter <<Adapter>> {
+  + clasificar(descripcion)
+}
+class LLMApiSimulada <<Adaptee>> {
+  + predecir_categoria(texto)
+}
+ProveedorLLM <|-- LLMSimuladoAdapter
+LLMSimuladoAdapter --> LLMApiSimulada : api
+
+abstract class CalculadoraPuntos <<Target>>
+class MinamCartonAdapter <<Adapter>> {
+  + calcular()
+}
+class MinamPuntosAPI <<Adaptee>> {
+  + consultar_puntos(material)
+}
+CalculadoraPuntos <|-- MinamCartonAdapter
+MinamCartonAdapter --> MinamPuntosAPI : _api
+@enduml

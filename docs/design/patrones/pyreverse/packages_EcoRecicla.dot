@@ -1,0 +1,11 @@
+digraph "packages_EcoRecicla" {
+rankdir=BT
+charset="utf-8"
+"solicitudes" [color="black", label=<solicitudes>, shape="box", style="solid"];
+"solicitudes.dominio" [color="black", label=<solicitudes.dominio>, shape="box", style="solid"];
+"solicitudes.externos" [color="black", label=<solicitudes.externos>, shape="box", style="solid"];
+"solicitudes.guardrails" [color="black", label=<solicitudes.guardrails>, shape="box", style="solid"];
+"solicitudes.ia" [color="black", label=<solicitudes.ia>, shape="box", style="solid"];
+"solicitudes.puntos" [color="black", label=<solicitudes.puntos>, shape="box", style="solid"];
+"solicitudes.servicio" [color="black", label=<solicitudes.servicio>, shape="box", style="solid"];
+}

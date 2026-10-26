@@ -1,0 +1,8 @@
+src/solicitudes/antes/servicio.py
+    M 19:4 ServicioSolicitudes.procesar_recojo - C (14)
+    C 13:0 ServicioSolicitudes - B (10)
+    M 14:4 ServicioSolicitudes.__init__ - A (3)
+    C 5:0 Solicitud - A (1)
+
+4 blocks (classes, functions, methods) analyzed.
+Average complexity: B (7.0)

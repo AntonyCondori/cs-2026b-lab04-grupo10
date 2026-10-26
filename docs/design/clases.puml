@@ -104,4 +104,51 @@ MapasGeocodificacionPort <|.. GoogleMapsAdapter : realiza
 MapasGeocodificacionPort ..> ErrorGeocodificacion : lanza
 MapasGeocodificacionPort ..> Coordenadas : retorna
 
+
+' INICIO COMPONENTES LAB07
+package "Componentes Lab07" {
+class ServicioSolicitudes {
+  + procesar_recojo(solicitud, campana)
+}
+abstract class ProveedorLLM {
+  + clasificar(descripcion)
+}
+class LLMSimuladoAdapter
+class ConCache
+class ConGuardrails
+class LLMApiSimulada
+abstract class Guardrail
+class FormatoValido
+class SinPrecios
+class SinPeligrosos
+class FabricaCalculadoras
+abstract class CalculadoraPuntos
+class CalculadoraPlastico
+class CalculadoraVidrio
+class MinamCartonAdapter
+class MinamPuntosAPI
+class WhatsAppSDK
+
+ProveedorLLM <|-- LLMSimuladoAdapter
+ProveedorLLM <|-- ConCache
+ProveedorLLM <|-- ConGuardrails
+ConCache --> ProveedorLLM : interno
+ConGuardrails --> ProveedorLLM : interno
+ConGuardrails --> Guardrail : cadena
+LLMSimuladoAdapter --> LLMApiSimulada : api
+Guardrail <|-- FormatoValido
+Guardrail <|-- SinPrecios
+Guardrail <|-- SinPeligrosos
+Guardrail --> "0..1" Guardrail : siguiente
+ServicioSolicitudes --> ProveedorLLM : clasificador
+ServicioSolicitudes --> LLMApiSimulada : ia
+ServicioSolicitudes --> FabricaCalculadoras : fabrica
+ServicioSolicitudes --> WhatsAppSDK : whatsapp
+FabricaCalculadoras ..> CalculadoraPuntos : crea
+CalculadoraPuntos <|-- CalculadoraPlastico
+CalculadoraPuntos <|-- CalculadoraVidrio
+CalculadoraPuntos <|-- MinamCartonAdapter
+MinamCartonAdapter --> MinamPuntosAPI : _api
+}
+' FIN COMPONENTES LAB07
 @enduml

@@ -1,0 +1,24 @@
+src/solicitudes/antes/servicio.py
+    LOC: 69
+    LLOC: 60
+    SLOC: 54
+    Comments: 6
+    Single comments: 5
+    Multi: 0
+    Blank: 10
+    - Comment Stats
+        (C % L): 9%
+        (C % S): 11%
+        (C + M % L): 9%
+** Total **
+    LOC: 69
+    LLOC: 60
+    SLOC: 54
+    Comments: 6
+    Single comments: 5
+    Multi: 0
+    Blank: 10
+    - Comment Stats
+        (C % L): 9%
+        (C % S): 11%
+        (C + M % L): 9%
