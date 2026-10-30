@@ -1,17 +1,20 @@
 from src.solicitudes.ia import crear_clasificador
-from src.solicitudes.antes.servicio import Solicitud
+from src.solicitudes.estados import Solicitud
 from src.solicitudes.externos import LLMApiSimulada, WhatsAppSDK, MinamPuntosAPI
 from src.solicitudes.puntos import (
     FabricaCalculadoras, CalculadoraPlastico, CalculadoraVidrio, MinamCartonAdapter
 )
+from src.solicitudes.decoradores import campanas_por_defecto
+from src.solicitudes.eventos import PublicadorEventos, NotificadorWhatsApp, AuditoriaSolicitudes
+
 
 class ServicioSolicitudes:
-    def __init__(self, ia_api=None, ws_api=None, fabrica=None):
+    def __init__(self, ia_api=None, ws_api=None, fabrica=None, campanas=None, publicador=None):
         self.ia = ia_api or LLMApiSimulada()
         self.clasificador = crear_clasificador(api=self.ia)
         self.whatsapp = ws_api or WhatsAppSDK()
         self.eventos = []
-        
+
         if fabrica is None:
             self.fabrica = FabricaCalculadoras()
             self.fabrica.registrar("PLASTICO", CalculadoraPlastico)
@@ -20,15 +23,17 @@ class ServicioSolicitudes:
         else:
             self.fabrica = fabrica
 
+        self.campanas = campanas or campanas_por_defecto()
+
+        if publicador is None:
+            self.publicador = PublicadorEventos()
+            self.publicador.suscribir("solicitud_completada", NotificadorWhatsApp(self.whatsapp, self.eventos))
+            self.publicador.suscribir("solicitud_completada", AuditoriaSolicitudes(self.eventos))
+        else:
+            self.publicador = publicador
+
     def procesar_recojo(self, solicitud: Solicitud, campana: str = "NINGUNA") -> str:
-        
-        if solicitud.estado != "PENDIENTE":
-            if solicitud.estado == "COMPLETADO":
-                raise ValueError("La solicitud ya fue procesada")
-            elif solicitud.estado == "CANCELADO":
-                raise ValueError("No se puede procesar una solicitud cancelada")
-            else:
-                raise ValueError("Estado no válido")
+        solicitud.iniciar()  # STATE: solo una solicitud PENDIENTE puede procesarse
 
         for intento in range(3):
             try:
@@ -36,23 +41,16 @@ class ServicioSolicitudes:
                 break
             except TimeoutError:
                 if intento == 2:
-                    solicitud.estado = "CANCELADO"
+                    solicitud.cancelar()  # STATE
                     return solicitud.estado
 
-        calculadora = self.fabrica.crear(categoria)
-        puntos_base = calculadora.calcular()
+        calculadora = self.campanas.aplicar(campana, self.fabrica.crear(categoria))  # DECORATOR
+        puntos = calculadora.calcular()
 
-        if campana == "RECICLA_VERANO":
-            puntos_base *= 2
-        elif campana == "DIA_TIERRA":
-            puntos_base += 50
+        solicitud.completar(puntos)  # STATE
 
-        solicitud.puntos_asignados = puntos_base
-        solicitud.estado = "COMPLETADO"
-
-        mensaje = f"Hola {solicitud.usuario}, ganaste {puntos_base} puntos por tu reciclaje."
-        self.whatsapp.send(solicitud.celular, mensaje)
-        self.eventos.append(f"whatsapp: {solicitud.celular}: {puntos_base} puntos")
-        self.eventos.append(f"log_auditoria: Solicitud {solicitud.id} completada")
+        self.publicador.publicar("solicitud_completada", {  # OBSERVER
+            "id": solicitud.id, "usuario": solicitud.usuario,
+            "celular": solicitud.celular, "puntos": puntos})
 
         return solicitud.estado

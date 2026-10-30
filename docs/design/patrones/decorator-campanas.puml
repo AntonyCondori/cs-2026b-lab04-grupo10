@@ -1,0 +1,33 @@
+@startuml decorator
+title Campañas de puntos: Decorator
+interface CalculadoraPuntos <<Component>> {
+  +calcular(): int
+}
+class CalculadoraPlastico
+class CalculadoraVidrio
+class MinamCartonAdapter <<Adapter>>
+class ConMultiplicador <<Decorator>> {
+  -interna: CalculadoraPuntos
+  -factor: int
+}
+class ConBonoFijo <<Decorator>> {
+  -interna: CalculadoraPuntos
+  -bono: int
+}
+class RegistroCampanas {
+  +registrar(nombre, decorar)
+  +aplicar(nombre, calculadora)
+}
+CalculadoraPuntos <|.. CalculadoraPlastico
+CalculadoraPuntos <|.. CalculadoraVidrio
+CalculadoraPuntos <|.. MinamCartonAdapter
+CalculadoraPuntos <|.. ConMultiplicador
+CalculadoraPuntos <|.. ConBonoFijo
+ConMultiplicador o--> CalculadoraPuntos : envuelve
+ConBonoFijo o--> CalculadoraPuntos : envuelve
+RegistroCampanas ..> CalculadoraPuntos : decora
+note right of ConBonoFijo
+  Se pueden apilar: el orden importa
+  (10*2)+50 = 70  vs  (10+50)*2 = 120
+end note
+@enduml
