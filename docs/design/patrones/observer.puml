@@ -1,0 +1,28 @@
+@startuml observer
+title Notificaciones: Observer
+class ServicioSolicitudes <<cliente>> {
+  +procesar_recojo(solicitud, campana): str
+}
+class PublicadorEventos <<Subject>> {
+  -_suscriptores: dict
+  +suscribir(evento, suscriptor)
+  +publicar(evento, datos)
+}
+interface Suscriptor <<Observer>> {
+  +actualizar(evento, datos)
+}
+class NotificadorWhatsApp
+class AuditoriaSolicitudes
+class WhatsAppSDK <<externo>> {
+  +send(phone, message): bool
+}
+ServicioSolicitudes --> PublicadorEventos : publica "solicitud_completada"
+PublicadorEventos o--> "0..*" Suscriptor
+Suscriptor <|.. NotificadorWhatsApp
+Suscriptor <|.. AuditoriaSolicitudes
+NotificadorWhatsApp --> WhatsAppSDK
+note bottom of PublicadorEventos
+  Un nuevo interesado solo se suscribe;
+  el servicio no se modifica (Open/Closed).
+end note
+@enduml
