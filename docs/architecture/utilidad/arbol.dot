@@ -1,0 +1,31 @@
+digraph utilidad {
+  rankdir=LR; nodesep=0.25; ranksep=0.45;
+  node [fontname="Helvetica", fontsize=10, shape=box, style="rounded,filled", color="#999999"];
+  edge [color="#888888", arrowhead=none];
+
+  raiz [label="Utilidad\nEcoRecicla AQP 2.0", fillcolor="#1F3A5F", fontcolor=white, color="#1F3A5F"];
+
+  node [fillcolor="#C8310E", fontcolor=white, color="#C8310E"];
+  mod [label="Modificabilidad"]; seg [label="Seguridad"];
+  dis [label="Disponibilidad"]; ren [label="Rendimiento"];
+
+  node [fillcolor="#F6D5CC", fontcolor="#222222", color="#C8310E"];
+  r1 [label="Reglas de puntos"]; r2 [label="Nuevo distrito"];
+  r3 [label="Aislamiento\nentre distritos"];
+  r4 [label="Reintentos\ny duplicados"]; r5 [label="Conectividad\ndel reciclador"];
+  r6 [label="Consulta de ruta"];
+
+  node [fillcolor="#FFFFFF", fontcolor="#222222", color="#777777", fontsize=9];
+  q1 [label="(H,M) QA-01: registrar una regla de puntos nueva (material o campaña) → 0 archivos de lógica modificados, ≤ 15 líneas nuevas, 100 % de regresión"];
+  q2 [label="(H,H) QA-02: activar un distrito nuevo con su regla de puntos y horario → ≤ 16 h-persona, 0 archivos modificados en otros módulos"];
+  q3 [label="(H,M) QA-03: un usuario del distrito A consulta datos del distrito B → 0 filas expuestas en 100 de 100 intentos"];
+  q4 [label="(H,M) QA-04: 100 reenvíos de la misma confirmación (10 simultáneos) → 1 recojo confirmado y 1 abono de puntos"];
+  q5 [label="(M,M) QA-05: reciclador sin señal hasta 2 h → sincroniza en ≤ 5 min al recuperar la señal"];
+  q6 [label="(M,L) QA-06: ruta del día de 12 distritos → p95 ≤ 1000 ms a 20 req/s (valores por calibrar)"];
+
+  raiz -> {mod seg dis ren};
+  mod -> r1 -> q1; mod -> r2 -> q2;
+  seg -> r3 -> q3;
+  dis -> r4 -> q4; dis -> r5 -> q5;
+  ren -> r6 -> q6;
+}

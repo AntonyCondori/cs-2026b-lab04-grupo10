@@ -2,3 +2,6 @@ __pycache__/.venv/
 __pycache__/
 .pytest_cache/
 .env
+# Archivos generados por Structurizr
+docs/architecture/c4/.structurizr/
+docs/architecture/c4/workspace.json

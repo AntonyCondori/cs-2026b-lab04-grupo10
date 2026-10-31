@@ -16,17 +16,17 @@ workspace "EcoRecicla AQP" "Modelo C4 de la plataforma de recolección de materi
         ecorecicla = softwareSystem "EcoRecicla AQP" "Plataforma que conecta vecinos con recicladores." {
             
             appVecino = container "App Vecino" "Interfaz web progresiva para reportar reciclaje." "PWA / React" "Web Browser"
-            appReciclador = container "App Reciclador" "Interfaz web progresiva para gestionar rutas." "PWA / React" "Web Browser"
-            db = container "Base de Datos" "Almacena usuarios, solicitudes, puntos y rutas." "PostgreSQL" "Database"
-            optimizador = container "Optimizador de Rutas" "Tarea asíncrona para calcular la mejor ruta." "Node.js Cron"
+            appReciclador = container "App Reciclador" "Interfaz web progresiva para gestionar rutas. [QA-05] [QA-06]" "PWA / React" "Web Browser"
+            db = container "Base de Datos" "Almacena usuarios, solicitudes, puntos y rutas. [QA-03] [QA-06]" "PostgreSQL" "Database"
+            optimizador = container "Optimizador de Rutas" "Tarea asíncrona para calcular la mejor ruta. [QA-06]" "Node.js Cron"
             
             // CONTENEDOR PRINCIPAL Y SUS COMPONENTES (E3)
-            api = container "API REST" "Monolito modular que gestiona todo el dominio del sistema." "Node.js / Express" {
-                reportes = component "Módulo Reportes" "Consultas públicas de solicitudes, rutas y puntos." "Node.js Express Router"
-                rutas = component "Módulo Rutas" "Gestión y asignación de rutas." "Node.js Express Router"
-                solicitudes = component "Módulo Solicitudes" "Manejo de recojos y adaptadores externos." "Node.js Express Router"
-                puntos = component "Módulo Puntos y Canjes" "Acreditación de puntos por material." "Node.js Express Router"
-                identidad = component "Módulo Identidad y Distritos" "Gestión de usuarios y validación geográfica base." "Node.js Express Router"
+            api = container "API REST" "Monolito modular que gestiona todo el dominio del sistema. [QA-01] [QA-03]" "Node.js / Express" {
+                reportes = component "Módulo Reportes" "Consultas públicas de solicitudes, rutas y puntos. [QA-03]" "Node.js Express Router"
+                rutas = component "Módulo Rutas" "Gestión y asignación de rutas. [QA-06]" "Node.js Express Router"
+                solicitudes = component "Módulo Solicitudes" "Manejo de recojos y adaptadores externos; confirmación sin duplicados. [QA-04]" "Node.js Express Router"
+                puntos = component "Módulo Puntos y Canjes" "Acreditación de puntos por material; reglas registradas en arranque.py (Strategy, Factory, Decorator). [QA-01] [QA-02]" "Node.js Express Router"
+                identidad = component "Módulo Identidad y Distritos" "Gestión de usuarios y validación geográfica base; base del concepto de distrito. [QA-02] [QA-03]" "Node.js Express Router"
             }
         }
 
