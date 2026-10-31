@@ -189,10 +189,34 @@ python -m pip install pytest
 python -m pytest -v
 ```
 
-### Pendientes de cierre
 
-- Integrar State y Observer y completar sus diagramas.
-- Completar el contraste de los diagramas con pyreverse.
-- Registrar la revisión cruzada del Pull Request.
-- Confirmar las métricas de la versión integrada.
-- Crear la etiqueta v0.7-patrones sobre la versión final revisada.
+## Diseño de la arquitectura (Lab 08)
+
+![fitness-functions](https://github.com/AntonyCondori/cs-2026b-lab04-grupo10/actions/workflows/fitness.yml/badge.svg)
+
+Diseñamos la arquitectura de EcoRecicla AQP para crecer de 3 a 12 distritos, con ADD en tres iteraciones, evaluación ATAM-lite cruzada y fitness functions en integración continua.
+
+### Árbol de utilidad
+
+![Árbol de utilidad](docs/architecture/utilidad/arbol.png)
+
+Escenarios y calificaciones: [escenarios.md](docs/architecture/utilidad/escenarios.md).
+
+### Iteraciones de ADD
+
+| Iteración | Escenario | Táctica | Evidencia | ¿Cumple? |
+|---|---|---|---|---|
+| 1 | QA-01 Regla de puntos nueva sin modificar el servicio | Strategy, Factory por registro y Decorator, con punto de arranque | 0 archivos de lógica modificados frente a 1 en la versión inicial; 45 de 45 pruebas | Sí |
+| 2 | [COMPLETA B] | [COMPLETA B] | [COMPLETA B] | [COMPLETA B] |
+| 3 | [COMPLETA C] | [COMPLETA C] | [COMPLETA C] | [COMPLETA C] |
+
+### Documentación
+
+- [ADR-006](docs/architecture/adr/006-reglas-de-puntos-extensibles.md)
+- [ADR-007](docs/architecture/adr/)
+- [ADR-008](docs/architecture/adr/)- [Iteración 1](docs/architecture/add/iteracion-1.md), iteración 2 e iteración 3
+- [Evaluación ATAM-lite](docs/architecture/atam-lite.md)
+- [Bitácora de IA](docs/architecture/bitacora-ia.md)
+- [Modelo C4 actualizado](docs/architecture/c4/workspace.dsl)
+
+Etiqueta de entrega: `v0.8-arquitectura`.
