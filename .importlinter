@@ -1,0 +1,25 @@
+[importlinter]
+root_package = src
+
+[importlinter:contract:capas]
+name = FF-01 Capas de solicitudes sin dependencias ascendentes
+type = layers
+layers =
+    src.solicitudes.arranque
+    src.solicitudes.servicio
+    src.solicitudes.decoradores | src.solicitudes.ia | src.solicitudes.eventos
+    src.solicitudes.puntos | src.solicitudes.guardrails | src.solicitudes.estados
+    src.solicitudes.externos
+
+[importlinter:contract:adaptadores]
+name = FF-02 Logica sin dependencias de externos
+type = forbidden
+source_modules =
+    src.solicitudes.puntos
+    src.solicitudes.decoradores
+    src.solicitudes.estados
+    src.solicitudes.eventos
+    src.solicitudes.guardrails
+    src.solicitudes.ia
+forbidden_modules =
+    src.solicitudes.externos

@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from src.solicitudes.externos import MinamPuntosAPI
 
 # 1. STRATEGY (Puerto/Interfaz común)
 class CalculadoraPuntos(ABC):
@@ -18,7 +17,7 @@ class CalculadoraVidrio(CalculadoraPuntos):
 
 # 2. ADAPTER (Traduce la API externa del MINAM a nuestra interfaz CalculadoraPuntos)
 class MinamCartonAdapter(CalculadoraPuntos):
-    def __init__(self, api: MinamPuntosAPI):
+    def __init__(self, api):
         self._api = api
 
     def calcular(self) -> int:
