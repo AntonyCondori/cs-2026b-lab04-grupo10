@@ -4,6 +4,7 @@ No reemplaza el servicio del dominio ni representa una prueba de PostgreSQL.
 Cada solicitud usa una conexion propia a SQLite sobre el mismo archivo.
 """
 import json
+from contextlib import closing
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -17,7 +18,7 @@ class RegistroConfirmaciones:
             raise ValueError("Estrategia no soportada")
         self.ruta = str(ruta)
         self.estrategia = estrategia
-        with sqlite3.connect(self.ruta) as con:
+        with closing(sqlite3.connect(self.ruta)) as con, con:
             con.execute("PRAGMA foreign_keys=ON")
             con.execute("""CREATE TABLE IF NOT EXISTS confirmaciones (
                 id INTEGER PRIMARY KEY, clave TEXT NOT NULL,
@@ -69,7 +70,7 @@ class RegistroConfirmaciones:
             con.close()
 
     def contar(self):
-        with sqlite3.connect(self.ruta) as con:
+        with closing(sqlite3.connect(self.ruta)) as con, con:
             confirmaciones = con.execute("SELECT COUNT(*) FROM confirmaciones").fetchone()[0]
             abonos, puntos = con.execute(
                 "SELECT COUNT(*), COALESCE(SUM(puntos),0) FROM abonos"
