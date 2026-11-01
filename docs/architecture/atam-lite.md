@@ -5,7 +5,9 @@
 Base revisada: main a4b957a0fa305f901facac1c6c2e081014587c99 y prototipo QA-04 de Persona B.
 
 Evaluación recibida real: [issue #24, Grupo 01](https://github.com/AntonyCondori/cs-2026b-lab04-grupo10/issues/24).
-Las respuestas siguientes son un BORRADOR para revisión del equipo; no han sido publicadas en GitHub.
+Las respuestas fueron publicadas en el issue #24. El issue permanece abierto para seguimiento y revisión de los pendientes.
+
+Enlace al comentario: https://github.com/AntonyCondori/cs-2026b-lab04-grupo10/issues/24#issuecomment-6552561941
 
 Evaluación emitida: pendiente de confirmar con el docente el repositorio asignado y revisar su árbol de utilidad e iteración 1. El repositorio del Grupo 01 consultado no expone actualmente archivos con esos nombres; no se inventan hallazgos sobre entregables no revisados. Recibir una evaluación del Grupo 01 no prueba por sí solo que sea también el destinatario asignado.
 
