@@ -26,7 +26,7 @@ Evaluación emitida: pendiente de confirmar con el docente el repositorio asigna
 - S2, sensibilidad: la deduplicación depende de que todos los envíos usen el mismo ID/clave y compartan el almacenamiento. Evidencia: restricciones únicas y pruebas de conflictos y recreación del registro.
 - T2, trade-off: persistencia/unicidad y transacción frente a espacio y contención. Se midió la reducción de duplicados; el costo de latencia queda como hipótesis sin benchmark.
 - R3: sin deduplicación persistente se repite el abono. El prototipo sin táctica produjo 100 abonos; con táctica, 1. La integración real sigue pendiente.
-- R4: aún no hay verificación de aislamiento por distrito. Lo debe abordar QA-03 / ADR-008; la idempotencia no lo resuelve.
+- R4: QA-03 / ADR-008 aporta verificación de aislamiento en memoria: 100 accesos cruzados denegados, 0 filas ajenas y 100 escrituras cruzadas rechazadas. La idempotencia no lo resuelve; falta integración productiva de autorización y persistencia.
 - N2: el prototipo protegido conserva el resultado al recrear el registro y revierte confirmación y abono ante fallo intermedio. No equivale a garantizar durabilidad frente a cortes físicos.
 
 ## Matriz de probabilidad e impacto
@@ -38,7 +38,7 @@ Escala de equipo: 1 a 5; puntuación P x I. Zona crítica propuesta: >= 15; 8-14
 | R1 | Dependencia obligatoria de mapas / reconexión offline sin diseño coherente | 3 | 4 | 12 | Resolver contradicción R-06/C4 con Persona A; no afirmar mitigación productiva. |
 | R2 | Acceso SQL entre módulos sin controles | 3 | 4 | 12 | Persona C: controles estructurales y propuesta de permisos/SQL; import-linter solo no cubre SQL. |
 | R3 | Abonos duplicados por reenvío | 4 | 4 | 16 | Crítico: mitigación probada en QA-04; riesgo productivo abierto hasta integrar en PostgreSQL. |
-| R4 | Exposición de datos de otro distrito | 3 | 5 | 15 | Crítico: iteración 3 y fitness de aislamiento, pendiente de Persona C. |
+| R4 | Exposición de datos de otro distrito | 3 | 5 | 15 | Crítico: mitigación verificada en el prototipo de [iteración 3](add/iteracion-3.md) y [ADR-008](adr/008-aislamiento-por-distrito.md), con FF-05 en CI. Abierto para producción hasta integrar autorización y persistencia. |
 | R5 | Un solo VPS deja el sistema sin servicio ante caída | 3 | 4 | 12 | Se propone aceptar ausencia de alta disponibilidad en el MVP de un mes; requiere acuerdo, respaldo y recuperación por definir. |
 | R6 | C4/ADR y código describen tecnologías y estados diferentes | 4 | 3 | 12 | Alinear Node.js/Python y actualizar métricas de Lab07; pendiente de consolidación. |
 
