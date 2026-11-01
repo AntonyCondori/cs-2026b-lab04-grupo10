@@ -1,0 +1,27 @@
+[
+  {
+    "confirmaciones": 100,
+    "abonos": 100,
+    "puntos_totales": 1000,
+    "duplicados": 99,
+    "estrategia": "sin_tactica",
+    "envios": 100,
+    "simultaneas": 10,
+    "acuses_perdidos": 10,
+    "respuestas_recibidas": 90,
+    "resultado_original_reutilizado": false
+  },
+  {
+    "confirmaciones": 1,
+    "abonos": 1,
+    "puntos_totales": 10,
+    "duplicados": 0,
+    "estrategia": "idempotencia",
+    "envios": 100,
+    "simultaneas": 10,
+    "acuses_perdidos": 10,
+    "respuestas_recibidas": 90,
+    "resultado_original_reutilizado": true
+  }
+]
+QA-04: SE CUMPLE EN EL PROTOTIPO
