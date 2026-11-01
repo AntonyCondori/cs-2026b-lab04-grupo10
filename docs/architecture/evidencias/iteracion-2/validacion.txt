@@ -1,0 +1,4 @@
+Base revisada: main a4b957a0fa305f901facac1c6c2e081014587c99
+Python 3.12; pytest 9.2.0.
+python -m pytest -q: 53 passed (45 previas + 8 casos nuevos).
+Prototipo SQLite; no sustituye al servicio ni prueba PostgreSQL.
