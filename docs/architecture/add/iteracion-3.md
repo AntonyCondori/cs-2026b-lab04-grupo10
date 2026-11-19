@@ -1,5 +1,7 @@
 # Iteración 3 de ADD - Aislamiento por distrito (QA-03)
 
+**Subsanación:** el contexto distrital se aplicó al repositorio SQL usado por los servicios de recojo. PostgreSQL rechazó 100 lecturas y 100 escrituras cruzadas. El resto del documento describe el prototipo en memoria. [Código, reproducción y alcance](../integracion-postgres.md).
+
 ## 1. Revisar entradas
 Se revisaron drivers.md, ADR-001, ADR-006, utilidad/escenarios.md
 y atam-lite.md. EcoRecicla AQP crece de 3 a 12 distritos, con un VPS,

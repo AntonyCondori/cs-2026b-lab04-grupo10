@@ -38,7 +38,7 @@ Se midió con `fitness/modificabilidad.py` (`python -m fitness.modificabilidad`)
 | Campaña nueva (FIESTAS_AQP, +30) | Antes | 1 | 2 | 0 (0) | 0 | sí | 45 ok |
 | Campaña nueva (FIESTAS_AQP, +30) | Después | 0 | 0 | 0 (0) | 2 | sí | 45 ok |
 
-Contexto del Lab 07: la complejidad de `procesar_recojo` bajó de C (14) a B (9) (`docs/design/patrones/metricas.md`).
+Contexto del Lab 07: Radon registra C (14) en la línea base, A (4) en `8e26afd` y A (2) en la subsanación ([métricas](../../design/patrones/metricas.md)). La evidencia histórica de modificabilidad se conserva en esta iteración.
 
 ## Supuestos de la medición
 

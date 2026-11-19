@@ -206,16 +206,19 @@ Escenarios y calificaciones: [escenarios.md](docs/architecture/utilidad/escenari
 | Iteración | Escenario | Táctica | Evidencia | ¿Cumple? |
 |---|---|---|---|---|
 | 1 | QA-01 Regla de puntos nueva sin modificar el servicio | Strategy, Factory por registro y Decorator, con punto de arranque | 0 archivos de lógica modificados frente a 1 en la versión inicial; 45 de 45 pruebas | Sí |
-| 2 | [COMPLETA B] | [COMPLETA B] | [COMPLETA B] | [COMPLETA B] |
-| 3 | [COMPLETA C] | [COMPLETA C] | [COMPLETA C] | [COMPLETA C] |
+| 2 | QA-04 Confirmación idempotente | Unicidad por distrito, bloqueo por solicitud y transacción | 100 envíos, 10 concurrentes, 1 confirmación y 1 abono persistidos | Sí, en pruebas de integración con PostgreSQL 16.2 |
+| 3 | QA-03 Aislamiento por distrito | Repositorio SQL vinculado al distrito autorizado | 100 lecturas y 100 escrituras cruzadas rechazadas. Los accesos propios siguieron disponibles | Sí, con el contexto de distrito suministrado por la aplicación |
 
 ### Documentación
 
 - [ADR-006](docs/architecture/adr/006-reglas-de-puntos-extensibles.md)
-- [ADR-007](docs/architecture/adr/)
-- [ADR-008](docs/architecture/adr/)- [Iteración 1](docs/architecture/add/iteracion-1.md), iteración 2 e iteración 3
+- [ADR-007](docs/architecture/adr/007-confirmaciones-idempotentes.md)
+- [ADR-008](docs/architecture/adr/008-aislamiento-por-distrito.md)
+- Iteraciones de ADD: [1](docs/architecture/add/iteracion-1.md), [2](docs/architecture/add/iteracion-2.md) y [3](docs/architecture/add/iteracion-3.md)
 - [Evaluación ATAM-lite](docs/architecture/atam-lite.md)
-- [Bitácora de IA](docs/architecture/bitacora-ia.md)
+- [Borrador de evaluación emitida](docs/architecture/evaluacion-emitida-grupo01.md)
+- [Bitácora de IA del Lab 08](docs/architecture/bitacora-lab08.md)
+- [Integración y reproducción en PostgreSQL](docs/architecture/integracion-postgres.md)
 - [Modelo C4 actualizado](docs/architecture/c4/workspace.dsl)
 
-Etiqueta de entrega: `v0.8-arquitectura`.
+Pendientes de entrega: confirmar el destinatario y publicar la evaluación emitida; registrar la aprobación de los ADR-007 y ADR-008 en el PR; publicar `v0.8-arquitectura` sobre el commit revisado con el workflow aprobado.

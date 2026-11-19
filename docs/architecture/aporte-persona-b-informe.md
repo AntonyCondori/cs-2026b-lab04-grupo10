@@ -1,6 +1,6 @@
 # Texto para incorporar al informe: Persona B
 
-Estos apartados describen el prototipo ensayado y la revisión preparada. La evaluación cruzada no se considera cerrada hasta publicar la respuesta y la evaluación emitida con sus enlaces reales.
+Estos apartados conservan los resultados del prototipo original. Para el informe actualizado, incorporar los [resultados de PostgreSQL](integracion-postgres.md), la [bitácora consolidada](bitacora-lab08.md) y el enlace público de la evaluación emitida una vez que el equipo la publique.
 
 ## Evaluación ATAM-lite recibida
 

@@ -1,6 +1,6 @@
 # ADR-008: Aislar solicitudes por distrito
 
-- Estado: Propuesto, pendiente de revisión del equipo
+- Estado: Propuesto para aprobación del equipo. Integración Python validada con PostgreSQL 16.2.
 - Fecha: 2026-10-31
 - Decisores: Equipo del Grupo 10, pendiente de aprobación
 
@@ -23,10 +23,7 @@ el distrito del formulario como autorización. Las claves incluyen
 distrito e identificador. Se deniega el acceso cruzado antes de
 devolver una fila; las escrituras usan la misma comprobación.
 
-El prototipo se implementa en fitness/aislamiento.py y no reemplaza
-el servicio existente. RLS queda como defensa futura, no como una
-política SQL ya instalada. Rechazamos una base por distrito para
-este alcance y diferimos el esquema por distrito.
+Se conserva el prototipo en `fitness/aislamiento.py`. El repositorio PostgreSQL enlazado a los servicios de alta y gestión filtra por distrito en cada lectura y escritura. RLS queda como defensa futura. Se mantiene la base compartida y se difiere el esquema por distrito.
 
 ## Evidencia
 Con 100 intentos alternados entre D01 y D02, la línea base sin filtro
@@ -34,7 +31,7 @@ devuelve 100 filas ajenas; con filtro se deniegan 100 y se devuelven 0.
 Se conservan accesos propios y se rechazan 100 escrituras cruzadas
 sin alterar los puntos. Las seis pruebas de C pasaron; la regresión
 completa pasó con 59 pruebas en la rama antony.
-Ver add/iteracion-3.md y tests/test_fitness.py.
+En PostgreSQL se rechazaron 100 lecturas y 100 intentos de confirmar un recojo ajeno. Cada distrito conservó acceso a sus registros. Ver [iteración 3](../add/iteracion-3.md) e [integración](../integracion-postgres.md).
 
 ## Consecuencias
 - Positivas: control central, claves por distrito y verificación en CI.
@@ -46,6 +43,5 @@ Ver add/iteracion-3.md y tests/test_fitness.py.
 - Trade-off aceptado: menor costo operacional y una base compartida
   a cambio de disciplina en filtros, permisos y pruebas.
 
-## Alcance pendiente
-No se implementaron JWT, API ni RLS; no se validó QA-02 ni el tiempo
-de alta de distritos. El riesgo R4 sigue abierto para producción.
+## Alcance y aceptación
+El servicio recibe el distrito autorizado desde el punto de arranque. La capa HTTP que autentica y obtiene el contexto, RLS y el tiempo de alta de distritos quedan pendientes. Registrar la aprobación del equipo y el enlace al PR antes de cambiar el estado a «Aceptado».
