@@ -182,7 +182,7 @@ Se miden los mismos métodos del servicio en los tres puntos. El código de rein
 Con el entorno virtual activado:
 
 ```bash
-python -m pip install pytest
+python -m pip install pytest jsonschema
 python -m pytest -v
 ```
 

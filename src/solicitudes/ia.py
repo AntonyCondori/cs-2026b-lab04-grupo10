@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Protocol
 
 from src.solicitudes.guardrails import crear_guardrails
 
@@ -7,6 +8,12 @@ class ProveedorLLM(ABC):
     @abstractmethod
     def clasificar(self, descripcion: str) -> str:
         pass
+
+
+class ProveedorGeneracionLLM(Protocol):
+    def completar(self, prompt: str) -> str:
+        """Devuelve el texto generado para el prompt."""
+        ...
 
 
 class LLMSimuladoAdapter(ProveedorLLM):
