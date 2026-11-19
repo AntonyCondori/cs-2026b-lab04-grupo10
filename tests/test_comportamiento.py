@@ -4,10 +4,7 @@ from src.solicitudes.externos import LLMApiSimulada
 
 @pytest.fixture(params=["antes.servicio", "servicio"])
 def m(request):
-    try:
-        return importlib.import_module(f"src.solicitudes.{request.param}")
-    except ModuleNotFoundError:
-        pytest.skip(f"Módulo {request.param} no implementado aún")
+    return importlib.import_module(f"src.solicitudes.{request.param}")
 
 def crear_solicitud(m, descripcion="botella de plastico", estado="PENDIENTE"):
     return m.Solicitud(id=1, usuario="Juan", celular="999888777", descripcion_residuo=descripcion, estado=estado)
@@ -53,3 +50,35 @@ def test_reintenta_tras_caidas_de_ia(m):
     
     assert estado == "COMPLETADO"
     assert ia_inestable.llamadas == 3
+
+
+def test_campana_dia_tierra_suma_cincuenta_puntos(m):
+    servicio = m.ServicioSolicitudes()
+    solicitud = crear_solicitud(m)
+
+    servicio.procesar_recojo(solicitud, campana="DIA_TIERRA")
+
+    assert solicitud.puntos_asignados == 60
+
+
+def test_agotar_reintentos_cancela_sin_abonar_ni_notificar(m):
+    ia_caida = LLMApiSimulada(fallas=3)
+    servicio = m.ServicioSolicitudes(ia_api=ia_caida)
+    solicitud = crear_solicitud(m)
+
+    assert servicio.procesar_recojo(solicitud) == "CANCELADO"
+    assert ia_caida.llamadas == 3
+    assert solicitud.puntos_asignados == 0
+    assert servicio.eventos == []
+
+
+def test_categoria_desconocida_deja_pendiente_sin_abono(m):
+    servicio = m.ServicioSolicitudes()
+    solicitud = crear_solicitud(m, descripcion="material sin clasificar")
+
+    with pytest.raises(ValueError, match="Categoría no soportada"):
+        servicio.procesar_recojo(solicitud)
+
+    assert solicitud.estado == "PENDIENTE"
+    assert solicitud.puntos_asignados == 0
+    assert servicio.eventos == []

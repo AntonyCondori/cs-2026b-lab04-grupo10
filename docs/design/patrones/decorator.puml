@@ -12,18 +12,24 @@ class ConCache <<Decorator>> {
 class ConGuardrails <<Decorator>> {
   + clasificar(descripcion)
 }
+class ConReintentos <<Decorator>> {
+  + clasificar(descripcion)
+}
 abstract class Guardrail
 
 ProveedorLLM <|-- LLMSimuladoAdapter
 ProveedorLLM <|-- ConCache
 ProveedorLLM <|-- ConGuardrails
+ProveedorLLM <|-- ConReintentos
 ConCache --> ProveedorLLM : interno
 ConGuardrails --> ProveedorLLM : interno
+ConReintentos --> ProveedorLLM : interno
 ConGuardrails --> Guardrail : cadena
 
 note bottom of ConCache
   Ensamblaje:
-  ConCache envuelve a ConGuardrails.
+  ConCache envuelve a ConGuardrails,
+  que envuelve a ConReintentos.
   Solo se guardan resultados validados.
 end note
 @enduml

@@ -147,26 +147,22 @@ durante las pruebas.
 | Reglas de puntos acopladas al servicio | Strategy | test_open_closed_nuevo_material_sin_modificar_el_servicio |
 | Incorporar nuevas calculadoras | Fábrica por registro | test_open_closed_nuevo_material_sin_modificar_el_servicio |
 | Adaptar la interfaz del simulador | Adapter | test_clasificacion_valida |
+| Adaptar el SDK previo de WhatsApp | Adapter | test_observer_whatsapp_recibe_el_mensaje_correcto |
 | Cambiar el proveedor de IA | Strategy | test_strategy_permite_otro_proveedor |
 | Evitar llamadas repetidas | Decorator | test_cache_evitar_llamadas_repetidas |
+| Reintentar tiempos de espera del proveedor | Decorator | test_agotar_reintentos_cancela_sin_abonar_ni_notificar |
 | Separar las validaciones de salida | Chain of Responsibility | test_guardrails_bloquean_salidas_invalidas |
+| Recorrer el ciclo completo del Lab 05 | State | test_flujo_del_lab05_llega_a_puntos_acreditados |
 
 ### Métricas
 
-| Indicador | Antes | Después |
-|---|---:|---:|
-| Complejidad de procesar_recojo | C (14) | B (9) |
-| Complejidad del constructor | A (3) | A (4) |
-| SLOC de servicio.py | 54 | 48 |
-| SLOC con alcance equiparado | 200 | 283 |
+| Indicador (Radon 6.0.1) | Línea base | `main` revisada (`8e26afd`) | Subsanación |
+|---|---:|---:|---:|
+| Complejidad de `procesar_recojo` | C (14) | A (4) | A (2) |
+| Complejidad del constructor | A (3) | B (6) | B (6) |
+| SLOC de `servicio.py` | 54 | 45 | 45 |
 
-El alcance equiparado incluye externos.py y dominio.py en ambas versiones.
-Las métricas corresponden al estado actual y deben actualizarse si cambia
-la implementación.
-
-La complejidad del método principal disminuyó, a cambio de incorporar
-más clases y archivos. Rechazamos Abstract Factory porque no necesitamos
-familias de productos relacionados; la fábrica por registro cubre el caso.
+Se miden los mismos métodos del servicio en los tres puntos. El código de reintentos pasó al proveedor de IA. Las SLOC de `servicio.py` miden el archivo en el que vive el servicio.
 
 ### Documentación
 
@@ -178,6 +174,7 @@ familias de productos relacionados; la fábrica por registro cubre el caso.
 - [Fábrica por registro](docs/design/patrones/factory.puml)
 - [Decorator](docs/design/patrones/decorator.puml)
 - [Chain of Responsibility](docs/design/patrones/chain.puml)
+- [State del Lab 05](docs/design/patrones/state.puml)
 - [Diagrama de clases](docs/design/clases.puml)
 
 ### Ejecución de pruebas
@@ -188,6 +185,8 @@ Con el entorno virtual activado:
 python -m pip install pytest
 python -m pytest -v
 ```
+
+`tests/test_comportamiento.py` cubre ocho casos ejecutados contra ambas versiones (16 ejecuciones). `tests/test_ciclo_recojo.py` comprueba el flujo de la HU-01 y el rechazo por ubicación. Para cerrar la entrega, registrar aquí el enlace de revisión cruzada y publicar `v0.7-patrones` sobre el commit revisado.
 
 
 ## Diseño de la arquitectura (Lab 08)

@@ -1,0 +1,4 @@
+-
+    C 11:0 ServicioSolicitudes - B (6)
+    M 12:4 ServicioSolicitudes.__init__ - B (6)
+    M 35:4 ServicioSolicitudes.procesar_recojo - A (4)

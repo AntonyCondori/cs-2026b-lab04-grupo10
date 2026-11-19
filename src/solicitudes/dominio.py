@@ -10,6 +10,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
+from math import isfinite
 from uuid import uuid4
 
 
@@ -94,40 +95,98 @@ class Solicitud:
         self.direccion.coordenadas = coordenadas
 
     def marcar_pendiente(self) -> None:
-        if not self.direccion.esta_geocodificada():
-            raise ErrorValidacion("La dirección no está geocodificada")
-        self.estado = EstadoSolicitud.PENDIENTE
+        _ESTADOS_CICLO[self.estado].marcar_pendiente(self)
 
     def rechazar(self, motivo: str) -> None:
-        self.estado = EstadoSolicitud.RECHAZADA
-        self.motivo_rechazo = motivo
+        _ESTADOS_CICLO[self.estado].rechazar(self, motivo)
 
     def obtener_peso_total(self) -> float:
         return sum(d.peso_kg for d in self.detalles)
 
-    # --- Operaciones propuestas por la máquina de estados (E3, regla C2) ---
-    def asignar(self, reciclador_id: str) -> None:
-        if self.estado is not EstadoSolicitud.PENDIENTE:
-            raise ErrorValidacion("Solo una solicitud PENDIENTE puede asignarse")
-        self.reciclador_id = reciclador_id
-        self.estado = EstadoSolicitud.ASIGNADA
+    def asignar(self, reciclador_id: str, *, disponible: bool = True) -> None:
+        _ESTADOS_CICLO[self.estado].asignar(self, reciclador_id, disponible)
 
     def registrar_recojo(self) -> None:
-        if self.estado is not EstadoSolicitud.ASIGNADA:
-            raise ErrorValidacion("Solo una solicitud ASIGNADA puede recogerse")
-        self.estado = EstadoSolicitud.RECOGIDA
+        _ESTADOS_CICLO[self.estado].registrar_recojo(self)
 
     def registrar_pesaje(self, peso_kg: float) -> None:
-        if self.estado is not EstadoSolicitud.RECOGIDA or peso_kg <= 0:
-            raise ErrorValidacion("Pesaje inválido")
-        self.peso_real_kg = peso_kg
-        self.estado = EstadoSolicitud.PESADA
+        _ESTADOS_CICLO[self.estado].registrar_pesaje(self, peso_kg)
 
     def acreditar_puntos(self, puntos: int) -> None:
-        if self.estado is not EstadoSolicitud.PESADA:
-            raise ErrorValidacion("Solo una solicitud PESADA acredita puntos")
-        self.puntos = puntos
-        self.estado = EstadoSolicitud.PUNTOS_ACREDITADOS
+        _ESTADOS_CICLO[self.estado].acreditar_puntos(self, puntos)
+
+
+class TransicionesSolicitud:
+    """Por defecto, el estado actual impide todas las transiciones."""
+
+    def marcar_pendiente(self, solicitud: Solicitud) -> None:
+        raise ErrorValidacion("Solo una solicitud nueva puede quedar PENDIENTE")
+
+    def rechazar(self, solicitud: Solicitud, motivo: str) -> None:
+        raise ErrorValidacion("Solo una solicitud nueva puede rechazarse por ubicación")
+
+    def asignar(self, solicitud: Solicitud, reciclador_id: str, disponible: bool) -> None:
+        raise ErrorValidacion("Solo una solicitud PENDIENTE puede asignarse")
+
+    def registrar_recojo(self, solicitud: Solicitud) -> None:
+        raise ErrorValidacion("Solo una solicitud ASIGNADA puede recogerse")
+
+    def registrar_pesaje(self, solicitud: Solicitud, peso_kg: float) -> None:
+        raise ErrorValidacion("Solo una solicitud RECOGIDA puede pesarse")
+
+    def acreditar_puntos(self, solicitud: Solicitud, puntos: int) -> None:
+        raise ErrorValidacion("Solo una solicitud PESADA acredita puntos")
+
+
+class NuevaSolicitud(TransicionesSolicitud):
+    def marcar_pendiente(self, solicitud: Solicitud) -> None:
+        if not solicitud.direccion.esta_geocodificada():
+            raise ErrorValidacion("La dirección no está geocodificada")
+        solicitud.estado = EstadoSolicitud.PENDIENTE
+
+    def rechazar(self, solicitud: Solicitud, motivo: str) -> None:
+        solicitud.estado = EstadoSolicitud.RECHAZADA
+        solicitud.motivo_rechazo = motivo
+
+
+class SolicitudPendiente(TransicionesSolicitud):
+    def asignar(self, solicitud: Solicitud, reciclador_id: str, disponible: bool) -> None:
+        if not disponible or not reciclador_id:
+            raise ErrorValidacion("Se requiere un reciclador disponible")
+        solicitud.reciclador_id = reciclador_id
+        solicitud.estado = EstadoSolicitud.ASIGNADA
+
+
+class SolicitudAsignada(TransicionesSolicitud):
+    def registrar_recojo(self, solicitud: Solicitud) -> None:
+        solicitud.estado = EstadoSolicitud.RECOGIDA
+
+
+class SolicitudRecogida(TransicionesSolicitud):
+    def registrar_pesaje(self, solicitud: Solicitud, peso_kg: float) -> None:
+        if not isfinite(peso_kg) or peso_kg <= 0:
+            raise ErrorValidacion("Pesaje inválido")
+        solicitud.peso_real_kg = peso_kg
+        solicitud.estado = EstadoSolicitud.PESADA
+
+
+class SolicitudPesada(TransicionesSolicitud):
+    def acreditar_puntos(self, solicitud: Solicitud, puntos: int) -> None:
+        if puntos < 0:
+            raise ErrorValidacion("Los puntos deben ser mayores o iguales a cero")
+        solicitud.puntos = puntos
+        solicitud.estado = EstadoSolicitud.PUNTOS_ACREDITADOS
+
+
+_ESTADOS_CICLO = {
+    None: NuevaSolicitud(),
+    EstadoSolicitud.PENDIENTE: SolicitudPendiente(),
+    EstadoSolicitud.ASIGNADA: SolicitudAsignada(),
+    EstadoSolicitud.RECOGIDA: SolicitudRecogida(),
+    EstadoSolicitud.PESADA: SolicitudPesada(),
+    EstadoSolicitud.PUNTOS_ACREDITADOS: TransicionesSolicitud(),
+    EstadoSolicitud.RECHAZADA: TransicionesSolicitud(),
+}
 
 
 # --------------------------- Puertos (interfaces) ---------------------------
@@ -165,7 +224,7 @@ class SolicitarRecojoService:
         solicitud = Solicitud.crear(vecino_id, direccion, detalles)  # ErrorValidacion
         try:
             coordenadas = self.mapas.geocodificar(texto_direccion)
-        except ErrorGeocodificacion:
+        except (ErrorGeocodificacion, TimeoutError):
             solicitud.rechazar("Dirección inválida")
             self.repositorio.guardar(solicitud)
             # En el diagrama de secuencia este mensaje es asíncrono (->>)

@@ -33,6 +33,19 @@ class ConGuardrails(ProveedorLLM):
         return categoria
 
 
+class ConReintentos(ProveedorLLM):
+    def __init__(self, interno):
+        self.interno = interno
+
+    def clasificar(self, descripcion):
+        for _ in range(2):
+            try:
+                return self.interno.clasificar(descripcion)
+            except TimeoutError:
+                continue
+        return self.interno.clasificar(descripcion)
+
+
 class ConCache(ProveedorLLM):
     def __init__(self, interno):
         self.interno = interno
@@ -53,5 +66,5 @@ def crear_clasificador(api=None, proveedor=None):
         proveedor = LLMSimuladoAdapter(api)
 
     return ConCache(
-        ConGuardrails(proveedor, crear_guardrails())
+        ConGuardrails(ConReintentos(proveedor), crear_guardrails())
     )

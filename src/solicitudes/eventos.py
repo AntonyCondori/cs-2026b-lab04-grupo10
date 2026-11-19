@@ -21,14 +21,24 @@ class PublicadorEventos:
             s.actualizar(evento, datos)
 
 
-class NotificadorWhatsApp(Suscriptor):
-    def __init__(self, sdk, bandeja: list):
+class WhatsAppSDKAdapter:
+    """Adapta el SDK existente al envío que consume el observador."""
+
+    def __init__(self, sdk):
         self._sdk = sdk
+
+    def enviar(self, destinatario: str, mensaje: str) -> bool:
+        return self._sdk.send(destinatario, mensaje)
+
+
+class NotificadorWhatsApp(Suscriptor):
+    def __init__(self, mensajeria, bandeja: list):
+        self._mensajeria = mensajeria
         self._bandeja = bandeja
 
     def actualizar(self, evento, datos):
         mensaje = f"Hola {datos['usuario']}, ganaste {datos['puntos']} puntos por tu reciclaje."
-        self._sdk.send(datos["celular"], mensaje)
+        self._mensajeria.enviar(datos["celular"], mensaje)
         self._bandeja.append(f"whatsapp: {datos['celular']}: {datos['puntos']} puntos")
 
 

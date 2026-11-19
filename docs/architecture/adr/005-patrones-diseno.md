@@ -23,11 +23,12 @@ simulados para ejecutar las pruebas sin claves ni conexiones externas.
 
 Usaremos Strategy para las reglas de puntos y los proveedores de clasificación.
 
-Adaptaremos las interfaces externas mediante LLMSimuladoAdapter y
-MinamCartonAdapter. Mantendremos la fábrica por registro FabricaCalculadoras
+Adaptamos `LLMApiSimulada` y `WhatsAppSDK`, presentes en el commit de línea base
+`313ab96`, a los contratos de clasificación y notificación. `MinamCartonAdapter`
+usa el simulador de puntos añadido durante el refactor. Mantendremos la fábrica por registro FabricaCalculadoras
 para incorporar calculadoras sin modificar el procesamiento principal.
 
-Utilizaremos Decorator para agregar caché y validación al proveedor de IA.
+Utilizamos Decorator para agregar caché, validación y reintentos al proveedor de IA.
 La cadena de guardrails revisará el formato, los precios expresados con S/
 y las respuestas que contengan PELIGROSO.
 
@@ -51,21 +52,12 @@ la inyección de dependencias cubren el alcance actual.
 - La caché vive en memoria y no incorpora caducidad ni límite de tamaño.
 - Los guardrails implementados son controles básicos; no garantizan que toda
   clasificación aceptada sea correcta.
-- Los reintentos permanecen en el servicio.
-- State y Observer están pendientes de integración en esta rama.
+- El proveedor reintenta hasta tres llamadas frente a `TimeoutError`. El servicio decide la cancelación del flujo de compatibilidad al agotar los intentos.
+- Observer publica al completar el recojo del flujo de compatibilidad. La HU-01 de Lab 05 conserva su ciclo completo de seis estados de negocio.
 
 ## Evidencia y conclusión
 
-En el estado medido, procesar_recojo pasó de complejidad C (14) a B (9).
-El constructor pasó de A (3) a A (4).
-
-Las SLOC con alcance equiparado aumentaron de 200 a 283.
-El refactor redujo la complejidad del método principal a cambio de más
-código y configuración. Esta decisión resulta útil ante nuevos proveedores,
-reglas de puntos y validaciones; una demostración pequeña podría conservar
-la versión inicial.
-
-Las métricas deberán actualizarse si la integración pendiente modifica el código.
+Con Radon 6.0.1, `procesar_recojo` registra C (14) en la línea base, A (4) en `8e26afd` y A (2) en la subsanación. El constructor pasa de A (3) a B (6). Las SLOC del archivo `servicio.py` pasan de 54 a 45.
 
 - Métricas: ../../design/patrones/metricas.md
 - Evidencias: ../../design/patrones/mediciones/

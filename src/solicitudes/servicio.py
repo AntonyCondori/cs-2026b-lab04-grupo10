@@ -5,7 +5,9 @@ from src.solicitudes.puntos import (
     FabricaCalculadoras, CalculadoraPlastico, CalculadoraVidrio, MinamCartonAdapter
 )
 from src.solicitudes.decoradores import campanas_por_defecto
-from src.solicitudes.eventos import PublicadorEventos, NotificadorWhatsApp, AuditoriaSolicitudes
+from src.solicitudes.eventos import (
+    AuditoriaSolicitudes, NotificadorWhatsApp, PublicadorEventos, WhatsAppSDKAdapter,
+)
 
 
 class ServicioSolicitudes:
@@ -27,7 +29,8 @@ class ServicioSolicitudes:
 
         if publicador is None:
             self.publicador = PublicadorEventos()
-            self.publicador.suscribir("solicitud_completada", NotificadorWhatsApp(self.whatsapp, self.eventos))
+            mensajeria = WhatsAppSDKAdapter(self.whatsapp)
+            self.publicador.suscribir("solicitud_completada", NotificadorWhatsApp(mensajeria, self.eventos))
             self.publicador.suscribir("solicitud_completada", AuditoriaSolicitudes(self.eventos))
         else:
             self.publicador = publicador
@@ -35,14 +38,11 @@ class ServicioSolicitudes:
     def procesar_recojo(self, solicitud: Solicitud, campana: str = "NINGUNA") -> str:
         solicitud.iniciar()  # STATE: solo una solicitud PENDIENTE puede procesarse
 
-        for intento in range(3):
-            try:
-                categoria = self.clasificador.clasificar(solicitud.descripcion_residuo)
-                break
-            except TimeoutError:
-                if intento == 2:
-                    solicitud.cancelar()  # STATE
-                    return solicitud.estado
+        try:
+            categoria = self.clasificador.clasificar(solicitud.descripcion_residuo)
+        except TimeoutError:
+            solicitud.cancelar()
+            return solicitud.estado
 
         calculadora = self.campanas.aplicar(campana, self.fabrica.crear(categoria))  # DECORATOR
         puntos = calculadora.calcular()
