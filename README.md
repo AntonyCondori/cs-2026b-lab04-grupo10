@@ -222,3 +222,20 @@ Escenarios y calificaciones: [escenarios.md](docs/architecture/utilidad/escenari
 - [Modelo C4 actualizado](docs/architecture/c4/workspace.dsl)
 
 Pendientes de entrega: confirmar el destinatario y publicar la evaluación emitida; registrar la aprobación de los ADR-007 y ADR-008 en el PR; publicar `v0.8-arquitectura` sobre el commit revisado con el workflow aprobado.
+
+## Prompt engineering (Lab 09)
+
+La Tarea A genera criterios de aceptación para EcoRecicla AQP. La Tarea B evalúa la generación de docstrings para funciones del repositorio.
+
+| Tarea | Versión o ciclo | Evaluación con grabaciones del equipo |
+|---|---|---|
+| A · Criterios | `v1` | Pendiente de completar el dataset y grabar la línea base |
+| A · Criterios | `v2` y `v3` | Pendiente de evaluar las iteraciones |
+| B · Docstrings | `v1` y siguientes | Pendiente de implementar y evaluar |
+
+El equipo completará esta tabla con las tasas, gráfico y lecciones de las ejecuciones reales.
+
+- [Proceso y responsables de E1 a E8](docs/design/lab09-integracion.md)
+- [Contrato, caso inicial y evaluación de criterios](prompts/criterios/)
+- [Bitácora de IA](prompts/bitacora-ia.md)
+- [Matriz de pruebas defensivas](prompts/seguridad/red-team.md)
