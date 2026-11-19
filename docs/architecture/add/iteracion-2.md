@@ -1,5 +1,7 @@
 # Iteración 2 de ADD: confirmaciones idempotentes (QA-04)
 
+**Subsanación:** el servicio de recojo se conectó a PostgreSQL. La prueba de 100 envíos, 10 concurrentes, verificó un único abono persistido. El resto del documento describe la iteración original en SQLite. [Código, reproducción y alcance](../integracion-postgres.md).
+
 ## 1. Revisar las entradas
 
 - Base revisada: main a4b957a0fa305f901facac1c6c2e081014587c99.

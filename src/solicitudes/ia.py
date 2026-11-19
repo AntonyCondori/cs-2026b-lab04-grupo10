@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Protocol
 
 from src.solicitudes.guardrails import crear_guardrails
 
@@ -7,6 +8,12 @@ class ProveedorLLM(ABC):
     @abstractmethod
     def clasificar(self, descripcion: str) -> str:
         pass
+
+
+class ProveedorGeneracionLLM(Protocol):
+    def completar(self, prompt: str) -> str:
+        """Devuelve el texto generado para el prompt."""
+        ...
 
 
 class LLMSimuladoAdapter(ProveedorLLM):
@@ -33,6 +40,19 @@ class ConGuardrails(ProveedorLLM):
         return categoria
 
 
+class ConReintentos(ProveedorLLM):
+    def __init__(self, interno):
+        self.interno = interno
+
+    def clasificar(self, descripcion):
+        for _ in range(2):
+            try:
+                return self.interno.clasificar(descripcion)
+            except TimeoutError:
+                continue
+        return self.interno.clasificar(descripcion)
+
+
 class ConCache(ProveedorLLM):
     def __init__(self, interno):
         self.interno = interno
@@ -53,5 +73,5 @@ def crear_clasificador(api=None, proveedor=None):
         proveedor = LLMSimuladoAdapter(api)
 
     return ConCache(
-        ConGuardrails(proveedor, crear_guardrails())
+        ConGuardrails(ConReintentos(proveedor), crear_guardrails())
     )

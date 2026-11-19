@@ -9,7 +9,7 @@ Las respuestas fueron publicadas en el issue #24. El issue permanece abierto par
 
 Enlace al comentario: https://github.com/AntonyCondori/cs-2026b-lab04-grupo10/issues/24#issuecomment-6552561941
 
-Evaluación emitida: pendiente de confirmar con el docente el repositorio asignado y revisar su árbol de utilidad e iteración 1. El repositorio del Grupo 01 consultado no expone actualmente archivos con esos nombres; no se inventan hallazgos sobre entregables no revisados. Recibir una evaluación del Grupo 01 no prueba por sí solo que sea también el destinatario asignado.
+Evaluación emitida: se revisó el árbol y la evidencia de QA-01 y QA-03 del Grupo 01 en `6b6cca2`. El [borrador de revisión](evaluacion-emitida-grupo01.md) contiene hallazgos reproducidos. Quedan por confirmar el destinatario asignado, publicar la evaluación y registrar su enlace.
 
 ## Respuesta fundamentada a la evaluación recibida
 
@@ -25,8 +25,8 @@ Evaluación emitida: pendiente de confirmar con el docente el repositorio asigna
 
 - S2, sensibilidad: la deduplicación depende de que todos los envíos usen el mismo ID/clave y compartan el almacenamiento. Evidencia: restricciones únicas y pruebas de conflictos y recreación del registro.
 - T2, trade-off: persistencia/unicidad y transacción frente a espacio y contención. Se midió la reducción de duplicados; el costo de latencia queda como hipótesis sin benchmark.
-- R3: sin deduplicación persistente se repite el abono. El prototipo sin táctica produjo 100 abonos; con táctica, 1. La integración real sigue pendiente.
-- R4: QA-03 / ADR-008 aporta verificación de aislamiento en memoria: 100 accesos cruzados denegados, 0 filas ajenas y 100 escrituras cruzadas rechazadas. La idempotencia no lo resuelve; falta integración productiva de autorización y persistencia.
+- R3: el prototipo sin táctica produjo 100 abonos. La integración PostgreSQL con la táctica produjo 1 abono en 100 envíos.
+- R4: el repositorio PostgreSQL rechazó 100 lecturas y 100 escrituras cruzadas. La autenticación ante un cliente HTTP queda pendiente.
 - N2: el prototipo protegido conserva el resultado al recrear el registro y revierte confirmación y abono ante fallo intermedio. No equivale a garantizar durabilidad frente a cortes físicos.
 
 ## Matriz de probabilidad e impacto
@@ -37,8 +37,8 @@ Escala de equipo: 1 a 5; puntuación P x I. Zona crítica propuesta: >= 15; 8-14
 |---|---|---:|---:|---:|---|
 | R1 | Dependencia obligatoria de mapas / reconexión offline sin diseño coherente | 3 | 4 | 12 | Resolver contradicción R-06/C4 con Persona A; no afirmar mitigación productiva. |
 | R2 | Acceso SQL entre módulos sin controles | 3 | 4 | 12 | Persona C: controles estructurales y propuesta de permisos/SQL; import-linter solo no cubre SQL. |
-| R3 | Abonos duplicados por reenvío | 4 | 4 | 16 | Crítico: mitigación probada en QA-04; riesgo productivo abierto hasta integrar en PostgreSQL. |
-| R4 | Exposición de datos de otro distrito | 3 | 5 | 15 | Crítico: mitigación verificada en el prototipo de [iteración 3](add/iteracion-3.md) y [ADR-008](adr/008-aislamiento-por-distrito.md), con FF-05 en CI. Abierto para producción hasta integrar autorización y persistencia. |
+| R3 | Abonos duplicados por reenvío | 4 | 4 | 16 | Mitigación verificada para el servicio Python conectado a PostgreSQL. Despliegue pendiente. |
+| R4 | Exposición de datos de otro distrito | 3 | 5 | 15 | Mitigación probada con contexto asignado por el servicio. Autenticación HTTP y RLS pendientes. |
 | R5 | Un solo VPS deja el sistema sin servicio ante caída | 3 | 4 | 12 | Se propone aceptar ausencia de alta disponibilidad en el MVP de un mes; requiere acuerdo, respaldo y recuperación por definir. |
 | R6 | C4/ADR y código describen tecnologías y estados diferentes | 4 | 3 | 12 | Alinear Node.js/Python y actualizar métricas de Lab07; pendiente de consolidación. |
 
@@ -46,8 +46,5 @@ Escala de equipo: 1 a 5; puntuación P x I. Zona crítica propuesta: >= 15; 8-14
 
 ## Dependencias para cerrar E3 y E7
 
-1. Confirmar el destinatario y revisar su árbol e iteración 1.
-2. Publicar la evaluación emitida con sensibilidad, trade-off, dos riesgos y un no riesgo, todos sustentados.
-3. Revisar y publicar la respuesta al issue #24; agregar enlaces a los comentarios reales.
-4. Actualizar el estado de R3/R4 con evidencia de las integraciones, sin convertir una simulación en garantía productiva.
-5. Completar al menos cinco interacciones reales de IA en la bitácora, incorporando las de A y C.
+1. Confirmar el destinatario asignado y publicar la evaluación con su enlace.
+2. Trasladar al informe al menos cinco interacciones documentadas en la [bitácora del Lab 08](bitacora-lab08.md).

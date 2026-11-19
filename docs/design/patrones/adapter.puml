@@ -13,6 +13,16 @@ class LLMApiSimulada <<Adaptee>> {
 ProveedorLLM <|-- LLMSimuladoAdapter
 LLMSimuladoAdapter --> LLMApiSimulada : api
 
+class NotificadorWhatsApp
+class WhatsAppSDKAdapter <<Adapter>> {
+  + enviar(destinatario, mensaje)
+}
+class WhatsAppSDK <<Adaptee>> {
+  + send(phone, message)
+}
+NotificadorWhatsApp --> WhatsAppSDKAdapter : mensajeria
+WhatsAppSDKAdapter --> WhatsAppSDK : SDK del commit 313ab96
+
 abstract class CalculadoraPuntos <<Target>>
 class MinamCartonAdapter <<Adapter>> {
   + calcular()
@@ -22,4 +32,5 @@ class MinamPuntosAPI <<Adaptee>> {
 }
 CalculadoraPuntos <|-- MinamCartonAdapter
 MinamCartonAdapter --> MinamPuntosAPI : _api
+note right of MinamPuntosAPI: Simulador añadido en E2
 @enduml

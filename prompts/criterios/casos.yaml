@@ -1,0 +1,9 @@
+# Caso verificado en docs/design/historia.md.
+- description: HU-01 · Solicitar el recojo de residuos reciclables
+  vars:
+    id: HU-01
+    invest_esperado: true
+    historia: >-
+      Como vecino, quiero solicitar el recojo de mis residuos reciclables desde la aplicación
+      ingresando mi dirección y el detalle de mis residuos, para que un reciclador pueda asignar
+      mi solicitud a su ruta diaria.

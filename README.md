@@ -147,26 +147,22 @@ durante las pruebas.
 | Reglas de puntos acopladas al servicio | Strategy | test_open_closed_nuevo_material_sin_modificar_el_servicio |
 | Incorporar nuevas calculadoras | Fábrica por registro | test_open_closed_nuevo_material_sin_modificar_el_servicio |
 | Adaptar la interfaz del simulador | Adapter | test_clasificacion_valida |
+| Adaptar el SDK previo de WhatsApp | Adapter | test_observer_whatsapp_recibe_el_mensaje_correcto |
 | Cambiar el proveedor de IA | Strategy | test_strategy_permite_otro_proveedor |
 | Evitar llamadas repetidas | Decorator | test_cache_evitar_llamadas_repetidas |
+| Reintentar tiempos de espera del proveedor | Decorator | test_agotar_reintentos_cancela_sin_abonar_ni_notificar |
 | Separar las validaciones de salida | Chain of Responsibility | test_guardrails_bloquean_salidas_invalidas |
+| Recorrer el ciclo completo del Lab 05 | State | test_flujo_del_lab05_llega_a_puntos_acreditados |
 
 ### Métricas
 
-| Indicador | Antes | Después |
-|---|---:|---:|
-| Complejidad de procesar_recojo | C (14) | B (9) |
-| Complejidad del constructor | A (3) | A (4) |
-| SLOC de servicio.py | 54 | 48 |
-| SLOC con alcance equiparado | 200 | 283 |
+| Indicador (Radon 6.0.1) | Línea base | `main` revisada (`8e26afd`) | Subsanación |
+|---|---:|---:|---:|
+| Complejidad de `procesar_recojo` | C (14) | A (4) | A (2) |
+| Complejidad del constructor | A (3) | B (6) | B (6) |
+| SLOC de `servicio.py` | 54 | 45 | 45 |
 
-El alcance equiparado incluye externos.py y dominio.py en ambas versiones.
-Las métricas corresponden al estado actual y deben actualizarse si cambia
-la implementación.
-
-La complejidad del método principal disminuyó, a cambio de incorporar
-más clases y archivos. Rechazamos Abstract Factory porque no necesitamos
-familias de productos relacionados; la fábrica por registro cubre el caso.
+Se miden los mismos métodos del servicio en los tres puntos. El código de reintentos pasó al proveedor de IA. Las SLOC de `servicio.py` miden el archivo en el que vive el servicio.
 
 ### Documentación
 
@@ -178,6 +174,7 @@ familias de productos relacionados; la fábrica por registro cubre el caso.
 - [Fábrica por registro](docs/design/patrones/factory.puml)
 - [Decorator](docs/design/patrones/decorator.puml)
 - [Chain of Responsibility](docs/design/patrones/chain.puml)
+- [State del Lab 05](docs/design/patrones/state.puml)
 - [Diagrama de clases](docs/design/clases.puml)
 
 ### Ejecución de pruebas
@@ -185,9 +182,11 @@ familias de productos relacionados; la fábrica por registro cubre el caso.
 Con el entorno virtual activado:
 
 ```bash
-python -m pip install pytest
+python -m pip install pytest jsonschema
 python -m pytest -v
 ```
+
+`tests/test_comportamiento.py` cubre ocho casos ejecutados contra ambas versiones (16 ejecuciones). `tests/test_ciclo_recojo.py` comprueba el flujo de la HU-01 y el rechazo por ubicación. Para cerrar la entrega, registrar aquí el enlace de revisión cruzada y publicar `v0.7-patrones` sobre el commit revisado.
 
 
 ## Diseño de la arquitectura (Lab 08)
@@ -207,16 +206,36 @@ Escenarios y calificaciones: [escenarios.md](docs/architecture/utilidad/escenari
 | Iteración | Escenario | Táctica | Evidencia | ¿Cumple? |
 |---|---|---|---|---|
 | 1 | QA-01 Regla de puntos nueva sin modificar el servicio | Strategy, Factory por registro y Decorator, con punto de arranque | 0 archivos de lógica modificados frente a 1 en la versión inicial; 45 de 45 pruebas | Sí |
-| 2 | [COMPLETA B] | [COMPLETA B] | [COMPLETA B] | [COMPLETA B] |
-| 3 | [COMPLETA C] | [COMPLETA C] | [COMPLETA C] | [COMPLETA C] |
+| 2 | QA-04 Confirmación idempotente | Unicidad por distrito, bloqueo por solicitud y transacción | 100 envíos, 10 concurrentes, 1 confirmación y 1 abono persistidos | Sí, en pruebas de integración con PostgreSQL 16.2 |
+| 3 | QA-03 Aislamiento por distrito | Repositorio SQL vinculado al distrito autorizado | 100 lecturas y 100 escrituras cruzadas rechazadas. Los accesos propios siguieron disponibles | Sí, con el contexto de distrito suministrado por la aplicación |
 
 ### Documentación
 
 - [ADR-006](docs/architecture/adr/006-reglas-de-puntos-extensibles.md)
-- [ADR-007](docs/architecture/adr/)
-- [ADR-008](docs/architecture/adr/)- [Iteración 1](docs/architecture/add/iteracion-1.md), iteración 2 e iteración 3
+- [ADR-007](docs/architecture/adr/007-confirmaciones-idempotentes.md)
+- [ADR-008](docs/architecture/adr/008-aislamiento-por-distrito.md)
+- Iteraciones de ADD: [1](docs/architecture/add/iteracion-1.md), [2](docs/architecture/add/iteracion-2.md) y [3](docs/architecture/add/iteracion-3.md)
 - [Evaluación ATAM-lite](docs/architecture/atam-lite.md)
-- [Bitácora de IA](docs/architecture/bitacora-ia.md)
+- [Borrador de evaluación emitida](docs/architecture/evaluacion-emitida-grupo01.md)
+- [Bitácora de IA del Lab 08](docs/architecture/bitacora-lab08.md)
+- [Integración y reproducción en PostgreSQL](docs/architecture/integracion-postgres.md)
 - [Modelo C4 actualizado](docs/architecture/c4/workspace.dsl)
 
-Etiqueta de entrega: `v0.8-arquitectura`.
+Pendientes de entrega: confirmar el destinatario y publicar la evaluación emitida; registrar la aprobación de los ADR-007 y ADR-008 en el PR; publicar `v0.8-arquitectura` sobre el commit revisado con el workflow aprobado.
+
+## Prompt engineering (Lab 09)
+
+La Tarea A genera criterios de aceptación para EcoRecicla AQP. La Tarea B evalúa la generación de docstrings para funciones del repositorio.
+
+| Tarea | Versión o ciclo | Evaluación con grabaciones del equipo |
+|---|---|---|
+| A · Criterios | `v1` | Pendiente de completar el dataset y grabar la línea base |
+| A · Criterios | `v2` y `v3` | Pendiente de evaluar las iteraciones |
+| B · Docstrings | `v1` y siguientes | Pendiente de implementar y evaluar |
+
+El equipo completará esta tabla con las tasas, gráfico y lecciones de las ejecuciones reales.
+
+- [Proceso y responsables de E1 a E8](docs/design/lab09-integracion.md)
+- [Contrato, caso inicial y evaluación de criterios](prompts/criterios/)
+- [Bitácora de IA](prompts/bitacora-ia.md)
+- [Matriz de pruebas defensivas](prompts/seguridad/red-team.md)

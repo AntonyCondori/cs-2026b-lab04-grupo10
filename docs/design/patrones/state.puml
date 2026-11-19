@@ -1,29 +1,21 @@
 @startuml state
-title Ciclo de vida de la solicitud: State
-class Solicitud <<contexto>> {
-  -_estado: EstadoSolicitud
-  +estado: str
-  +iniciar()
-  +completar(puntos)
-  +cancelar()
-  ~cambiar_a(nuevo)
-}
-abstract class EstadoSolicitud <<State>> {
-  +iniciar(solicitud)
-  +completar(solicitud, puntos)
-  +cancelar(solicitud)
-}
-class Pendiente
-class Completado
-class Cancelado
-class EstadoDesconocido
-Solicitud o--> EstadoSolicitud : estado actual
-EstadoSolicitud <|-- Pendiente
-EstadoSolicitud <|-- Completado
-EstadoSolicitud <|-- Cancelado
-EstadoSolicitud <|-- EstadoDesconocido
-note right of EstadoSolicitud
-  Por defecto toda transición lanza ValueError.
-  Cada estado redefine SOLO las permitidas.
+title State del ciclo de recojo de la HU-01
+
+[*] --> NUEVA
+NUEVA --> PENDIENTE : marcar_pendiente() [dirección geocodificada]
+NUEVA --> RECHAZADA : rechazar(motivo) [fallo de ubicación]
+PENDIENTE --> ASIGNADA : asignar(reciclador_id) [reciclador disponible]
+ASIGNADA --> RECOGIDA : registrar_recojo()
+RECOGIDA --> PESADA : registrar_pesaje(peso_kg) [peso finito y positivo]
+PESADA --> PUNTOS_ACREDITADOS : acreditar_puntos(puntos) [puntos >= 0]
+RECHAZADA --> [*]
+PUNTOS_ACREDITADOS --> [*]
+
+note right of NUEVA
+  En Python, estado = None antes
+  de geocodificar o rechazar.
+end note
+note right of PESADA
+  Una acreditación inválida conserva PESADA.
 end note
 @enduml
