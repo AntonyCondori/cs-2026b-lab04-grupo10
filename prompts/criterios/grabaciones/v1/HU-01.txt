@@ -1,0 +1,25 @@
+**Criterios de aceptación — HU-01: Solicitar recojo de residuos reciclables**
+
+1. **Registro de la solicitud**  
+   Dado que el vecino ingresa una dirección y el detalle de sus residuos, cuando confirma la solicitud, entonces el sistema la registra con estado «Pendiente de asignación».
+
+2. **Validación de campos obligatorios**  
+   Dado que falta la dirección o el detalle de los residuos, cuando el vecino intenta confirmar la solicitud, entonces el sistema indica los campos que debe completar y no registra la solicitud.
+
+3. **Detalle de los residuos**  
+   Dado que el vecino está completando la solicitud, cuando ingresa el detalle de sus residuos, entonces puede indicar el tipo de material reciclable y su cantidad aproximada.
+
+4. **Revisión antes del envío**  
+   Dado que el vecino completó los datos, cuando revisa la solicitud antes de confirmarla, entonces puede verificar y corregir la dirección y el detalle de los residuos.
+
+5. **Confirmación del registro**  
+   Dado que la solicitud se registra correctamente, cuando finaliza el envío, entonces el sistema muestra su identificador, los datos registrados y el estado «Pendiente de asignación».
+
+6. **Disponibilidad para el reciclador**  
+   Dado que existe una solicitud pendiente, cuando un reciclador consulta las solicitudes disponibles para su ruta diaria, entonces puede visualizar su dirección y el detalle de los residuos.
+
+7. **Asignación a una ruta diaria**  
+   Dado que la solicitud está pendiente, cuando un reciclador la incorpora a su ruta diaria, entonces el sistema registra la asignación, actualiza su estado a «Asignada» e impide que otro reciclador la asigne simultáneamente.
+
+8. **Error al registrar**  
+   Dado que ocurre un error durante el envío, cuando el sistema no puede registrar la solicitud, entonces informa al vecino, conserva los datos ingresados y permite reintentar.

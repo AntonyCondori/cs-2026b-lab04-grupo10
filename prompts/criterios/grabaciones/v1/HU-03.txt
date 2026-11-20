@@ -1,0 +1,19 @@
+### Criterios de aceptación — HU-03
+
+1. **Consultar la ruta del día**  
+   Dado que soy un reciclador formalizado con paradas asignadas para hoy, cuando consulto mi ruta, entonces veo una lista con todas mis paradas del día.
+
+2. **Mostrar las paradas en orden**  
+   Dado que mis paradas tienen un orden asignado, cuando consulto la ruta del día, entonces aparecen en esa secuencia y cada parada muestra su posición en la lista.
+
+3. **Identificar cada parada**  
+   Dado que consulto una ruta con paradas, entonces cada parada muestra la dirección o ubicación del recojo para identificar dónde debo acudir.
+
+4. **Mostrar únicamente mis paradas de hoy**  
+   Cuando consulto mi ruta del día, entonces no aparecen paradas asignadas a otros recicladores ni correspondientes a otras fechas.
+
+5. **Mostrar una ruta vacía**  
+   Dado que no tengo paradas asignadas para hoy, cuando consulto mi ruta, entonces veo el mensaje «No tienes paradas asignadas para hoy» y la lista está vacía.
+
+6. **Distinguir un error de una ruta vacía**  
+   Dado que ocurre un error al consultar la ruta, entonces veo un mensaje que indica que no se pudo cargar y no se muestra el mensaje de ruta vacía.

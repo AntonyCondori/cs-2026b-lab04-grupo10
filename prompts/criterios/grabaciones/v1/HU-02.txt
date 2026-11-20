@@ -1,0 +1,26 @@
+### Criterios de aceptación — HU-02
+
+1. **Cancelación antes del inicio del recojo**  
+   **Dado** que el vecino tiene una solicitud cuyo recojo aún no comenzó,  
+   **cuando** solicita cancelarla,  
+   **entonces** el sistema acepta la cancelación y cambia su estado a «Cancelada».
+
+2. **Bloqueo de cancelación con recojo iniciado**  
+   **Dado** que el recojo de una solicitud ya comenzó,  
+   **cuando** el vecino intenta cancelarla,  
+   **entonces** el sistema rechaza la cancelación, conserva su estado e informa que el recojo ya comenzó.
+
+3. **Validación al procesar la cancelación**  
+   **Dado** que el vecino abrió una solicitud antes del inicio del recojo,  
+   **cuando** intenta cancelarla después de que el recojo comenzó,  
+   **entonces** el sistema rechaza la cancelación usando el estado vigente de la solicitud.
+
+4. **Confirmación de cancelación exitosa**  
+   **Dado** que la cancelación se realizó correctamente,  
+   **cuando** el vecino consulta su solicitud,  
+   **entonces** visualiza el estado «Cancelada» y la solicitud queda excluida de los recojos pendientes.
+
+5. **Cancelación limitada al propietario**  
+   **Dado** que una solicitud pertenece a otro vecino,  
+   **cuando** un vecino intenta cancelarla,  
+   **entonces** el sistema rechaza la operación y mantiene la solicitud sin cambios.
