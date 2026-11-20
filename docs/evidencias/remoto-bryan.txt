@@ -1,0 +1,2 @@
+$ git ls-remote origin refs/heads/feat/bryan-docstrings-ci-entrega
+fatal: unable to access 'https://github.com/AntonyCondori/cs-2026b-lab04-grupo10.git/': Failed to connect to github.com port 443 after 135 ms: Could not connect to server
