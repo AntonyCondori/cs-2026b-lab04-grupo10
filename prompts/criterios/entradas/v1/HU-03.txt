@@ -1,0 +1,3 @@
+Escribe criterios de aceptación para esta historia de EcoRecicla AQP.
+
+Historia HU-03: Como reciclador formalizado, quiero consultar la ruta del día como una lista ordenada de mis paradas asignadas para organizar mis recojos. Si no tengo paradas, quiero ver que mi ruta está vacía.

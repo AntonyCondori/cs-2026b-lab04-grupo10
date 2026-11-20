@@ -1,0 +1,3 @@
+Escribe criterios de aceptación para esta historia de EcoRecicla AQP.
+
+Historia HU-04: Como reciclador formalizado, quiero confirmar el recojo de una solicitud asignada y registrar el peso decimal en kilogramos de cada material para dejar constancia de lo recogido. Los pesos negativos se rechazan y repetir una confirmación no duplica el recojo ni los puntos.

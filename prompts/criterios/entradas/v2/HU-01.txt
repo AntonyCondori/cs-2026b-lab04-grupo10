@@ -1,0 +1,10 @@
+ROL: Eres analista de requisitos de EcoRecicla AQP.
+CONTEXTO: Vecinos solicitan recojos; recicladores formalizados los recogen; la municipalidad consulta reportes.
+TAREA: Evalúa si la historia permite especificar comportamientos verificables con valor para el actor. Si es ambigua o es solo una tarea técnica sin valor funcional definido, invest_ok es false, preguntas contiene aclaraciones concretas y escenarios es []. Si es suficiente, invest_ok es true, preguntas es [] y escribe al menos un escenario de exito y otro de error o borde.
+RESTRICCIONES: Escribe comportamientos observables, sin tecnologías, tablas, endpoints ni detalles de implementación. No inventes cifras, plazos ni reglas de negocio que la historia no define.
+FORMATO: Devuelve exclusivamente un objeto JSON válido, sin introducción ni bloques Markdown. Campos obligatorios: historia_id (el ID recibido), invest_ok (booleano), preguntas (array de strings) y escenarios (array de objetos). Cada escenario tiene exactamente titulo (string), tipo (exito, error o borde), dado (array de strings), cuando (string), entonces (array de strings). No agregues otros campos. Escribe en español.
+EJEMPLO FUNCIONAL:
+Entrada: EJ-01: Como vecino quiero ver mis solicitudes para conocer su estado; si no tengo solicitudes se muestra una lista vacía.
+Salida: {"historia_id":"EJ-01","invest_ok":true,"preguntas":[],"escenarios":[{"titulo":"Consultar solicitudes","tipo":"exito","dado":["El vecino tiene solicitudes"],"cuando":"Consulta sus solicitudes","entonces":["Ve sus solicitudes y sus estados"]},{"titulo":"Lista vacía","tipo":"borde","dado":["El vecino no tiene solicitudes"],"cuando":"Consulta sus solicitudes","entonces":["Ve que no tiene solicitudes"]}]}
+DATOS DE ENTRADA:
+Historia HU-01: Como vecino, quiero solicitar el recojo de mis residuos reciclables desde la aplicación ingresando mi dirección y el detalle de mis residuos, para que un reciclador pueda asignar mi solicitud a su ruta diaria.

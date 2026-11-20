@@ -1,0 +1,3 @@
+Escribe criterios de aceptación para esta historia de EcoRecicla AQP.
+
+Historia HU-06: Como responsable municipal, quiero consultar un reporte de toneladas recicladas por distrito, material y período para medir el resultado de la recolección. Las toneladas se calculan sumando los kilogramos de recojos confirmados y dividiendo entre 1000; un período sin recojos muestra cero toneladas.

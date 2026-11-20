@@ -1,0 +1,60 @@
+description: EcoRecicla AQP · criterios de aceptación
+prompts:
+- file://v1.txt
+providers:
+- id: file://proveedor_grabado.py
+  label: asistente-grabado
+tests: file://casos.yaml
+defaultTest:
+  assert:
+  - type: is-json
+    value: file://esquema.json
+    metric: A1_contrato_json
+  - type: javascript
+    metric: A2_id_de_historia
+    value: 'let datos;
+
+      try { datos = JSON.parse(output); } catch { return false; }
+
+      return datos?.historia_id === context.vars.id;
+
+      '
+  - type: javascript
+    metric: A3_invest_esperado
+    value: 'let datos;
+
+      try { datos = JSON.parse(output); } catch { return false; }
+
+      return datos?.invest_ok === context.vars.invest_esperado;
+
+      '
+  - type: javascript
+    metric: A4_escenarios_o_preguntas
+    value: 'let datos;
+
+      try { datos = JSON.parse(output); } catch { return false; }
+
+      if (!Array.isArray(datos?.escenarios)) return false;
+
+      if (datos.invest_ok === false) return datos.escenarios.length === 0 && datos.preguntas?.length
+      > 0;
+
+      const tipos = datos.escenarios.map(escenario => escenario?.tipo);
+
+      return tipos.includes(''exito'') && (tipos.includes(''error'') || tipos.includes(''borde''));
+
+      '
+  - type: javascript
+    metric: A5_comportamiento_observable
+    value: 'let datos;
+
+      try { datos = JSON.parse(output); } catch { return false; }
+
+      if (!Array.isArray(datos?.escenarios)) return false;
+
+      const escenarios = JSON.stringify(datos.escenarios);
+
+      return !/\b(postgresql|react|django|endpoint|tabla SQL|api de|api rest|base
+      de datos)\b/i.test(escenarios);
+
+      '

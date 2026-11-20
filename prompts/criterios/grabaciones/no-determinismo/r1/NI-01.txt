@@ -1,0 +1,1 @@
+{"historia_id":"NI-01","invest_ok":false,"preguntas":["¿Qué acción concreta necesita realizar el vecino y qué resultado observable lo haría estar satisfecho?"],"escenarios":[]}

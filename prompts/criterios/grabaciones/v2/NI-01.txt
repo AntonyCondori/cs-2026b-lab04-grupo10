@@ -1,0 +1,1 @@
+{"historia_id":"NI-01","invest_ok":false,"preguntas":["¿Qué acción concreta quiere realizar el vecino y qué dificultad encuentra actualmente?","¿Qué mejora observable espera al realizar esa acción?","¿Qué resultado permitiría comprobar que la mejora satisface su necesidad?"],"escenarios":[]}

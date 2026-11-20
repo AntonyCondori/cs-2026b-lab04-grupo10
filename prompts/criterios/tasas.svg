@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="380" viewBox="0 0 820 380" role="img" aria-label="Tasa de aprobación por caso: v1 0%, v2 88.89%, v3 100%. Umbral 85%.">
+<rect width="820" height="380" fill="white"/><g font-family="Arial, sans-serif" fill="#152d3c">
+<text x="42" y="38" font-size="23" font-weight="bold">Criterios de aceptación · EcoRecicla AQP</text>
+<text x="42" y="63" font-size="14">Mismos 9 casos y 7 aserciones; tasa por caso</text>
+<line x1="80" y1="300" x2="770" y2="300" stroke="#8999a3"/>
+<line x1="80" y1="113" x2="770" y2="113" stroke="#b66d1c" stroke-dasharray="6 4"/>
+<text x="635" y="105" fill="#965711" font-size="13">Meta: 85 %</text>
+<rect x="140" y="297" width="120" height="3" fill="#9ca9b1"/>
+<rect x="350" y="104.44" width="120" height="195.56" fill="#416f8b"/>
+<rect x="560" y="80" width="120" height="220" fill="#27735e"/>
+<text x="200" y="282" text-anchor="middle" font-size="20" font-weight="bold">0 %</text>
+<text x="410" y="95" text-anchor="middle" font-size="20" font-weight="bold">88,89 %</text>
+<text x="620" y="72" text-anchor="middle" font-size="20" font-weight="bold">100 %</text>
+<text x="200" y="325" text-anchor="middle" font-size="17">v1 · 0/9</text>
+<text x="410" y="325" text-anchor="middle" font-size="17">v2 · 8/9</text>
+<text x="620" y="325" text-anchor="middle" font-size="17">v3 · 9/9</text>
+<text x="42" y="363" font-size="13">Fuente: prompts/criterios/resultados.json · respuestas originales capturadas el 19/11/2026</text>
+</g></svg>
