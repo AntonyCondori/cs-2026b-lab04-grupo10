@@ -5,7 +5,8 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
-from tempfile import NamedTemporaryFile
+import sys
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 
 DIRECTORIO = Path(__file__).resolve().parent
 CRITERIOS = DIRECTORIO.parent / "criterios"
@@ -13,28 +14,28 @@ CRITERIOS = DIRECTORIO.parent / "criterios"
 
 def evaluar(directorio, config, salida, total_esperado, umbral):
     salida.parent.mkdir(parents=True, exist_ok=True)
-    if salida.exists():
-        # El informe de una ejecución anterior no debe validar una ejecución fallida.
-        salida.unlink()
     npx = shutil.which("npx.cmd" if os.name == "nt" else "npx")
     if not npx:
         raise SystemExit("No se encontró npx.")
     entorno = dict(os.environ, PROMPTFOO_DISABLE_TELEMETRY="1",
                    PROMPTFOO_DISABLE_UPDATE="1", PYTHONIOENCODING="utf-8",
-                   PROMPTFOO_PYTHON=shutil.which("python") or "python")
-    proceso = subprocess.run(
-        [npx, "--yes", "promptfoo@0.118.0", "eval", "-c", str(config),
-         "--no-cache", "--no-table", "-o", str(salida)],
-        cwd=directorio, env=entorno, check=False,
-    )
-    if proceso.returncode not in (0, 1, 100) or not salida.is_file():
-        raise SystemExit(f"Promptfoo no produjo un informe válido (código {proceso.returncode}).")
+                   PROMPTFOO_PYTHON=sys.executable)
+    with TemporaryDirectory(dir=salida.parent) as temporal:
+        informe = Path(temporal) / "resultado.json"
+        proceso = subprocess.run(
+            [npx, "--yes", "promptfoo@0.118.0", "eval", "-c", str(config),
+             "--no-cache", "--no-table", "-o", str(informe)],
+            cwd=directorio, env=entorno, check=False,
+        )
+        if proceso.returncode not in (0, 1, 100) or not informe.is_file():
+            raise SystemExit(f"Promptfoo no produjo un informe válido (código {proceso.returncode}).")
 
-    stats = json.loads(salida.read_text(encoding="utf-8"))["results"]["stats"]
-    aprobados = stats["successes"]
-    total = aprobados + stats["failures"] + stats["errors"]
-    if stats["errors"] or total != total_esperado:
-        raise SystemExit(f"Informe incompleto: {total}/{total_esperado} casos, {stats['errors']} errores.")
+        stats = json.loads(informe.read_text(encoding="utf-8"))["results"]["stats"]
+        aprobados = stats["successes"]
+        total = aprobados + stats["failures"] + stats["errors"]
+        if stats["errors"] or total != total_esperado:
+            raise SystemExit(f"Informe incompleto: {total}/{total_esperado} casos, {stats['errors']} errores.")
+        informe.replace(salida)
     tasa = 100 * aprobados / total
     print(f"{salida.name}: {aprobados}/{total} aprobados ({tasa:.2f} %)")
     if tasa < umbral:
@@ -46,9 +47,11 @@ def main():
     parser.add_argument("tarea", choices=("criterios", "docstrings"))
     parser.add_argument("version", choices=("v1", "v2", "v3"))
     parser.add_argument("--seguridad", action="store_true")
-    parser.add_argument("--umbral", type=int, choices=range(101), default=0)
+    parser.add_argument("--umbral", type=int, default=0)
     parser.add_argument("--salida", type=Path)
     args = parser.parse_args()
+    if not 0 <= args.umbral <= 100:
+        parser.error('El umbral debe estar entre 0 y 100.')
     if args.tarea == "criterios":
         if args.seguridad:
             parser.error("Usa promptfoo-seguridad.yaml para la evaluación defensiva de criterios.")

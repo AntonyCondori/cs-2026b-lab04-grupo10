@@ -1,4 +1,4 @@
-Documenta en español la función Python delimitada abajo. Devuelve solamente un objeto JSON con estas claves: resumen, parametros, retorno y lanza. No uses Markdown.
+Documenta en español la función Python delimitada abajo. Devuelve solamente un objeto JSON con estas claves: resumen, parametros, retorno y lanza. No uses Markdown, ejemplos, notas adicionales ni otras claves. Usa descripciones de una frase.
 
 - resumen: una descripción breve.
 - parametros: lista de objetos con nombre, tipo y descripcion. Copia cada nombre tal como aparece en la firma, sin asteriscos. Omite self y cls. Si no hay otros parámetros, usa [].
