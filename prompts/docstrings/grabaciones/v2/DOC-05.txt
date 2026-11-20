@@ -1,0 +1,12 @@
+{
+    "resumen": "Esta función agrega un objeto DetalleResiduo a una lista de detalles.",
+    "parametros": [
+        {
+            "nombre": "detalle",
+            "tipo": "DetalleResiduo",
+            "descripcion": "El objeto DetalleResiduo que se desea agregar a la lista de detalles."
+        }
+    ],
+    "retorno": "None",
+    "lanza": []
+}

@@ -1,0 +1,1 @@
+{"resumen":"La función verifica si el material es 'carton' y devuelve 5 si es así, de lo contrario devuelve 0.","parametros":[{"nombre":"material","tipo":"str","descripcion":"El material a verificar."}],"retorno":{"tipo":"int","descripcion":"El número de puntos correspondiente al material."},"lanza":[""]}

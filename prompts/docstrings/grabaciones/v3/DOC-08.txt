@@ -1,0 +1,1 @@
+{"resumen":"Crea un objeto ServicioSolicitudes utilizando las dependencias proporcionadas y registra reglas para el objeto ServicioSolicitudes.","parametros":[],"retorno":{"tipo":"ServicioSolicitudes","descripcion":"Un objeto ServicioSolicitudes con reglas registradas"},"lanza":["Exception"]}

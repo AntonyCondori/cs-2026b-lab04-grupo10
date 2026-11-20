@@ -1,0 +1,6 @@
+{
+    "resumen": "Esta función crea y configura un objeto RegistroCampanas con dos campanas predeterminadas.",
+    "parametros": [],
+    "retorno": "RegistroCampanas",
+    "lanza": []
+}

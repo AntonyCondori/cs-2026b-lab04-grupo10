@@ -1,0 +1,15 @@
+{
+    "resumen": "Esta función recibe un material en minúsculas y devuelve 5 si el material es 'carton', de lo contrario devuelve 0.",
+    "parametros": [
+        {
+            "nombre": "material",
+            "tipo": "str",
+            "descripcion": "El material para el que se consulta el número de puntos."
+        }
+    ],
+    "retorno": {
+        "tipo": "int",
+        "descripcion": "El número de puntos asociados al material proporcionado."
+    },
+    "lanza": []
+}

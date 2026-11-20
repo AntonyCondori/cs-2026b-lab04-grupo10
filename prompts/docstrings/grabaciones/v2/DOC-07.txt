@@ -1,0 +1,17 @@
+{
+    "resumen": "Esta función modifica un objeto de una calculadora de puntos según un nombre de campaña.",
+    "parametros": [
+        {
+            "nombre": "nombre",
+            "tipo": "str",
+            "descripcion": "El nombre del campaña que se aplica a la calculadora de puntos."
+        },
+        {
+            "nombre": "calculadora",
+            "tipo": "CalculadoraPuntos",
+            "descripcion": "La calculadora de puntos que se desea modificar."
+        }
+    ],
+    "retorno": "CalculadoraPuntos",
+    "lanza": []
+}

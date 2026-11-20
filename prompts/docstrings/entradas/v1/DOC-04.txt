@@ -1,0 +1,6 @@
+Documenta en español la función Python siguiente. Describe el propósito, los parámetros, el retorno y las excepciones en formato JSON.
+
+def validar_detalles(self) -> None:
+    # Criterio 3: lista vacía o peso 0 -> error de validación
+    if not self.detalles or not all(d.es_valido() for d in self.detalles):
+        raise ErrorValidacion("Debe ingresar al menos un residuo con peso mayor a 0")

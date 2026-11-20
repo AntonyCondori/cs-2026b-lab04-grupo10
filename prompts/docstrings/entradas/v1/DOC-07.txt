@@ -1,0 +1,5 @@
+Documenta en español la función Python siguiente. Describe el propósito, los parámetros, el retorno y las excepciones en formato JSON.
+
+def aplicar(self, nombre: str, calculadora: CalculadoraPuntos) -> CalculadoraPuntos:
+    decorar = self._campanas.get(nombre)
+    return decorar(calculadora) if decorar else calculadora  # "NINGUNA" o desconocida: sin cambios

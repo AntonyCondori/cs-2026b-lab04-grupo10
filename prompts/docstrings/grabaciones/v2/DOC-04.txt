@@ -1,0 +1,6 @@
+{
+    "resumen": "Esta función verifica si los detalles proporcionados cumplen con los criterios de validación, lanzando una excepción si no lo hacen.",
+    "parametros": [],
+    "retorno": "None",
+    "lanza": ["ErrorValidacion"]
+}

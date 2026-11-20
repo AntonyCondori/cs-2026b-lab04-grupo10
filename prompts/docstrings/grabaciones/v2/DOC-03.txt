@@ -1,0 +1,17 @@
+{
+    "resumen": "Esta función predice la categoría de un objeto basándose en el texto proporcionado.",
+    "parametros": [
+        {
+            "nombre": "texto",
+            "tipo": "str",
+            "descripcion": "El texto que se utilizará para predecir la categoría del objeto."
+        }
+    ],
+    "retorno": {
+        "tipo": "dict",
+        "descripcion": "Un diccionario con el estado de la predicción y la categoría del objeto."
+    },
+    "lanza": [
+        "TimeoutError"
+    ]
+}

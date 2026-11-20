@@ -1,0 +1,17 @@
+```json
+{
+  "proposito": "La función `validar_detalles` verifica si la lista de detalles está vacía o si alguno de los detalles tiene un peso igual a 0. Si es así, lanza una excepción de tipo `ErrorValidacion` con un mensaje de error.",
+  "parámetros": {
+    "self": "Es un parámetro de tipo objeto que representa la instancia de la clase que llama a esta función. `self` es un parámetro comúnmente utilizado en métodos de clases para acceder a los atributos de la instancia."
+  },
+  "retorno": "La función no retorna ningún valor. Retorna `None`.",
+  "excepciones": [
+    {
+      "nombre": "ErrorValidacion",
+      "mensaje": "Debe ingresar al menos un residuo con peso mayor a 0"
+    }
+  ]
+}
+```
+
+En este código, `self` es un parámetro de tipo objeto que representa la instancia de la clase que llama a esta función. `self` es un parámetro comúnmente utilizado en métodos de clases para acceder a los atributos de la instancia. La función `validar_detalles` no retorna ningún valor, sino que retorna `None`. Si la lista de detalles está vacía o si alguno de los detalles tiene un peso igual a 0, la función lanza una excepción de tipo `ErrorValidacion` con el mensaje "Debe ingresar al menos un residuo con peso mayor a 0".

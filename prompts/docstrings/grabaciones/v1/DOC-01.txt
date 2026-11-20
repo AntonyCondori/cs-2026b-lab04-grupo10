@@ -1,0 +1,11 @@
+```json
+{
+  "proposito": "La función `campanas_por_defecto` crea y configura un objeto `RegistroCampanas` con dos funciones de campana registradas por defecto.",
+  "parámetros": "Esta función no requiere ningún parámetro.",
+  "retorno": "Una instancia de la clase `RegistroCampanas` que contiene las funciones de campana registradas.",
+  "excepciones": "No hay excepciones específicas mencionadas en este código. Sin embargo, si se intenta registrar una función de campana que no sea una función válida (por ejemplo, si se intenta registrar una cadena en lugar de una función), se podría generar una excepción de tipo `TypeError`.",
+  "ejemplo_de_uso": "registro_campanas = campanas_por_defecto()"
+}
+```
+
+Nota: La clase `RegistroCampanas` y la clase `ConMultiplicador` y `ConBonoFijo` no están definidas en este contexto, por lo que no se pueden incluir en el JSON. Si estas clases estuvieran disponibles, se podrían incluir en el JSON para proporcionar más contexto.

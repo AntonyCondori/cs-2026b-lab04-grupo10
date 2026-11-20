@@ -1,0 +1,16 @@
+```json
+{
+  "proposito": "Esta función en Python modifica o aplica una decoración a una calculadora de puntos basada en el nombre de la decoración.",
+  "parámetros": {
+    "nombre": "Es una cadena que representa el nombre de la decoración a ser aplicada.",
+    "calculadora": "Es una instancia de la clase CalculadoraPuntos que será decorada o modificada."
+  },
+  "retorno": "Retorna una instancia de la clase CalculadoraPuntos que ha sido decorada si se aplica la decoración correspondiente. Si no se aplica la decoración, retorna la calculadora original.",
+  "excepciones": {
+    "KeyError": "Se lanza si el nombre de la decoración no está en el diccionario _campanas del objeto self."
+  }
+}
+```
+
+Explicación de las excepciones:
+- La excepción KeyError se lanza si el nombre de la decoración no está en el diccionario _campanas del objeto self. Esto significa que la función no encontró una decoración asociada al nombre proporcionado y, por lo tanto, no puede aplicar ninguna modificación a la calculadora.

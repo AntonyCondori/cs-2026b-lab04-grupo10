@@ -1,0 +1,1 @@
+{"resumen":"Define y regista funciones de multiplicador y bono fijo en un objeto RegistroCampanas.","parametros":[],"retorno":{"tipo":"RegistroCampanas","descripcion":"Un objeto con funciones de campana registradas"},"lanza":[""])

@@ -21,7 +21,7 @@ def capturar_ollama(modelo, entrada, salida, renderizado, cpu):
                          "stream": False, "options": opciones}).encode("utf-8"),
         headers={"Content-Type": "application/json"},
     )
-    with urlopen(solicitud, timeout=120) as respuesta:
+    with urlopen(solicitud, timeout=300) as respuesta:
         datos = json.load(respuesta)
     if not datos["done"]:
         raise RuntimeError(f"Ollama no terminó la respuesta para {entrada.name}.")

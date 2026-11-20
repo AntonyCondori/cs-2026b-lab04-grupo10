@@ -1,0 +1,16 @@
+```json
+{
+  "proposito": "Esta función agrega un objeto de tipo DetalleResiduo a la lista de detalles almacenada en el objeto self.",
+  "parámetros": {
+    "self": "Un objeto de la clase que llama a esta función.",
+    "detalle": "Un objeto de tipo DetalleResiduo que se desea agregar a la lista de detalles."
+  },
+  "retorno": "None",
+  "excepciones": [
+    {
+      "nombre": "ValueError",
+      "descripcion": "Se lanza esta excepción si la función no puede procesar el objeto de detalle debido a una condición no controlada."
+    }
+  ]
+}
+```

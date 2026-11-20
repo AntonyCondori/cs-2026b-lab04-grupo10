@@ -1,0 +1,4 @@
+Documenta en español la función Python siguiente. Describe el propósito, los parámetros, el retorno y las excepciones en formato JSON.
+
+def es_valido(self) -> bool:
+    return bool(self.tipo) and self.peso_kg > 0

@@ -1,0 +1,14 @@
+{
+  "proveedor": "Ollama local",
+  "modelo": "qwen2.5:3b",
+  "fecha_utc": "2026-11-20T04:27:22.9682534Z",
+  "opciones": {
+    "temperature": 0,
+    "num_predict": 512,
+    "num_gpu": 0,
+    "num_ctx": 1024
+  },
+  "motivo_fin": "stop",
+  "entrada_sha256": "0a7a70ed04a774f9e55c5865981eecf2b661a816e3db9dbfe46331cb02e5d005",
+  "respuesta_sha256": "9d4397f4cb1977bb85c7dafb066a75eb9de519ae00af5569e515812f9c1572ef"
+}
