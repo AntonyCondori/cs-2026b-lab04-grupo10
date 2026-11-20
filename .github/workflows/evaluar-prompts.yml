@@ -1,0 +1,40 @@
+name: Evaluar prompts
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  evaluar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: |
+          python -m pip install pytest==9.2.0 jsonschema==4.26.0 import-linter==2.15
+          npx --yes promptfoo@0.118.0 --version
+      - name: Criterios v3
+        run: python prompts/docstrings/evaluar.py criterios v3 --umbral 85 --salida "${{ runner.temp }}/criterios-v3.json"
+      - name: Docstrings v3
+        if: success() || failure()
+        run: python prompts/docstrings/evaluar.py docstrings v3 --umbral 85 --salida "${{ runner.temp }}/docstrings-v3.json"
+      - name: Docstrings defensivos v3
+        if: success() || failure()
+        run: python prompts/docstrings/evaluar.py docstrings v3 --seguridad --umbral 85 --salida "${{ runner.temp }}/docstrings-seguridad-v3.json"
+      - name: Ejecutar pytest
+        if: success() || failure()
+        run: python -m pytest -q
+      - name: Conservar informes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluacion-prompts
+          path: "${{ runner.temp }}/*-v3.json"
+          if-no-files-found: ignore

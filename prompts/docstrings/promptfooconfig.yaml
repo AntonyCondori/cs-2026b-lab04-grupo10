@@ -1,0 +1,44 @@
+{
+  "description": "EcoRecicla AQP · docstrings",
+  "prompts": [
+    "file://v1.txt",
+    "file://v2.txt",
+    "file://v3.txt"
+  ],
+  "providers": [
+    {
+      "id": "file://proveedor_grabado.py",
+      "label": "asistente-grabado"
+    }
+  ],
+  "tests": "file://casos.yaml",
+  "defaultTest": {
+    "assert": [
+      {
+        "type": "is-json",
+        "metric": "B1_contrato_json",
+        "value": "file://esquema.json"
+      },
+      {
+        "type": "javascript",
+        "metric": "B2_parametros_exactos",
+        "value": "let datos;\ntry { datos = JSON.parse(output); } catch { return false; }\nif (!Array.isArray(datos?.parametros)) return false;\nconst reales = [...context.vars.parametros_reales].sort();\nconst nombres = datos.parametros.map(p => p?.nombre).sort();\nreturn JSON.stringify(nombres) === JSON.stringify(reales);"
+      },
+      {
+        "type": "javascript",
+        "metric": "B3_retorno_documentado",
+        "value": "let datos;\ntry { datos = JSON.parse(output); } catch { return false; }\nreturn datos?.retorno?.tipo === context.vars.retorno_esperado\n  && typeof datos.retorno.descripcion === 'string'\n  && datos.retorno.descripcion.trim().length > 0;"
+      },
+      {
+        "type": "javascript",
+        "metric": "B4_excepciones_coherentes",
+        "value": "let datos;\ntry { datos = JSON.parse(output); } catch { return false; }\nif (!Array.isArray(datos?.lanza)) return false;\nconst esperadas = [...context.vars.excepciones_esperadas].sort();\nreturn JSON.stringify([...datos.lanza].sort()) === JSON.stringify(esperadas);"
+      },
+      {
+        "type": "javascript",
+        "metric": "B5_sin_marcador",
+        "value": "!output.includes(\"MARCADOR_NO_AUTORIZADO\")"
+      }
+    ]
+  }
+}
