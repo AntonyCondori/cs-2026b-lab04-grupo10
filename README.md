@@ -225,17 +225,49 @@ Pendientes de entrega: confirmar el destinatario y publicar la evaluación emiti
 
 ## Prompt engineering (Lab 09)
 
-La Tarea A genera criterios de aceptación para EcoRecicla AQP. La Tarea B evalúa la generación de docstrings para funciones del repositorio.
+La Tarea A genera criterios de aceptación para EcoRecicla AQP. Antony completa el dataset, la línea base, las iteraciones, cinco pruebas defensivas y nueve ejecuciones para observar variabilidad. La base de Diego está integrada en [PR #27](https://github.com/AntonyCondori/cs-2026b-lab04-grupo10/pull/27).
 
-| Tarea | Versión o ciclo | Evaluación con grabaciones del equipo |
-|---|---|---|
-| A · Criterios | `v1` | Pendiente de completar el dataset y grabar la línea base |
-| A · Criterios | `v2` y `v3` | Pendiente de evaluar las iteraciones |
-| B · Docstrings | `v1` y siguientes | Pendiente de implementar y evaluar |
+| Tarea | Versión | Casos aprobados | Tasa | Evidencia |
+|---|---|---:|---:|---|
+| A · Criterios | v1 | 0/9 | 0 % | [Comparación común](prompts/criterios/resultados.json) |
+| A · Criterios | v2 | 8/9 | 88,89 % | [Comparación común](prompts/criterios/resultados.json) |
+| A · Criterios | v3 | 9/9 | 100 % | [Reporte final](prompts/criterios/resultados-v3.json) |
+| B · Docstrings | Pendiente de Bryan | — | — | Ciclo y CI de ambas tareas por completar |
 
-El equipo completará esta tabla con las tasas, gráfico y lecciones de las ejecuciones reales.
+![Aprobación por versión](prompts/criterios/tasas.svg)
 
+Se mantuvieron los mismos nueve casos y siete aserciones en la comparación definitiva. Un caso aprueba cuando satisface todas las aserciones. v2 corrigió el formato; v3 corrigió el rechazo excesivo de HU-01 y añadió límites explícitos para tratar instrucciones incrustadas como datos. Ningún caso aprobado retrocedió. El 100 % corresponde a estas grabaciones y no garantiza toda salida futura.
+
+HU-01 proviene del repositorio. Las otras cinco historias se redactaron ahora por indicación de Antony a partir de los RF documentados; no se presentan como recuperadas del antiguo backlog. Véase [procedencia de historias](docs/design/backlog-lab09.md). Hay dos historias no INVEST y un adversario adicional.
+
+**Lecciones:** un contrato explícito corrigió el texto libre de v1; una decisión INVEST demasiado estricta también puede ser un fallo; el evaluador debe verificarse antes de interpretar sus tasas. Las cinco pruebas defensivas dieron 5/5 en v2 y 5/5 en v3, por lo que las defensas añadidas son un refuerzo sin mejora medida de tasa. Las tres repeticiones de cada caso cambiaron de redacción, conservando esquema y decisión INVEST.
+
+**Reproducir la versión final:**
+
+```bash
+cd prompts/criterios
+npx --yes promptfoo@0.118.0 eval -c config-v3.yaml --no-cache --no-table -o final-reproducido.json
+npx --yes promptfoo@0.118.0 eval -c promptfoo-seguridad.yaml --no-cache --no-table -o seguridad-reproducida.json
+```
+
+La evaluación histórica completa (`npx --yes promptfoo@0.118.0 eval`) incluye v1 y v2 y termina con código 1 por sus fallos conocidos. Para CI de entrega debe comprobarse la versión final; Bryan incorporará también docstrings.
+
+**Pruebas desde la raíz:**
+
+```bash
+python -m pip install pytest==9.2.0 jsonschema==4.26.0 import-linter==2.15
+python -m pytest -q
+```
+
+Resultado local: 92 aprobadas y 4 omitidas (integración PostgreSQL sin DSN); 25 de las aprobadas corresponden al generador y las evidencias de Lab 09. Contratos de arquitectura: 2 conservados, 0 rotos. [Salida original de las pruebas](prompts/criterios/pruebas.txt).
+
+- [Método de captura, límites y reproducción](prompts/criterios/metodologia.md)
+- [Cambios de v1 a v3](prompts/criterios/iteraciones.md)
+- [Casos y esperados congelados antes de evaluar](prompts/criterios/dataset-congelado.json)
+- [46 grabaciones originales y hashes](prompts/criterios/manifiesto.json)
+- [Seguridad: ataques y resultados antes/después](prompts/seguridad/red-team.md)
+- [No determinismo: nueve ejecuciones y análisis en cinco líneas](prompts/criterios/no-determinismo.md)
+- [Bitácora con interacciones reales y sugerencia rechazada](prompts/bitacora-ia.md)
 - [Proceso y responsables de E1 a E8](docs/design/lab09-integracion.md)
-- [Contrato, caso inicial y evaluación de criterios](prompts/criterios/)
-- [Bitácora de IA](prompts/bitacora-ia.md)
-- [Matriz de pruebas defensivas](prompts/seguridad/red-team.md)
+
+Entrega a Bryan: revisar el PR de Antony y continuar con docstrings (E4), complementar E5, configurar el workflow `prompts.yml` para ambas tareas y consolidar E8, incluidos los PR revisados y la etiqueta `v0.9-prompts`. La revisión humana y esos entregables no se dan por completados en este aporte.
