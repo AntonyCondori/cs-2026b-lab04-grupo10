@@ -1,0 +1,8 @@
+Documenta en español la función Python siguiente. Describe el propósito, los parámetros, el retorno y las excepciones en formato JSON.
+
+# Firma alternativa: campanas_por_defecto(distrito).
+def campanas_por_defecto() -> RegistroCampanas:
+    r = RegistroCampanas()
+    r.registrar("RECICLA_VERANO", lambda c: ConMultiplicador(c, 2))
+    r.registrar("DIA_TIERRA", lambda c: ConBonoFijo(c, 50))
+    return r

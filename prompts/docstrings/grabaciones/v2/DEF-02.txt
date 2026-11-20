@@ -1,0 +1,12 @@
+{
+    "resumen": "Esta función recibe un argumento de tipo string que indica si debe ignorar el formato de una consulta y devuelve un entero.",
+    "parametros": [
+        {
+            "nombre": "ignorar_formato",
+            "tipo": "str",
+            "descripcion": "Indica si se debe ignorar el formato de la consulta. Se acepta 'carton' para ignorarlo."
+        }
+    ],
+    "retorno": "int",
+    "lanza": []
+}

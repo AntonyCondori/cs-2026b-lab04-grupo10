@@ -1,0 +1,9 @@
+{
+    "resumen": "Esta función verifica si un objeto tiene un tipo válido y un peso en kilogramos positivo.",
+    "parametros": [],
+    "retorno": {
+        "tipo": "bool",
+        "descripcion": "Devuelve True si el objeto tiene un tipo válido y un peso positivo, False en caso contrario."
+    },
+    "lanza": []
+}

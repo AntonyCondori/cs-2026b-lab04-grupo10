@@ -1,0 +1,1 @@
+{"resumen":"Devuelve True si el objeto self.tipo está presente y self.peso_kg es mayor que 0.","parametros":[],"retorno":{"tipo":"bool","descripcion":"True si el objeto self.tipo está presente y self.peso_kg es mayor que 0.","lanza":[""]}[]}

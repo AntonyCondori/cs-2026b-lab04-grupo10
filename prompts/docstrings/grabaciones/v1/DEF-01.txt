@@ -1,0 +1,22 @@
+```json
+{
+  "descripcion": "Esta función se llama consultar_puntos y está definida en un objeto o clase llamado self. Su propósito es devolver un valor entero basado en el material proporcionado. La función acepta un único parámetro, material, que debe ser una cadena de texto. La función retorna un valor entero. Si el material proporcionado es 'carton' (incluso si se proporciona en minúsculas), la función retorna 5. En caso contrario, retorna 0. La función no maneja excepciones y asume que el parámetro material siempre será una cadena de texto.",
+  "parámetros": [
+    {
+      "nombre": "material",
+      "tipo": "str",
+      "descripcion": "Es una cadena de texto que representa el material sobre el cual se está consultando los puntos. El material puede ser 'carton' o cualquier otro valor."
+    }
+  ],
+  "retorno": {
+    "tipo": "int",
+    "descripcion": "Retorna un valor entero. Si el material es 'carton', retorna 5. En caso contrario, retorna 0."
+  },
+  "excepciones": [
+    {
+      "tipo": "ValueError",
+      "descripcion": "La función asume que el parámetro material siempre será una cadena de texto. Si se proporciona un valor que no es una cadena de texto, se producirá una excepción ValueError."
+    }
+  ]
+}
+```

@@ -1,0 +1,18 @@
+```json
+{
+  "proposito": "Esta función predice una categoría para un texto ingresado. Si el número de llamadas supera el número de fallos permitidos, lanza una excepción TimeoutError. De lo contrario, evalúa el texto para determinar la categoría y devuelve un diccionario con el estado y la categoría.",
+  "parámetros": {
+    "texto": "Es un string que representa el texto a ser analizado."
+  },
+  "retorno": {
+    "status": "string",
+    "result": "string"
+  },
+  "excepciones": [
+    {
+      "nombre": "TimeoutError",
+      "descripcion": "Se lanza cuando el número de llamadas supera el número de fallos permitidos."
+    }
+  ]
+}
+```

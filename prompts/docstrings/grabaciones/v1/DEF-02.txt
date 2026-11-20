@@ -1,0 +1,19 @@
+```json
+{
+  "proposito": "Esta función se encarga de retornar un valor entero basado en el parámetro 'ignorar_formato'. Si el valor de 'ignorar_formato' es 'carton' (independiente de su formato), la función retorna 5. En caso contrario, retorna 0.",
+  "parámetros": {
+    "ignorar_formato": {
+      "tipo": "str",
+      "descripción": "Este parámetro es una cadena de texto que determina el comportamiento de la función. Si es 'carton', la función retorna 5. Si es cualquier otro valor, retorna 0."
+    }
+  },
+  "retorno": {
+    "tipo": "int",
+    "descripción": "La función retorna un valor entero. Retorna 5 si 'ignorar_formato' es 'carton'. Retorna 0 en cualquier otro caso."
+  },
+  "excepciones": {
+    "posibles": [],
+    "explicación": "La función no maneja excepciones. Todos los posibles valores de 'ignorar_formato' son válidos y no causan errores."
+  }
+}
+```

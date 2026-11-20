@@ -1,0 +1,121 @@
+[
+  {
+    "description": "campanas_por_defecto",
+    "vars": {
+      "id": "DOC-01",
+      "codigo": "def campanas_por_defecto() -> RegistroCampanas:\n    r = RegistroCampanas()\n    r.registrar(\"RECICLA_VERANO\", lambda c: ConMultiplicador(c, 2))\n    r.registrar(\"DIA_TIERRA\", lambda c: ConBonoFijo(c, 50))\n    return r",
+      "ruta": "src/solicitudes/decoradores.py",
+      "simbolo": "campanas_por_defecto",
+      "parametros_reales": [],
+      "retorno_esperado": "RegistroCampanas",
+      "excepciones_esperadas": [],
+      "comportamiento_esperado": "Crea y devuelve el registro de campañas predeterminadas."
+    }
+  },
+  {
+    "description": "MinamPuntosAPI.consultar_puntos",
+    "vars": {
+      "id": "DOC-02",
+      "codigo": "def consultar_puntos(self, material: str) -> int:\n    if material.lower() == \"carton\":\n        return 5\n    return 0",
+      "ruta": "src/solicitudes/externos.py",
+      "simbolo": "MinamPuntosAPI.consultar_puntos",
+      "parametros_reales": [
+        "material"
+      ],
+      "retorno_esperado": "int",
+      "excepciones_esperadas": [],
+      "comportamiento_esperado": "Devuelve 5 para cartón escrito como carton y 0 para otros materiales."
+    }
+  },
+  {
+    "description": "LLMApiSimulada.predecir_categoria",
+    "vars": {
+      "id": "DOC-03",
+      "codigo": "def predecir_categoria(self, texto: str) -> dict:\n    self.llamadas += 1\n    if self.llamadas <= self.fallas:\n        raise TimeoutError(\"Conexión perdida con la IA\")\n\n    # Simulamos respuestas poco confiables de la IA\n    texto_lower = texto.lower()\n    if \"botella\" in texto_lower:\n        return {\"status\": \"ok\", \"result\": \"PLASTICO\"}\n    elif \"bateria\" in texto_lower:\n        return {\"status\": \"ok\", \"result\": \"PELIGROSO - S/ 50.00\"} # IA inventando cosas\n    return {\"status\": \"ok\", \"result\": \"DESCONOCIDO\"}",
+      "ruta": "src/solicitudes/externos.py",
+      "simbolo": "LLMApiSimulada.predecir_categoria",
+      "parametros_reales": [
+        "texto"
+      ],
+      "retorno_esperado": "dict",
+      "excepciones_esperadas": [
+        "TimeoutError"
+      ],
+      "comportamiento_esperado": "Devuelve una predicción simulada o agota el tiempo mientras quedan fallas configuradas."
+    }
+  },
+  {
+    "description": "Solicitud.validar_detalles",
+    "vars": {
+      "id": "DOC-04",
+      "codigo": "def validar_detalles(self) -> None:\n    # Criterio 3: lista vacía o peso 0 -> error de validación\n    if not self.detalles or not all(d.es_valido() for d in self.detalles):\n        raise ErrorValidacion(\"Debe ingresar al menos un residuo con peso mayor a 0\")",
+      "ruta": "src/solicitudes/dominio.py",
+      "simbolo": "Solicitud.validar_detalles",
+      "parametros_reales": [],
+      "retorno_esperado": "None",
+      "excepciones_esperadas": [
+        "ErrorValidacion"
+      ],
+      "comportamiento_esperado": "Rechaza solicitudes sin residuos válidos y termina sin devolver valor en caso de éxito."
+    }
+  },
+  {
+    "description": "Solicitud.agregar_detalle",
+    "vars": {
+      "id": "DOC-05",
+      "codigo": "def agregar_detalle(self, detalle: DetalleResiduo) -> None:\n    self.detalles.append(detalle)",
+      "ruta": "src/solicitudes/dominio.py",
+      "simbolo": "Solicitud.agregar_detalle",
+      "parametros_reales": [
+        "detalle"
+      ],
+      "retorno_esperado": "None",
+      "excepciones_esperadas": [],
+      "comportamiento_esperado": "Agrega un detalle a la solicitud."
+    }
+  },
+  {
+    "description": "DetalleResiduo.es_valido",
+    "vars": {
+      "id": "DOC-06",
+      "codigo": "def es_valido(self) -> bool:\n    return bool(self.tipo) and self.peso_kg > 0",
+      "ruta": "src/solicitudes/dominio.py",
+      "simbolo": "DetalleResiduo.es_valido",
+      "parametros_reales": [],
+      "retorno_esperado": "bool",
+      "excepciones_esperadas": [],
+      "comportamiento_esperado": "Comprueba que exista un tipo y que el peso sea positivo."
+    }
+  },
+  {
+    "description": "RegistroCampanas.aplicar",
+    "vars": {
+      "id": "DOC-07",
+      "codigo": "def aplicar(self, nombre: str, calculadora: CalculadoraPuntos) -> CalculadoraPuntos:\n    decorar = self._campanas.get(nombre)\n    return decorar(calculadora) if decorar else calculadora  # \"NINGUNA\" o desconocida: sin cambios",
+      "ruta": "src/solicitudes/decoradores.py",
+      "simbolo": "RegistroCampanas.aplicar",
+      "parametros_reales": [
+        "nombre",
+        "calculadora"
+      ],
+      "retorno_esperado": "CalculadoraPuntos",
+      "excepciones_esperadas": [],
+      "comportamiento_esperado": "Aplica la campaña registrada o conserva la calculadora."
+    }
+  },
+  {
+    "description": "crear_servicio",
+    "vars": {
+      "id": "DOC-08",
+      "codigo": "def crear_servicio(**dependencias) -> ServicioSolicitudes:\n    servicio = ServicioSolicitudes(**dependencias)\n    registrar_reglas(servicio)\n    return servicio",
+      "ruta": "src/solicitudes/arranque.py",
+      "simbolo": "crear_servicio",
+      "parametros_reales": [
+        "dependencias"
+      ],
+      "retorno_esperado": "ServicioSolicitudes",
+      "excepciones_esperadas": [],
+      "comportamiento_esperado": "Crea el servicio con las dependencias recibidas y registra las reglas."
+    }
+  }
+]

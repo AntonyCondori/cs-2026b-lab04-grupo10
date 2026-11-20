@@ -1,0 +1,15 @@
+```json
+{
+  "proposito": "La función 'agregar_detalle' agrega un objeto de tipo 'DetalleResiduo' a una lista interna llamada 'detalles'. Esta lista probablemente se utiliza para almacenar múltiples objetos 'DetalleResiduo' asociados a un objeto 'self'.",
+  "parámetros": {
+    "self": "Un objeto de la clase que contiene la lista 'detalles'.",
+    "detalle": "Un objeto de tipo 'DetalleResiduo' que se va a agregar a la lista 'detalles'."
+  },
+  "retorno": "None. La función no retorna ningún valor.",
+  "excepciones": {
+    "posibles": [
+      "TypeError": "Si el parámetro 'detalle' no es de tipo 'DetalleResiduo', se producirá una excepción de tipo TypeError."
+    ]
+  }
+}
+```

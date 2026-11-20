@@ -1,0 +1,9 @@
+$ C:\Users\daniel\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pytest -q -rs
+........................................................................ [ 75%]
+....................ssss                                                 [100%]
+=========================== short test summary info ===========================
+SKIPPED [1] tests\test_recojo_postgres.py:62: Configura ECORECICLA_POSTGRES_DSN con una base de pruebas PostgreSQL
+SKIPPED [1] tests\test_recojo_postgres.py:82: Configura ECORECICLA_POSTGRES_DSN con una base de pruebas PostgreSQL
+SKIPPED [1] tests\test_recojo_postgres.py:102: Configura ECORECICLA_POSTGRES_DSN con una base de pruebas PostgreSQL
+SKIPPED [1] tests\test_recojo_postgres.py:121: Configura ECORECICLA_POSTGRES_DSN con una base de pruebas PostgreSQL
+92 passed, 4 skipped in 3.75s

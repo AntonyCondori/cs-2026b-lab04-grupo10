@@ -1,0 +1,15 @@
+```json
+{
+  "proposito": "La función `campanas_por_defecto` registra dos funciones de multiplicador y bono fijo en un objeto `RegistroCampanas`. El propósito es proporcionar una configuración predeterminada de funciones de campana.",
+  "parámetros": {
+    "distrito": "Este parámetro es opcional y representa el distrito al que se refiere la función. En este caso, la función no requiere ningún parámetro.",
+    "función": "La función no requiere ningún parámetro."
+  },
+  "retorno": "Un objeto de tipo `RegistroCampanas` que contiene las funciones de multiplicador y bono fijo registradas.",
+  "excepciones": {
+    "None": "No se especifican excepciones en el código proporcionado. Si la función `ConMultiplicador` o `ConBonoFijo` no se definen o no funcionan correctamente, se podría generar una excepción."
+  }
+}
+```
+
+Nota: En el código original, no se definen las funciones `ConMultiplicador` y `ConBonoFijo`. Estas funciones deben estar definidas en el entorno de ejecución para que la función `campanas_por_defecto` funcione correctamente.

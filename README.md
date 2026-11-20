@@ -271,3 +271,36 @@ Resultado local: 92 aprobadas y 4 omitidas (integración PostgreSQL sin DSN); 25
 - [Proceso y responsables de E1 a E8](docs/design/lab09-integracion.md)
 
 Entrega a Bryan: revisar el PR de Antony y continuar con docstrings (E4), complementar E5, configurar el workflow `prompts.yml` para ambas tareas y consolidar E8, incluidos los PR revisados y la etiqueta `v0.9-prompts`. La revisión humana y esos entregables no se dan por completados en este aporte.
+
+
+### Lab 09 · Consolidación de entrega
+
+| Versión | Tarea A · Criterios | Tarea B · Docstrings |
+|---|---:|---:|
+| v1 | 0/9 (0,00 %) | Pendiente de ejecución en Promptfoo |
+| v2 | 8/9 (88,89 %) | Pendiente de ejecución en Promptfoo |
+| v3 | 9/9 (100,00 %) | Pendiente de ejecución en Promptfoo |
+
+![Tasas de aprobación por versión](prompts/docstrings/tasas.svg)
+
+El gráfico se regenera desde la raíz con `python prompts/docstrings/graficar.py`. Lee los informes de Promptfoo y marca las series pendientes cuando faltan informes.
+
+**No determinismo en criterios.** Antony ejecutó v3 tres veces por caso. HU-01 y HU-04 conservaron INVEST verdadero y tres escenarios en cada ejecución. NI-01 conservó INVEST falso, cero escenarios y una pregunta. Las tres respuestas de cada caso difirieron en redacción. [Comparación y nueve ejecuciones](prompts/criterios/no-determinismo.md)
+
+**Lecciones.** En criterios, el contrato explícito corrigió el formato libre y precisar el criterio INVEST resolvió el fallo restante. En docstrings, el esquema comprueba la estructura y las aserciones independientes cotejan la firma, el tipo de retorno y las excepciones. El contenido defensivo se prueba con variantes separadas del conjunto principal.
+
+**Reproducción de docstrings.** Desde la raíz, con Ollama local, el modelo Qwen instalado y acceso al registro de npm, ejecutar por versión, en orden de v1 a v3:
+
+```bash
+python prompts/docstrings/capturar.py v1 --ollama qwen2.5:3b --cpu
+python prompts/docstrings/evaluar.py docstrings v1
+```
+
+Para las entradas defensivas, añadir `--seguridad` a ambos comandos. Las grabaciones se preservan con las entradas y hashes. Un diagnóstico local con Python y JavaScript orientó los cambios en los prompts. La instalación de Promptfoo devolvió `EACCES`, así que las tasas de docstrings siguen pendientes. El workflow evalúa la v3 de ambas tareas con un umbral de 85 % y ejecuta pytest. Una grabación faltante hace fallar la evaluación.
+
+- [PR #27 de Diego](https://github.com/AntonyCondori/cs-2026b-lab04-grupo10/pull/27)
+- [PR #28 de Antony](https://github.com/AntonyCondori/cs-2026b-lab04-grupo10/pull/28)
+- PR de Bryan: **[PENDIENTE_URL_PR_BRYAN]**
+- Ejecución del workflow: **[PENDIENTE_URL_WORKFLOW]**
+- Capturas y entrega: **[PENDIENTE_CAPTURAS]**, **[PENDIENTE_TAG_V0.9]**, **[PENDIENTE_URL_ENTREGA]**
+- [Informes de criterios](prompts/criterios/resumen.json), [evaluación de docstrings](prompts/docstrings/promptfooconfig.yaml), [iteraciones y fallos observados](prompts/docstrings/iteraciones.md), [resultados defensivos](prompts/seguridad/red-team.md), [bitácora](prompts/bitacora-ia.md) y [workflow](.github/workflows/evaluar-prompts.yml).

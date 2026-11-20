@@ -1,0 +1,1 @@
+{"resumen":"Agrega un objeto DetalleResiduo a la lista de detalles de self.","parametros":[{"nombre":"detalle","tipo":"DetalleResiduo","descripcion":"Objeto a ser agregado a la lista de detalles."}],"retorno":{"tipo":"None","descripcion":"La función no devuelve nada."},"lanza":[]}

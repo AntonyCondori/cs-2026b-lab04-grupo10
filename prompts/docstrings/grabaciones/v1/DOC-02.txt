@@ -1,0 +1,30 @@
+```json
+{
+  "funcion": "consultar_puntos",
+  "descripcion": "Esta función se encarga de devolver un número entero basado en el material proporcionado.",
+  "parámetros": {
+    "material": {
+      "tipo": "str",
+      "descripcion": "Es un string que representa el material sobre el cual se desea consultar los puntos. El material se debe proporcionar en minúsculas."
+    }
+  },
+  "retorno": {
+    "tipo": "int",
+    "descripcion": "Devuelve un número entero que representa los puntos asociados al material. Si el material no es 'carton', devuelve 0."
+  },
+  "excepciones": {
+    "posibles": [
+      {
+        "tipo": "ValueError",
+        "descripcion": "Se lanza si el parámetro 'material' no es una cadena de texto."
+      },
+      {
+        "tipo": "AssertionError",
+        "descripcion": "Se lanza si el parámetro 'material' no es igual a 'carton' en minúsculas."
+      }
+    ]
+  }
+}
+```
+
+Nota: En este formato JSON, no se incluyen excepciones específicas de Python, ya que la función dada no tiene ninguna excepción implícita. Si se supone que el material debe ser 'carton' en minúsculas, se podría considerar una excepción `AssertionError` si el material no coincide con 'carton'.

@@ -1,0 +1,21 @@
+$ C:\Users\daniel\AppData\Local\Python\pythoncore-3.14-64\python.exe prompts/docstrings/evaluar.py docstrings v1 --salida C:\Users\daniel\AppData\Local\Temp\lab09-datos-ujawymq5\docstrings-v1-0.json
+npm error code EACCES
+npm error errno EACCES
+npm error FetchError: request to https://registry.npmjs.org/promptfoo failed, reason: 
+npm error     at ClientRequest.<anonymous> (D:\Nodejs\node_modules\npm\node_modules\minipass-fetch\lib\index.js:130:14)
+npm error     at ClientRequest.emit (node:events:509:28)
+npm error     at emitErrorEvent (node:_http_client:109:11)
+npm error     at _destroy (node:_http_client:993:9)
+npm error     at onSocketNT (node:_http_client:1014:5)
+npm error     at process.processTicksAndRejections (node:internal/process/task_queues:91:21) {
+npm error   code: 'EACCES',
+npm error   errno: 'EACCES',
+npm error   type: 'system'
+npm error }
+npm error
+npm error The operation was rejected by your operating system.
+npm error It's possible that the file was already in use (by a text editor or antivirus), or that you lack permissions to access it.
+npm error
+npm error If you believe this might be a permissions issue, please double-check the permissions of the file and its containing directories, or try running the command again as root/Administrator.
+npm error A complete log of this run can be found in: C:\Users\daniel\AppData\Local\Temp\lab09-promptfoo-npm\_logs\2026-11-20T04_40_58_948Z-debug-0.log
+Promptfoo no produjo un informe válido (código 1).

@@ -1,0 +1,1 @@
+{"resumen":"Aplica un decorador a una calculadora de puntos si existe un decorador con el nombre proporcionado.","parametros":[{"nombre":"nombre","tipo":"str"},{"nombre":"calculadora","tipo":"CalculadoraPuntos"}],"retorno":{"tipo":"CalculadoraPuntos","descripcion":"La calculadora de puntos decorada o original si no se encuentra el decorador correspondiente."},"lanza":[""]}

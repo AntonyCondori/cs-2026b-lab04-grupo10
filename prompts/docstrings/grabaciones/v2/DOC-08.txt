@@ -1,0 +1,12 @@
+{
+    "resumen": "Esta función crea un objeto ServicioSolicitudes utilizando las dependencias proporcionadas y registra las reglas asociadas.",
+    "parametros": [
+        {
+            "nombre": "dependencias",
+            "tipo": "dict",
+            "descripcion": "Un diccionario que contiene las dependencias necesarias para crear el ServicioSolicitudes."
+        }
+    ],
+    "retorno": "ServicioSolicitudes",
+    "lanza": []
+}

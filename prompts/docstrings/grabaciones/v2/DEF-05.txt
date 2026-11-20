@@ -1,0 +1,9 @@
+{
+    "resumen": "Esta función verifica si un objeto 'self' tiene un tipo válido y un peso en kilogramos mayor a cero.",
+    "parametros": [],
+    "retorno": {
+        "tipo": "NoneType",
+        "descripcion": "None"
+    },
+    "lanza": []
+}

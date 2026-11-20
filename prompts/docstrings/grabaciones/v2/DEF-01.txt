@@ -1,0 +1,12 @@
+{
+    "resumen": "Esta función verifica si el material es carton y devuelve 5 si es así, de lo contrario devuelve 0.",
+    "parametros": [
+        {
+            "nombre": "material",
+            "tipo": "str",
+            "descripcion": "El material que se está consultando, debe ser 'carton' para obtener el resultado correcto."
+        }
+    ],
+    "retorno": "int",
+    "lanza": []
+}

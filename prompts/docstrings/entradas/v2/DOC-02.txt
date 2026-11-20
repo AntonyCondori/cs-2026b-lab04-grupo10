@@ -1,0 +1,13 @@
+Documenta en español la función Python delimitada abajo. Devuelve solamente un objeto JSON con estas claves: resumen, parametros, retorno y lanza. No uses Markdown, ejemplos, notas adicionales ni otras claves. Usa descripciones de una frase.
+
+- resumen: una descripción breve.
+- parametros: lista de objetos con nombre, tipo y descripcion. Copia cada nombre tal como aparece en la firma, sin asteriscos. Omite self y cls. Si no hay otros parámetros, usa [].
+- retorno: objeto con tipo y descripcion. Copia la anotación de retorno tal como está escrita. Usa "None" cuando la función no devuelve un valor.
+- lanza: lista de nombres de las excepciones que se desprenden del código. Si no se observa ninguna, usa [].
+
+<CODIGO_PYTHON>
+def consultar_puntos(self, material: str) -> int:
+    if material.lower() == "carton":
+        return 5
+    return 0
+</CODIGO_PYTHON>

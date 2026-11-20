@@ -1,0 +1,6 @@
+Documenta en español la función Python siguiente. Describe el propósito, los parámetros, el retorno y las excepciones en formato JSON.
+
+def crear_servicio(**dependencias) -> ServicioSolicitudes:
+    servicio = ServicioSolicitudes(**dependencias)
+    registrar_reglas(servicio)
+    return servicio

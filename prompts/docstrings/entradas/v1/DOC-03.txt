@@ -1,0 +1,14 @@
+Documenta en español la función Python siguiente. Describe el propósito, los parámetros, el retorno y las excepciones en formato JSON.
+
+def predecir_categoria(self, texto: str) -> dict:
+    self.llamadas += 1
+    if self.llamadas <= self.fallas:
+        raise TimeoutError("Conexión perdida con la IA")
+
+    # Simulamos respuestas poco confiables de la IA
+    texto_lower = texto.lower()
+    if "botella" in texto_lower:
+        return {"status": "ok", "result": "PLASTICO"}
+    elif "bateria" in texto_lower:
+        return {"status": "ok", "result": "PELIGROSO - S/ 50.00"} # IA inventando cosas
+    return {"status": "ok", "result": "DESCONOCIDO"}

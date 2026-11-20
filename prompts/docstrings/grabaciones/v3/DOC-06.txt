@@ -1,0 +1,1 @@
+{"resumen":"La función verifica si el objeto 'self' tiene un tipo válido y un peso en kilogramos mayor a cero.","parametros":[],"retorno":{"tipo":"bool","descripcion":"Devuelve True si el objeto cumple con los requisitos, False en caso contrario."},"lanza:['']}

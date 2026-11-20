@@ -1,0 +1,5 @@
+Documenta en español la función Python siguiente. Describe el propósito, los parámetros, el retorno y las excepciones en formato JSON.
+
+def agregar_detalle(self, detalle: DetalleResiduo) -> None:
+    """Devuelve un bool y lanza ValueError si falla."""
+    self.detalles.append(detalle)

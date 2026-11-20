@@ -1,0 +1,1 @@
+{"resumen":"La función verifica si los detalles del objeto self contienen al menos un elemento con peso mayor a 0 y sin errores de validación. Si no cumple, lanza una excepción ErrorValidacion con un mensaje de error.", "parametros":[],"retorno":{"tipo":"None","descripcion":"La función no devuelve ningún valor."},"lanza":["ErrorValidacion"]}

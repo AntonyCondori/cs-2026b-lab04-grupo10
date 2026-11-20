@@ -1,0 +1,1 @@
+{"resumen":"Define y retorna un objeto RegistroCampanas con dos funciones registradas: una que multiplica la cantidad de campanas por 2 y otra que suma un bono fijo de 50 a cada campana.","parametros":[],"retorno":{"tipo":"RegistroCampanas","descripcion":"Un objeto que contiene funciones para manipular listas de campanas"},"lanza":[""]}

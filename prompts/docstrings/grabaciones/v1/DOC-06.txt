@@ -1,0 +1,14 @@
+```json
+{
+  "function_name": "es_valido",
+  "description": "Esta función verifica si un objeto tiene un tipo válido y un peso en kilogramos positivo.",
+  "parameters": [
+    "self"
+  ],
+  "return_type": "bool",
+  "return_description": "Retorna True si el objeto tiene un tipo y un peso en kilogramos positivo, de lo contrario retorna False.",
+  "exceptions": [
+    "No se especifican excepciones en este código. La función asume que 'self.tipo' es una propiedad válida y que 'self.peso_kg' es un número positivo."
+  ]
+}
+```
