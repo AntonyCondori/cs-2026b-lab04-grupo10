@@ -1,0 +1,9 @@
+{
+    "resumen": "Esta función crea y regista dos tipos de campanas por defecto en un objeto RegistroCampanas.",
+    "parametros": [],
+    "retorno": {
+        "tipo": "RegistroCampanas",
+        "descripcion": "Un objeto de la clase RegistroCampanas con dos campanas registradas."
+    },
+    "lanza": []
+}

@@ -1,0 +1,28 @@
+```json
+{
+  "funcion": "crear_servicio",
+  "descripcion": "Esta función crea un objeto de tipo ServicioSolicitudes utilizando los parámetros de entrada proporcionados en el formato de diccionario **dependencias. Posteriormente, llama a la función registrar_reglas para establecer reglas adicionales en el servicio.",
+  "parámetros": {
+    "dependencias": {
+      "tipo": "diccionario",
+      "descripción": "Un diccionario que contiene los parámetros necesarios para crear un objeto de tipo ServicioSolicitudes. Los nombres de los parámetros pueden variar dependiendo de la implementación específica de ServicioSolicitudes.",
+      "ejemplo": {
+        "parámetro1": "valor1",
+        "parámetro2": "valor2",
+        ...
+      }
+    }
+  },
+  "retorno": {
+    "tipo": "ServicioSolicitudes",
+    "descripción": "Un objeto de tipo ServicioSolicitudes que ha sido creado y puede contener las reglas adicionales registradas por la función registrar_reglas."
+  },
+  "excepciones": {
+    "posibles": [
+      "KeyError": "Si los parámetros necesarios para crear un objeto de tipo ServicioSolicitudes no están presentes en el diccionario de dependencias.",
+      "Exception": "Si ocurre algún otro error durante la creación del objeto de ServicioSolicitudes o la aplicación de las reglas."
+    ],
+    "descripción": "Las excepciones pueden variar dependiendo de la implementación específica de ServicioSolicitudes y la función registrar_reglas."
+  }
+}
+```

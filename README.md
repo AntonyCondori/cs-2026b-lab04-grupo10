@@ -303,4 +303,4 @@ Para las entradas defensivas, añadir `--seguridad` a ambos comandos. Las grabac
 - PR de Bryan: **[PENDIENTE_URL_PR_BRYAN]**
 - Ejecución del workflow: **[PENDIENTE_URL_WORKFLOW]**
 - Capturas y entrega: **[PENDIENTE_CAPTURAS]**, **[PENDIENTE_TAG_V0.9]**, **[PENDIENTE_URL_ENTREGA]**
-- [Informes de criterios](prompts/criterios/resumen.json), [evaluación de docstrings](prompts/docstrings/promptfooconfig.yaml), [resultados defensivos](prompts/seguridad/red-team.md), [bitácora](prompts/bitacora-ia.md) y [workflow](.github/workflows/evaluar-prompts.yml).
+- [Informes de criterios](prompts/criterios/resumen.json), [evaluación de docstrings](prompts/docstrings/promptfooconfig.yaml), [iteraciones y fallos observados](prompts/docstrings/iteraciones.md), [resultados defensivos](prompts/seguridad/red-team.md), [bitácora](prompts/bitacora-ia.md) y [workflow](.github/workflows/evaluar-prompts.yml).
