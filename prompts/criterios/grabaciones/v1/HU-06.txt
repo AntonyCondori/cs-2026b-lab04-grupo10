@@ -1,0 +1,22 @@
+### Criterios de aceptación de HU-06
+
+1. **Consulta del reporte**  
+   Dado que soy responsable municipal, cuando selecciono un distrito, un material y un período, entonces el sistema muestra las toneladas recicladas correspondientes a esa selección.
+
+2. **Cálculo de toneladas**  
+   Dados los recojos confirmados que coinciden con los filtros seleccionados, cuando consulto el reporte, entonces las toneladas se calculan sumando sus kilogramos y dividiendo el total entre 1000.
+
+3. **Inclusión exclusiva de recojos confirmados**  
+   Dados recojos confirmados y recojos en otros estados, cuando consulto el reporte, entonces solo los confirmados contribuyen al total.
+
+4. **Aplicación conjunta de filtros**  
+   Dados recojos de distintos distritos, materiales y períodos, cuando realizo la consulta, entonces el cálculo incluye únicamente los que cumplen todos los filtros seleccionados.
+
+5. **Período sin recojos**  
+   Dado un período sin recojos confirmados para el distrito y material seleccionados, cuando consulto el reporte, entonces se muestran **0 toneladas**.
+
+6. **Verificación del cálculo**  
+   Dados dos recojos confirmados de 750 kg y 1250 kg que cumplen los filtros seleccionados, cuando consulto el reporte, entonces se muestran **2 toneladas**.
+
+7. **Identificación de los resultados**  
+   Cuando se muestra el reporte, entonces se identifican el distrito, el material, el período consultado y el total expresado en toneladas.

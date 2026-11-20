@@ -1,0 +1,3 @@
+Escribe criterios de aceptación para esta historia de EcoRecicla AQP.
+
+Historia NI-01: Como vecino, quiero que la aplicación sea mejor para estar contento.

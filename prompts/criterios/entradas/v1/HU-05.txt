@@ -1,0 +1,3 @@
+Escribe criterios de aceptación para esta historia de EcoRecicla AQP.
+
+Historia HU-05: Como vecino, quiero consultar mi saldo de puntos y canjear un beneficio con saldo suficiente para aprovechar mis reciclajes. El canje descuenta el costo del beneficio y se rechaza si el saldo es insuficiente, sin dejar saldo negativo.

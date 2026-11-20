@@ -1,0 +1,22 @@
+### Criterios de aceptación de HU-04
+
+1. **Confirmar una solicitud asignada**  
+   Dado que soy un reciclador formalizado y tengo una solicitud asignada pendiente de recojo, cuando registro los pesos válidos y confirmo, entonces el sistema registra el recojo y marca la solicitud como recogida.
+
+2. **Registrar el peso de cada material**  
+   Dado que la solicitud contiene uno o más materiales, cuando confirmo el recojo, entonces el sistema exige y guarda un peso en kilogramos para cada material.
+
+3. **Aceptar pesos decimales**  
+   Dado que registro el peso de un material, cuando ingreso un valor decimal válido, como 2,5 kg, entonces el sistema lo acepta y conserva su valor sin convertirlo a un número entero.
+
+4. **Rechazar pesos negativos**  
+   Dado que ingreso un peso negativo en cualquier material, cuando intento confirmar, entonces el sistema identifica el campo inválido y muestra que el peso no puede ser negativo, sin registrar el recojo ni otorgar puntos.
+
+5. **Validar campos obligatorios y numéricos**  
+   Dado que algún material tiene el peso vacío o un valor no numérico, cuando intento confirmar, entonces el sistema solicita corregirlo y no registra el recojo ni otorga puntos.
+
+6. **Restringir la confirmación al reciclador asignado**  
+   Dado que no soy el reciclador asignado o no estoy formalizado, cuando intento confirmar el recojo, entonces el sistema rechaza la operación.
+
+7. **Evitar duplicados al repetir la confirmación**  
+   Dado que una solicitud ya tiene un recojo confirmado, cuando se repite la confirmación, incluso mediante solicitudes simultáneas o reintentos, entonces el sistema mantiene un único recojo y una única asignación de los puntos correspondientes, e informa que ya fue confirmado.

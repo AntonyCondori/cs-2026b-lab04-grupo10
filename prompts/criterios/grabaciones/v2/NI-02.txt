@@ -1,0 +1,1 @@
+{"historia_id":"NI-02","invest_ok":false,"preguntas":["¿Qué problema observable de vecinos, recicladores formalizados o personal municipal se busca resolver con la modernización?","¿Qué comportamiento funcional debe ofrecer el sistema al actor beneficiado y qué resultado observable permitirá verificarlo?"],"escenarios":[]}

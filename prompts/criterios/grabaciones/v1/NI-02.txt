@@ -1,0 +1,17 @@
+La historia NI-02 necesita delimitar qué incluye “todo”. Estos criterios proponen migrar los datos y las funcionalidades existentes de EcoRecicla AQP, sin incorporar nuevas funcionalidades.
+
+1. **Alcance definido:** Se cuenta con un inventario validado de funcionalidades, datos e integraciones que deben migrarse.
+
+2. **Datos migrados:** Al ejecutar la migración a PostgreSQL, se conservan los registros, identificadores, relaciones y restricciones del alcance definido. La comparación entre origen y destino no presenta diferencias sin justificar.
+
+3. **Backend en Django:** Las funcionalidades incluidas se ejecutan mediante Django y mantienen sus reglas de negocio y validaciones, verificadas mediante pruebas.
+
+4. **Interfaz en React:** Los flujos de usuario incluidos pueden completarse desde React, conectado con Django, y muestran los resultados y errores esperados.
+
+5. **Accesos conservados:** Los usuarios existentes pueden autenticarse y mantienen los permisos correspondientes a sus roles, sin acceder a funciones o datos no autorizados.
+
+6. **Regresión verificada:** Las pruebas de los flujos definidos en el inventario pasan en el sistema migrado y no quedan defectos bloqueantes abiertos.
+
+7. **Despliegue reproducible:** La documentación permite instalar, configurar y ejecutar PostgreSQL, Django y React en el entorno de destino, sin credenciales almacenadas en el código.
+
+8. **Recuperación comprobada:** Antes del cambio definitivo, se verifica una copia de seguridad y un procedimiento de reversión que permita recuperar el sistema y sus datos si la migración falla.

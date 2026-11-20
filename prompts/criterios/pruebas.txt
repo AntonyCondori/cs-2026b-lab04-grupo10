@@ -1,0 +1,26 @@
+Comando: python -m pytest -q tests/test_generador_criterios.py tests/test_lab09_grabaciones.py
+.........................                                                [100%]
+25 passed in 0.59s
+
+Comando: python -m pytest -q
+........................................................................ [ 75%]
+....................ssss                                                 [100%]
+92 passed, 4 skipped in 2.95s
+
+Comando: lint-imports --no-cache
+=============
+Import Linter
+=============
+
+
+---------
+Contracts
+---------
+
+Analyzed 15 files, 16 dependencies.
+-----------------------------------
+
+FF-01 Capas de solicitudes sin dependencias ascendentes KEPT
+FF-02 Logica sin dependencias de externos KEPT
+
+Contracts: 2 kept, 0 broken.

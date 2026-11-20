@@ -1,0 +1,10 @@
+La historia NI-01 es demasiado ambigua para definir criterios de aceptación verificables: “sea mejor” y “estar contento” no especifican un comportamiento ni un resultado medible.
+
+Estos criterios pueden completarse cuando se defina la mejora:
+
+- **Dado** que el vecino accede a [funcionalidad], **cuando** realiza [acción], **entonces** obtiene [resultado observable].
+- **Dado** que falta un dato obligatorio, **cuando** intenta continuar, **entonces** la aplicación identifica el dato faltante y explica cómo corregirlo.
+- **Dado** que ocurre [error previsto], **cuando** la aplicación lo detecta, **entonces** muestra un mensaje comprensible y permite [acción de recuperación].
+- **Dada** una prueba con [cantidad de vecinos], **cuando** realizan [tarea], **entonces** se cumple [umbral de éxito o satisfacción acordado].
+
+¿Qué funcionalidad se quiere mejorar y qué problema encuentran actualmente los vecinos?

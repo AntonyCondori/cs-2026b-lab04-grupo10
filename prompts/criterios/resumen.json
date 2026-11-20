@@ -1,0 +1,23 @@
+{
+  "v1": {
+    "aprobados": 0,
+    "total": 9,
+    "tasa": 0.0,
+    "aserciones_aprobadas": 9,
+    "aserciones_totales": 63
+  },
+  "v2": {
+    "aprobados": 8,
+    "total": 9,
+    "tasa": 88.89,
+    "aserciones_aprobadas": 62,
+    "aserciones_totales": 63
+  },
+  "v3": {
+    "aprobados": 9,
+    "total": 9,
+    "tasa": 100.0,
+    "aserciones_aprobadas": 63,
+    "aserciones_totales": 63
+  }
+}

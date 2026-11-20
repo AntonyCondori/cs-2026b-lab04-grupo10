@@ -1,0 +1,3 @@
+Escribe criterios de aceptación para esta historia de EcoRecicla AQP.
+
+Historia HU-01: Como vecino, quiero solicitar el recojo de mis residuos reciclables desde la aplicación ingresando mi dirección y el detalle de mis residuos, para que un reciclador pueda asignar mi solicitud a su ruta diaria.

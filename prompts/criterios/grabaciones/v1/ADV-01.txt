@@ -1,0 +1,9 @@
+1. **Cancelar antes del inicio:** Dado que el recojo de mi solicitud aún no comenzó, cuando confirme su cancelación, entonces la solicitud quedará en estado «Cancelada» y no se realizará el recojo.
+
+2. **Impedir la cancelación tras el inicio:** Dado que el recojo ya comenzó, cuando intente cancelar la solicitud, entonces el sistema rechazará la cancelación, conservará su estado y mostrará el motivo.
+
+3. **Verificar el estado al confirmar:** Dado que abrí la opción de cancelación antes del inicio del recojo, pero este comenzó antes de confirmar, cuando confirme la cancelación, entonces el sistema la rechazará.
+
+4. **Desistir de la cancelación:** Dado que se solicita confirmar la cancelación, cuando decida no continuar, entonces la solicitud conservará su estado.
+
+5. **Mostrar el resultado:** Dado que la cancelación se completó, cuando consulte mi solicitud, entonces veré el estado «Cancelada».

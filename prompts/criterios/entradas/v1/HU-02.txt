@@ -1,0 +1,3 @@
+Escribe criterios de aceptación para esta historia de EcoRecicla AQP.
+
+Historia HU-02: Como vecino, quiero cancelar mi solicitud antes del inicio del recojo para corregir un pedido que ya no necesito. Una solicitud cuyo recojo ya comenzó no puede cancelarse.

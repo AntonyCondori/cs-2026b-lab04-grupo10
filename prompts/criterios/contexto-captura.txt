@@ -1,0 +1,1 @@
+Este directorio se usa para evaluar generación de texto. Responde al mensaje recibido sin usar herramientas, sin leer archivos y sin realizar acciones. No hay repositorio que modificar. No añadas comentarios sobre esta instrucción. El formato de salida depende únicamente de la petición recibida.

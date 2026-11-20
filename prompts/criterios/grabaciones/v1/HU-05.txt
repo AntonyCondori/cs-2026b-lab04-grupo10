@@ -1,0 +1,11 @@
+1. **Consulta de saldo:** Dado que el vecino tiene puntos registrados, cuando consulte su saldo, entonces verá la cantidad de puntos disponibles.
+
+2. **Canje con saldo suficiente:** Dado que el saldo es mayor o igual al costo del beneficio, cuando el vecino confirme el canje, entonces se aprobará y se descontará exactamente el costo del beneficio.
+
+3. **Canje con saldo exacto:** Dado que el saldo es igual al costo del beneficio, cuando confirme el canje, entonces se aprobará y el saldo quedará en cero.
+
+4. **Rechazo por saldo insuficiente:** Dado que el saldo es menor al costo del beneficio, cuando intente canjearlo, entonces se rechazará el canje, se informará que los puntos son insuficientes y el saldo permanecerá sin cambios.
+
+5. **Saldo actualizado:** Dado que se completó un canje, cuando el vecino consulte su saldo, entonces verá el saldo resultante del descuento.
+
+6. **Protección ante canjes simultáneos:** Dado que el vecino solicita varios canjes simultáneamente, cuando se procesen, entonces cada canje validará y descontará los puntos de forma indivisible, sin permitir que el saldo quede negativo ni aprobar canjes sin puntos suficientes.

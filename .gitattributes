@@ -1,0 +1,3 @@
+# Las grabaciones se conservan byte por byte también al clonar en Windows.
+prompts/criterios/grabaciones/**/*.txt -text
+prompts/criterios/entradas/**/*.txt -text

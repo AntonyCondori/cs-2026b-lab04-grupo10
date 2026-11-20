@@ -1,0 +1,59 @@
+[
+  {
+    "id": "HU-01",
+    "respuestas_distintas": 3,
+    "escenarios": [
+      3,
+      3,
+      3
+    ],
+    "preguntas": [
+      0,
+      0,
+      0
+    ],
+    "invest": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "id": "HU-04",
+    "respuestas_distintas": 3,
+    "escenarios": [
+      3,
+      3,
+      3
+    ],
+    "preguntas": [
+      0,
+      0,
+      0
+    ],
+    "invest": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "id": "NI-01",
+    "respuestas_distintas": 3,
+    "escenarios": [
+      0,
+      0,
+      0
+    ],
+    "preguntas": [
+      1,
+      1,
+      1
+    ],
+    "invest": [
+      false,
+      false,
+      false
+    ]
+  }
+]

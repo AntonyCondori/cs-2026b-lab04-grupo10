@@ -1,0 +1,1 @@
+{"historia_id":"NI-02","invest_ok":false,"preguntas":["¿Qué actor se beneficiará de la modernización y qué acción concreta podrá realizar o qué resultado observable mejorará?"],"escenarios":[]}
