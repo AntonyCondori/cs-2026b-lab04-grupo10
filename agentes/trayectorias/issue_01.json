@@ -1,0 +1,57 @@
+[
+ {
+  "pensamiento": "Consultar el criterio de aceptación del Issue 01.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "issues/ISSUE-01.md"
+  }
+ },
+ {
+  "pensamiento": "Consultar el criterio de aceptación del Issue 01.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "issues/ISSUE-01.md"
+  }
+ },
+ {
+  "pensamiento": "Reproducir la acreditación duplicada antes de editar el código.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "python -m pytest -q --tb=line tests/test_issue_01.py"
+  }
+ },
+ {
+  "pensamiento": "Revisar cómo SaldoVecinos procesa cada evento de acreditación.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "src/solicitudes/operaciones_lab10.py"
+  }
+ },
+ {
+  "pensamiento": "Registrar cada solicitud acreditada para que un evento repetido no vuelva a sumar puntos.",
+  "accion": "editar_archivo",
+  "args": {
+   "ruta": "src/solicitudes/operaciones_lab10.py",
+   "antes": "        self.saldos = {}\n\n    def actualizar(self, evento, datos):\n        vecino = datos[\"usuario\"]\n        saldo_anterior = self.saldos.get(vecino, 0)\n        self.saldos[vecino] = saldo_anterior + datos[\"puntos\"]",
+   "despues": "        self.saldos = {}\n        self.solicitudes_acreditadas = set()\n\n    def actualizar(self, evento, datos):\n        solicitud_id = datos[\"id\"]\n        if solicitud_id in self.solicitudes_acreditadas:\n            return\n\n        vecino = datos[\"usuario\"]\n        saldo_anterior = self.saldos.get(vecino, 0)\n        self.saldos[vecino] = saldo_anterior + datos[\"puntos\"]\n        self.solicitudes_acreditadas.add(solicitud_id)"
+  }
+ },
+ {
+  "pensamiento": "Verificar que dos recojos distintos sumen 20 puntos aunque se repita el primer evento.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "python -m pytest -q --tb=line tests/test_issue_01.py"
+  }
+ },
+ {
+  "pensamiento": "Comprobar que el cambio se limita a la acreditación de puntos en SaldoVecinos.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "git diff"
+  }
+ },
+ {
+  "pensamiento": "La prueba del Issue 01 pasó y el diff confirma que el cambio se limita a SaldoVecinos.",
+  "final": "Se resolvió el Issue 01 en la copia de EcoRecicla. El recojo 101 se acredita una sola vez y el recojo 102 también suma. El saldo final de V01 es de 20 puntos."
+ }
+]

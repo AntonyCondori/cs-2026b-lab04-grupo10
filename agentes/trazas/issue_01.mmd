@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    actor U as Antony
+    participant E as Agente ejecutor
+    participant H as Herramientas
+    U->>E: Resolver Issue 01
+    E->>H: issues/ISSUE-01.md
+    H-->>E: contenido de ISSUE-01.md
+    E->>H: issues/ISSUE-01.md
+    H-->>E: contenido de ISSUE-01.md
+    E->>H: python -m pytest -q --tb=line tests/test_issue_01.py
+    H-->>E: 1 failed in 0.02s
+    E->>H: src/solicitudes/operaciones_lab10.py
+    H-->>E: contenido de operaciones_lab10.py
+    E->>H: src/solicitudes/operaciones_lab10.py
+    H-->>E: OK, archivo modificado
+    E->>H: python -m pytest -q --tb=line tests/test_issue_01.py
+    H-->>E: 1 passed in 0.04s
+    E->>H: git diff
+    H-->>E: Cambio revisado en SaldoVecinos
+    E-->>U: Issue 01 resuelto
