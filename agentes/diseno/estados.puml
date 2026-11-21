@@ -1,0 +1,34 @@
+@startuml
+title EcoRecicla AQP - Máquina de estados del agente ReAct
+hide empty description
+skinparam shadowing false
+
+[*] --> INICIO
+INICIO --> DECIDIENDO : recibir el objetivo del issue
+DECIDIENDO --> VALIDANDO_CONTRATO : recibir la decisión del modelo
+
+VALIDANDO_CONTRATO --> CONTRATO_INVALIDO : decisión inválida
+VALIDANDO_CONTRATO --> FINALIZADO : respuesta final válida
+VALIDANDO_CONTRATO --> EVALUANDO_POLITICA : acción válida
+
+CONTRATO_INVALIDO --> DECIDIENDO : registrar el motivo y reintentar\n[queda una iteración]
+CONTRATO_INVALIDO --> [*] : última iteración agotada
+
+EVALUANDO_POLITICA --> EJECUTANDO : acción permitida
+EVALUANDO_POLITICA --> BLOQUEADO : acción denegada por permisos
+EVALUANDO_POLITICA --> LIMITE_ALCANZADO : paso mayor que max_pasos
+
+BLOQUEADO --> DECIDIENDO : registrar el bloqueo
+EJECUTANDO --> OBSERVANDO : recibir resultado o error
+OBSERVANDO --> DECIDIENDO : añadir observación al historial
+
+FINALIZADO --> [*]
+LIMITE_ALCANZADO --> [*]
+
+note right of OBSERVANDO
+  En el Issue 01, pytest mostró primero
+  30 puntos frente a 20 esperados.
+  Después de la edición, la prueba pasó.
+end note
+
+@enduml
