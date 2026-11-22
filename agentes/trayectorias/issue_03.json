@@ -1,0 +1,83 @@
+[
+ {
+  "pensamiento": "Primero identificaré los criterios de aceptación del issue antes de investigar el fallo.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "issues/ISSUE-03.md"
+  }
+ },
+ {
+  "pensamiento": "El criterio de aceptación exige 15 puntos para plástico en D01 y 10 en D02. Revisaré la estructura del repositorio.",
+  "accion": "mapa_repo",
+  "args": {}
+ },
+ {
+  "pensamiento": "El mapa identifica calcular_puntos_distrito en src/solicitudes/operaciones_lab10.py como candidato principal. Primero reproduciré el fallo para establecer la línea base.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "python -m pytest -q tests/test_issue_03.py"
+  }
+ },
+ {
+  "pensamiento": "El fallo está reproducido: D01 recibe 10 puntos en lugar de 15, mientras D02 cumple lo esperado. Registraré la evidencia y la hipótesis inicial.",
+  "accion": "anotar",
+  "args": {
+   "texto": "Revisado: issues/ISSUE-03.md y estructura del repositorio mediante mapa_repo(). Prueba inicial: 1 failed en 0.08s. D01=10, D02=10; esperado D01=15, D02=10. Hipótesis: calcular_puntos_distrito en src/solicitudes/operaciones_lab10.py ignora el distrito. Revisar su implementación y los decoradores de puntos antes de corregir únicamente src/."
+  }
+ },
+ {
+  "pensamiento": "Revisaré la implementación de la función responsable del cálculo distrital para confirmar la hipótesis.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "src/solicitudes/operaciones_lab10.py"
+  }
+ },
+ {
+  "pensamiento": "La causa está confirmada: calcular_puntos_distrito no utiliza el parámetro distrito. Revisaré los decoradores existentes para reutilizar el mecanismo de bonos.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "src/solicitudes/decoradores.py"
+  }
+ },
+ {
+  "pensamiento": "Existe un decorador ConBonoFijo que permite sumar 5 puntos sin alterar las calculadoras base. Revisaré la fábrica para confirmar el comportamiento de los materiales.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "src/solicitudes/puntos.py"
+  }
+ },
+ {
+  "pensamiento": "La causa y la solución están identificadas. Registraré los archivos revisados y la corrección prevista antes de editar.",
+  "accion": "anotar",
+  "args": {
+   "texto": "Revisados: src/solicitudes/operaciones_lab10.py, src/solicitudes/decoradores.py y src/solicitudes/puntos.py. Causa confirmada: calcular_puntos_distrito ignora distrito y devuelve directamente los puntos base. CalculadoraPlastico devuelve 10 y ConBonoFijo permite añadir 5. Solución: reutilizar ConBonoFijo exclusivamente cuando material sea PLASTICO y distrito sea D01, conservando el comportamiento de los demás casos. Modificar solo operaciones_lab10.py."
+  }
+ },
+ {
+  "pensamiento": "Aplicaré el decorador existente únicamente para plástico en D01, manteniendo intactas las demás reglas y calculadoras.",
+  "accion": "editar_archivo",
+  "args": {
+   "ruta": "src/solicitudes/operaciones_lab10.py",
+   "antes": "def calcular_puntos_distrito(fabrica, material, distrito):\n    return fabrica.crear(material).calcular()",
+   "despues": "def calcular_puntos_distrito(fabrica, material, distrito):\n    from src.solicitudes.decoradores import ConBonoFijo\n\n    calculadora = fabrica.crear(material)\n    if material == \"PLASTICO\" and distrito == \"D01\":\n        calculadora = ConBonoFijo(calculadora, 5)\n    return calculadora.calcular()"
+  }
+ },
+ {
+  "pensamiento": "La corrección fue aplicada exclusivamente en src/. Ejecutaré nuevamente la misma prueba para verificar el cumplimiento de los criterios de aceptación.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "python -m pytest -q tests/test_issue_03.py"
+  }
+ },
+ {
+  "pensamiento": "La prueba pasó correctamente: 1 passed en 0.03s. Revisaré git diff para comprobar que la corrección se limita al código previsto y no introduce cambios ajenos al issue.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "git diff"
+  }
+ },
+ {
+  "pensamiento": "La prueba pasó y git diff confirma que la corrección se limita a la función calcular_puntos_distrito dentro de src/. Se cumplen los criterios de aceptación.",
+  "final": "ISSUE-03 resuelto correctamente. Se identificó que calcular_puntos_distrito ignoraba el parámetro distrito. Se reutilizó el decorador ConBonoFijo para sumar 5 puntos exclusivamente cuando el material es PLASTICO y el distrito es D01. Resultado: D01 recibe 15 puntos y D02 conserva 10 puntos. Se preserva el comportamiento de los demás materiales y distritos. Archivo modificado: src/solicitudes/operaciones_lab10.py. Prueba inicial: 1 failed in 0.08s. Prueba final (python -m pytest -q tests/test_issue_03.py): 1 passed in 0.03s. Se revisó git diff y se confirmó que la corrección del código se limita a src/. No se modificaron las pruebas. Se registraron las hipótesis, la causa y los archivos revisados mediante anotar(). Todos los criterios de aceptación del ISSUE-03 están cumplidos."
+ }
+]

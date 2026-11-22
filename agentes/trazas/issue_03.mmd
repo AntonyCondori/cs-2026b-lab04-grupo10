@@ -1,0 +1,31 @@
+sequenceDiagram
+    autonumber
+    actor U as Humano
+    participant PL as Planificador
+    participant EJ as Ejecutor (actor)
+    participant RV as Revisor (crítico)
+    participant P as Política
+    participant H as Herramientas
+    PL->>EJ: plan
+    EJ->>H: leer_archivo
+    H-->>EJ: contenido de ISSUE-03.md
+    EJ->>H: mapa_repo
+    H-->>EJ:   función listar_archivos(self, carpeta=
+    EJ->>H: ejecutar_comando
+    H-->>EJ: E       AssertionError: assert {'D01': 1
+    EJ->>H: anotar
+    H-->>EJ: OK: nota agregada
+    EJ->>H: leer_archivo
+    H-->>EJ: contenido de operaciones_lab10.py
+    EJ->>H: leer_archivo
+    H-->>EJ: contenido de decoradores.py
+    EJ->>H: leer_archivo
+    H-->>EJ: contenido de puntos.py
+    EJ->>H: anotar
+    H-->>EJ: OK: nota agregada
+    EJ->>H: editar_archivo
+    H-->>EJ: OK, archivo modificado
+    EJ->>H: ejecutar_comando
+    H-->>EJ: 1 passed in 0.03s
+    EJ->>H: ejecutar_comando
+    H-->>EJ: +        calculadora = ConBonoFijo(calcu
