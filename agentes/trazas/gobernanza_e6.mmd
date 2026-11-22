@@ -1,0 +1,12 @@
+flowchart TD
+    n1["ejecutor | 1 | CONTRATO_INVALIDO / (ninguna)"]
+    n2["ejecutor | 2 | BLOQUEADO / editar_archivo"]
+    n1 --> n2
+    n3["ejecutor | 3 | BLOQUEADO / editar_archivo"]
+    n2 --> n3
+    n4["ejecutor | 4 | OBSERVANDO / editar_archivo"]
+    n3 --> n4
+    n5["ejecutor | 5 | OBSERVANDO / leer_archivo"]
+    n4 --> n5
+    n6["ejecutor | 6 | FINALIZADO / Fin de la demostración. Consulte las observaciones y el archivo final."]
+    n5 --> n6

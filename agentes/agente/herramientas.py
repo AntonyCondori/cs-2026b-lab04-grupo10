@@ -1,6 +1,8 @@
 """Herramientas del agente. Cada una es una función pequeña, con descripción y parámetros explícitos.
 Todas operan DENTRO del directorio de trabajo (sandbox)."""
 import ast
+import shlex
+import sys
 import os
 import pathlib, subprocess, re
 
@@ -109,7 +111,7 @@ class Herramientas:
         return "\n".join(hallazgos) or "(sin resultados)"
 
     def ejecutar_pruebas(self):
-        r = subprocess.run(["python", "-m", "pytest", "-q", "--no-header", "-p", "no:cacheprovider"],
+        r = subprocess.run([sys.executable, "-m", "pytest", "-q", "--no-header", "-p", "no:cacheprovider"],
                            cwd=self.raiz, capture_output=True, text=True, timeout=120)
         salida = (r.stdout + r.stderr).strip().splitlines()
         fallos = [l for l in salida if l.startswith(("FAILED", "E "))][:6]
@@ -137,5 +139,8 @@ class Herramientas:
         return (self.raiz / ruta).resolve()
 
     def ejecutar_comando(self, comando):
-        r = subprocess.run(comando, shell=True, cwd=self.raiz, capture_output=True, text=True, timeout=60)
+        argumentos = shlex.split(comando)
+        if argumentos and argumentos[0] == "python":
+            argumentos[0] = sys.executable
+        r = subprocess.run(argumentos, shell=False, cwd=self.raiz, capture_output=True, text=True, timeout=60)
         return (r.stdout + r.stderr).strip()[-2000:]

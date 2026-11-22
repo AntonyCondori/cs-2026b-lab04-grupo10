@@ -4,7 +4,7 @@ Estados: DECIDIENDO -> VALIDANDO_CONTRATO -> EVALUANDO_POLITICA -> EJECUTANDO ->
 Estados finales: FINALIZADO (respuesta final) o LIMITE_ALCANZADO (presupuesto de pasos agotado).
 """
 import json, time
-from agente.contrato import validar_decision
+from .contrato import validar_decision
 
 
 class Agente:

@@ -5,7 +5,7 @@ import sys
 
 from agentes.agente.herramientas import Herramientas
 from agentes.agente.modelos import ModeloInteractivo
-from agentes.agente.politica import Politica
+from agentes.agente.politica import Politica, aprobar_edicion
 
 
 OBJETIVO_ISSUE = (
@@ -63,7 +63,7 @@ def main():
 
     herramientas = Herramientas(str(raiz))
     herramientas_revision = HerramientasRevision(str(raiz))
-    politica_ejecutor = Politica(max_pasos=12)
+    politica_ejecutor = Politica(max_pasos=12, aprobar_edicion=aprobar_edicion)
     politica_ejecutor.herramientas_permitidas.add("anotar")
     politica_revisor = Politica(
         herramientas_permitidas={"ver_cambios", "leer_archivo", "buscar", "ejecutar_pruebas"},

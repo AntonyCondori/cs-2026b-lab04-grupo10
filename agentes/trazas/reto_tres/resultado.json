@@ -1,0 +1,19 @@
+{
+  "modo": "grabado",
+  "aprobacion_edicion": "simulada",
+  "revisores": "tres",
+  "rondas": [
+    {
+      "ronda": 1,
+      "votos": {
+        "correccion": "APROBADO. Verificar exclusión de canceladas, conservación de pendientes, orden y entrada vacía. Evidencia en las acciones previas; aprobación sujeta al control automático de pytest.",
+        "diseno": "APROBADO. Verificar cambio acotado al selector y reutilización de Cancelado.nombre sin duplicar estados. Evidencia en las acciones previas; aprobación sujeta al control automático de pytest.",
+        "seguridad": "APROBADO. Verificar protección de tests y permisos: el revisor no puede editar ni invocar shell. Evidencia en las acciones previas; aprobación sujeta al control automático de pytest."
+      },
+      "prueba_obligatoria": "exit=0\n....                                                                     [100%]\n4 passed in 0.01s",
+      "aprobada": true
+    }
+  ],
+  "aprobada": true,
+  "limitacion": "Las decisiones grabadas provienen de un mismo asistente; no prueban independencia entre modelos."
+}
