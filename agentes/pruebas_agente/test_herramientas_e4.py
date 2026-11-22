@@ -7,7 +7,7 @@ def test_mapa_repo_lista_simbolos_y_omite_directorios(tmp_path):
     modulo.parent.mkdir()
     modulo.write_text(
         "# comentario\nclass Servicio:\n    def iniciar(self):\n        pass\n"
-        "\nasync def consultar():\n    pass\n",
+        "\nasync def consultar(a, b=2, *, activo=True):\n    pass\n",
         encoding="utf-8",
     )
     for nombre in (".git", "__pycache__", ".venv", "venv", "entorno"):
@@ -21,8 +21,8 @@ def test_mapa_repo_lista_simbolos_y_omite_directorios(tmp_path):
     assert mapa.splitlines() == [
         "src/modulo.py:",
         "  clase Servicio (línea 2)",
-        "  función iniciar (línea 3)",
-        "  función consultar (línea 6)",
+        "  función iniciar(self) (línea 3)",
+        "  función consultar(a, b=2, *, activo=True) (línea 6)",
     ]
 
 
@@ -37,7 +37,7 @@ def test_mapa_repo_reporta_error_de_sintaxis_y_continua(tmp_path):
     mapa = Herramientas(str(tmp_path)).mapa_repo()
 
     assert "invalido.py:\n  Error de sintaxis (línea 1)" in mapa
-    assert "valido.py:\n  función valida (línea 1)" in mapa
+    assert "valido.py:\n  función valida() (línea 1)" in mapa
 
 
 def test_leer_notas_sin_archivo(tmp_path):

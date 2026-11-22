@@ -26,7 +26,11 @@ class Herramientas:
             "editar_archivo": "editar_archivo(ruta, antes, despues): reemplaza un fragmento exacto (una sola vez)",
             "ver_cambios": "ver_cambios(): muestra el diff respecto de la versión original",
             "ejecutar_comando": "ejecutar_comando(comando): ejecuta un comando de shell (sujeto a la política)",
-            "mapa_repo": "mapa_repo(): lista clases y funciones por archivo Python con sus líneas",
+            "mapa_repo": (
+                "mapa_repo(): analiza archivos Python con AST y devuelve un resumen por archivo "
+                "con nombres de clases, firmas de funciones y números de línea, "
+                "sin incluir el contenido completo de los archivos"
+            ),
             "anotar": "anotar(texto): agrega una nota de hasta 500 caracteres",
             "leer_notas": "leer_notas(): devuelve el contenido de agentes/notas.md",
         }
@@ -61,8 +65,11 @@ class Herramientas:
                     key=lambda nodo: nodo.lineno,
                 )
                 for nodo in simbolos:
-                    tipo = "clase" if isinstance(nodo, ast.ClassDef) else "función"
-                    mapa.append(f"  {tipo} {nodo.name} (línea {nodo.lineno})")
+                    if isinstance(nodo, ast.ClassDef):
+                        simbolo = f"clase {nodo.name}"
+                    else:
+                        simbolo = f"función {nodo.name}({ast.unparse(nodo.args)})"
+                    mapa.append(f"  {simbolo} (línea {nodo.lineno})")
         return "\n".join(mapa)
 
     def anotar(self, texto):
