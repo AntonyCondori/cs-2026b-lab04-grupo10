@@ -1,0 +1,4 @@
+# Versiones de validación empleadas por el CI existente.
+pytest==9.2.0
+jsonschema==4.26.0
+import-linter==2.15

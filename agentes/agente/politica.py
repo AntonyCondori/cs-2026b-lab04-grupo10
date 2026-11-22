@@ -1,6 +1,28 @@
 """Guardrails: qué puede hacer el agente, cuántas veces y con qué aprobación."""
+import difflib
 import re
+import shlex
+from pathlib import PurePosixPath
+from typing import Callable, Optional
 from dataclasses import dataclass, field
+
+
+def aprobar_edicion(args: dict) -> bool:
+    """Solicita una decisión humana explícita; EOF o interrupción rechazan."""
+    print(f"\nEdición propuesta: {args.get('ruta', '')}")
+    print("".join(difflib.unified_diff(
+        args.get("antes", "").splitlines(keepends=True),
+        args.get("despues", "").splitlines(keepends=True),
+        fromfile="antes", tofile="después")))
+    while True:
+        try:
+            respuesta = input("¿Aprobar esta edición? [s/n]: ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            print("Sin aprobación explícita: edición rechazada.")
+            return False
+        if respuesta in {"s", "n"}:
+            return respuesta == "s"
+        print("Respuesta inválida. Escriba s o n.")
 
 
 @dataclass
@@ -17,7 +39,7 @@ class Politica:
     comandos_permitidos: tuple = (r"^python -m pytest\b", r"^radon cc\b", r"^lint-imports\b", r"^git (status|diff)\b")
     rutas_protegidas: tuple = ("tests/",)          # el agente no puede "arreglar" las pruebas para que pasen
     max_pasos: int = 15
-    aprobar_edicion = None                          # función opcional: humano en el circuito (human-in-the-loop)
+    aprobar_edicion: Optional[Callable[[dict], bool]] = None
 
     def evaluar(self, accion: str, args: dict, paso: int) -> Decision:
         if paso > self.max_pasos:
@@ -26,11 +48,21 @@ class Politica:
             return Decision(False, f"Herramienta no permitida: {accion}")
         if accion == "ejecutar_comando":
             cmd = args.get("comando", "")
-            if not any(re.search(p, cmd) for p in self.comandos_permitidos):
+            # El catálogo no ofrece un shell general ni operadores de encadenamiento.
+            try:
+                partes = shlex.split(cmd)
+            except ValueError:
+                return Decision(False, "Comando mal formado")
+            if (not partes or any(c in cmd for c in ";|&><`$\n\r")
+                    or not any(re.fullmatch(p.replace(r"\b", r"(?:[ \t].*)?"), cmd)
+                               for p in self.comandos_permitidos)):
                 return Decision(False, f"Comando fuera de la lista permitida: {cmd!r}")
         if accion == "editar_archivo":
             ruta = args.get("ruta", "")
-            if ruta.startswith(self.rutas_protegidas):
+            normal = PurePosixPath(ruta.replace("\\", "/"))
+            if (normal.is_absolute() or ".." in normal.parts
+                    or not normal.parts or normal.parts[0] != "src"
+                    or normal.as_posix().startswith(self.rutas_protegidas)):
                 return Decision(False, f"Ruta protegida: {ruta}")
             if self.aprobar_edicion and not self.aprobar_edicion(args):
                 return Decision(False, "El revisor humano rechazó la edición")

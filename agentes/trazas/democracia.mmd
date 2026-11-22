@@ -1,0 +1,38 @@
+flowchart TD
+    n1["planificador | 1 | FINALIZADO / Reproducir el defecto, filtrar Cancelado.nombre, verificar pytest y revisar"]
+    n3["ejecutor | 1 | OBSERVANDO / leer_archivo"]
+    n1 --> n3
+    n4["ejecutor | 2 | OBSERVANDO / pruebas_issue"]
+    n3 --> n4
+    n5["ejecutor | 3 | OBSERVANDO / leer_archivo"]
+    n4 --> n5
+    n6["ejecutor | 4 | OBSERVANDO / editar_archivo"]
+    n5 --> n6
+    n7["ejecutor | 5 | OBSERVANDO / pruebas_issue"]
+    n6 --> n7
+    n8["ejecutor | 6 | OBSERVANDO / ver_cambios"]
+    n7 --> n8
+    n9["ejecutor | 7 | FINALIZADO / Selector corregido; revisar observaciones de pytest y diff antes de votar."]
+    n8 --> n9
+    n11["revisor_correccion | 1 | OBSERVANDO / ver_cambios"]
+    n9 --> n11
+    n12["revisor_correccion | 2 | OBSERVANDO / leer_archivo"]
+    n11 --> n12
+    n13["revisor_correccion | 3 | OBSERVANDO / pruebas_issue"]
+    n12 --> n13
+    n14["revisor_correccion | 4 | FINALIZADO / APROBADO. Verificar exclusión de canceladas, conservación de pendientes, or"]
+    n13 --> n14
+    n16["revisor_diseno | 1 | OBSERVANDO / ver_cambios"]
+    n14 --> n16
+    n17["revisor_diseno | 2 | OBSERVANDO / leer_archivo"]
+    n16 --> n17
+    n18["revisor_diseno | 3 | FINALIZADO / APROBADO. Verificar cambio acotado al selector y reutilización de Cancelado"]
+    n17 --> n18
+    n20["revisor_seguridad | 1 | OBSERVANDO / ver_cambios"]
+    n18 --> n20
+    n21["revisor_seguridad | 2 | OBSERVANDO / leer_archivo"]
+    n20 --> n21
+    n22["revisor_seguridad | 3 | OBSERVANDO / pruebas_politica"]
+    n21 --> n22
+    n23["revisor_seguridad | 4 | FINALIZADO / APROBADO. Verificar protección de tests y permisos: el revisor no puede edi"]
+    n22 --> n23

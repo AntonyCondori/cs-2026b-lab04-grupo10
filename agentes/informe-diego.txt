@@ -1,0 +1,143 @@
+APORTE DE DIEGO — LABORATORIO 10
+EcoRecicla AQP: gobernanza humana, coordinación democrática, observabilidad y entrega
+
+INDICACIONES PARA INTEGRAR AL INFORME ORIGINAL
+Este documento continúa el avance “Lab10 - CS - Condori_Sencia_Yauli”. Pegar los apartados E6, E7 y E8 en los espacios vacíos de la página 25; agregar el reto opcional junto a E6; colocar las respuestas 7 y 8 en el cuestionario y añadir las conclusiones a las existentes. Las páginas indicadas corresponden al PDF recibido. Los textos entre corchetes son instrucciones de evidencia y se eliminan después de colocar la captura. Los comandos son auxiliares para preparar las imágenes.
+
+PREPARACIÓN DE LA TERMINAL PARA TODAS LAS CAPTURAS
+Ejecutar una sola vez:
+```bash
+cd /home/diego/ConsSoft/Lab10/cs-2026b-lab04-grupo10
+source .venv/bin/activate
+```
+El entorno .venv de esta copia ya contiene pytest y jsonschema. La instalación desde Internet no estuvo disponible; se reutilizaron los paquetes del entorno local de Lab 09. No es necesario volver a instalarlos para las capturas indicadas.
+
+E6. HUMANO EN EL CIRCUITO Y DELEGACIÓN PROGRESIVA
+Se implementó aprobar_edicion en agentes/agente/politica.py y se activó como callback en la política del ejecutor. Antes de escribir, se muestra la ruta y la diferencia entre el fragmento original y el propuesto. La función acepta s o n, ignora espacios y diferencias de mayúsculas, y vuelve a preguntar si recibe otra respuesta. Si la entrada se cierra o se interrumpe, rechaza la edición. La autorización se solicita únicamente después de comprobar los permisos y las rutas protegidas.
+
+El ejecutor puede proponer cambios dentro de src/; se bloquean rutas externas, componentes .. y modificaciones de tests/. Los revisores disponen de lectura, diff y pruebas prefijadas, sin edición ni comandos generales. El planificador no ejecuta herramientas. Además, se eliminó shell=True en la herramienta de comandos y se rechazan operadores de encadenamiento. Estas son barreras del prototipo: ejecutar pytest sigue implicando ejecutar código del repositorio.
+
+La demostración de E6 utiliza una copia temporal. Se registraron un rechazo del contrato por args de tipo texto, un intento bloqueado de editar pruebas, un parche rechazado y otro aceptado. El archivo termina con valor = 2 únicamente después de la aceptación. La evidencia automatizada usa respuestas programadas y se identifica como simulación; no equivale a una aprobación humana real. El mismo programa ofrece modo humano para obtener la captura en consola.
+
+[Figura 15. Colocar una captura de la consola mostrando la entrada inválida, el rechazo con n, la aprobación con s y los estados finales. Para obtener evidencia humana real ejecutar el comando siguiente y escribir quizá, luego n y finalmente s cuando se solicite.]
+```bash
+python -m agentes.ejecutar_e6 --salida agentes/trazas/e6_humano
+```
+[Si solo se desea reproducir la comprobación automatizada, usar el siguiente comando y conservar visible la palabra SIMULACIÓN en la captura.]
+```bash
+python -m agentes.ejecutar_e6 --simular --salida /tmp/ecorecicla-e6-captura
+```
+
+Se documentaron los cuatro roles humanos en agentes/delegacion.md. Como ejecutor, la persona aplica las sugerencias del agente; como revisor, autoriza los cambios que el agente propone; como colaborador, comparte decisiones y permite tareas acotadas con revisión final; como gobernador, fija políticas y supervisa tareas rutinarias con mecanismos de escalamiento. Actualmente se elige el rol de revisor. Para avanzar se requieren ejecuciones representativas sin correcciones humanas, pruebas completas sin errores de infraestructura, respeto de límites y recuperación comprobada ante rechazos.
+
+RETO OPCIONAL A. COORDINACIÓN DEMOCRÁTICA
+Se creó agentes/orquestador_democratico.py con dos variantes: un revisor y tres revisores con focos de corrección, diseño y seguridad. Cada revisor produce APROBADO con justificación o CAMBIOS con motivos. La variante democrática exige mayoría estricta de dos de tres, conserva los votos y permite hasta dos rondas. Un voto mal formado no se acepta. El resultado global exige además que la prueba de aceptación sea exitosa; una mayoría no convierte una ejecución fallida en un cambio válido.
+
+La comparación se realizó sembrando el mismo defecto del Issue 02 en copias temporales. El ejecutor reprodujo la inclusión de solicitudes canceladas, aplicó el filtro con Cancelado.nombre y ejecutó la aceptación junto a tres pruebas adicionales: lista vacía, todas canceladas y conservación de orden, identidad y entrada. Ambas variantes pasaron las cuatro pruebas. La corrección del repositorio principal y las trazas históricas se conservaron.
+
+Con un revisor se registraron 9 acciones y 3424 caracteres de observaciones; con tres revisores, 14 acciones y 5505 caracteres. El incremento fue de 55,6 % en acciones y aproximadamente 60,8 % en contexto registrado. Los tres votos fueron favorables en la primera ronda. Diseño revisó el alcance del cambio y seguridad comprobó las políticas; no se encontró otro defecto del selector. Los casos adicionales se incorporaron al preparar el experimento, no fueron hallazgos autónomos de los revisores.
+
+Las decisiones de esta comparación se grabaron desde Codex y las herramientas se ejecutaron realmente. No hubo llamadas a tres proveedores ni razonamiento independiente de tres LLM. Las autorizaciones de las corridas guardadas fueron simuladas y están declaradas en resultado.json. El modo interactivo permite repetir la actividad con decisiones de un asistente y aprobación de una persona.
+
+[Figura 16. Colocar una captura del resultado con los tres votos APROBADO, aprobada: true y el resultado de cuatro pruebas aprobadas.]
+```bash
+python -m json.tool agentes/trazas/reto_tres/resultado.json
+```
+[Figura 17. Colocar una captura de la comparación de métricas o pegar la tabla de E7. El comando imprime los datos calculados y regenera los diagramas.]
+```bash
+python -m agentes.consolidar
+```
+Para repetir el experimento completo en nuevas carpetas:
+```bash
+python -m agentes.orquestador_democratico --modo grabado --revisores uno --simular-aprobacion --salida /tmp/ecorecicla-uno-captura
+python -m agentes.orquestador_democratico --modo grabado --revisores tres --simular-aprobacion --salida /tmp/ecorecicla-tres-captura
+```
+Usar una carpeta diferente si ya existe resultado.json; el programa conserva la evidencia anterior. Para una sesión con intervención humana real:
+```bash
+python -m agentes.orquestador_democratico --modo interactivo --revisores tres --salida /tmp/ecorecicla-interactivo-captura
+```
+Se mantiene el principio de parsimonia: para este defecto pequeño, un revisor basta. Tres revisores permiten inspeccionar distintos aspectos, pero aumentan las acciones y el contexto. La simulación valida el mecanismo de coordinación, sin demostrar que tres modelos razonen mejor.
+
+E7. OBSERVACIÓN Y BITÁCORA
+Se consolidaron las trazas de los tres issues y las nuevas corridas en agentes/observacion.md. La tabla se genera desde los JSONL mediante agentes/consolidar.py. Las decisiones incluyen acciones y respuestas finales; las acciones incluyen intentos rechazados. En las variantes coordinadas se suman los valores de todos los roles.
+
+| Ejecución | Decisiones | Acciones | Rondas | Contratos inválidos | Bloqueos | Contexto (car.) |
+|---|---:|---:|---:|---:|---:|---:|
+| Issue 01 · E2 histórico | 8 | 7 | 1 | 0 | 0 | 2994 |
+| Issue 03 · E4 histórico | 12 | 11 | 1 | 0 | 0 | 4328 |
+| Issue 02 · E5 actor-crítico histórico | 16 | 13 | 1 | 0 | 0 | 5599 |
+| E6 · simulación de aprobación | 6 | 5 | 1 | 1 | 2 | 262 |
+| Issue 02 · reto uno (grabado) | 12 | 9 | 1 | 0 | 0 | 3424 |
+| Issue 02 · reto tres (grabado) | 19 | 14 | 1 | 0 | 0 | 5505 |
+
+El contexto registrado es la suma de los caracteres de las observaciones conservadas, que el núcleo limita a 600 por evento. No representa el historial completo, tokens ni costo monetario. El tiempo de las trazas históricas incluye espera humana y el de las reproducciones corresponde a ejecución local, por lo que no se comparan como velocidad del LLM. El contraste entre E2 y E4 también es orientativo porque resuelven issues distintos.
+
+El informe original señala 10 acciones, 3640 caracteres y 158,291 segundos para el agente único del Issue 02. Su JSONL no está en este clon, por lo que esos valores se conservan como referencia del PDF y no como una medición recalculada. La comparación nueva de uno y tres revisores sí conserva las decisiones, trazas y resultados de ambas variantes.
+
+Se completó agentes/bitacora-ia.md con nueve interacciones documentadas. Las entradas históricas se reconstruyeron a partir de los archivos existentes y se distinguieron del trabajo realizado con Codex. Entre los errores registrados figuran los 30 puntos frente a 20 del Issue 01, los errores de permisos de pytest en E5 y el contrato inválido de E6. No se presenta la aprobación del revisor histórico como una segunda ejecución completa exitosa.
+
+[Figura 18. Insertar directamente agentes/trazas/gobernanza_e6.png. La imagen muestra la trayectoria real de la demostración, generada desde sus eventos JSONL. Para abrirla:]
+```bash
+xdg-open agentes/trazas/gobernanza_e6.png
+```
+[Como imagen complementaria del reto, usar agentes/trazas/democracia.png. Para verla:]
+```bash
+xdg-open agentes/trazas/democracia.png
+```
+[Para una captura de la bitácora y las herramientas por ejecución, abrir agentes/bitacora-ia.md y agentes/observacion.md en el editor, o mostrarlos con:]
+```bash
+cat agentes/bitacora-ia.md
+cat agentes/observacion.md
+```
+
+E8. ADR, README Y ENTREGA
+Se redactó docs/architecture/adr/010-sistema-agentico.md con el arquetipo ReAct, máquina de estados, coordinación, herramientas, memoria, límites y rol humano. El ADR justifica conservar el agente único para cambios acotados, usar revisión adicional cuando aporte valor y postergar mayor autonomía hasta contar con evidencia suficiente.
+
+Se añadió al README la sección “Sistemas agénticos (Lab 10)”, con máquina de estados, trayectoria, tabla de métricas, comandos de reproducción y enlaces a las evidencias. Se registró la revisión local de los aportes ya integrados en los PR #30 y #31 en agentes/revision-integracion.md. Esta revisión se hizo sobre los commits disponibles; no constituye una aprobación nueva enviada a GitHub.
+
+La validación final de la suite local obtuvo 153 pruebas aprobadas y 4 omitidas. De forma focal, pasaron las 58 pruebas del agente, las 3 aceptaciones de los issues y las 6 pruebas de fitness de arquitectura. Las cuatro omitidas requieren PostgreSQL y la variable ECORECICLA_POSTGRES_DSN. No se ejecutó import-linter: no está instalado y no hubo acceso DNS para obtenerlo; el resultado de pytest no sustituye esa comprobación del CI.
+
+[Figura 19. Colocar una captura de la suite completa y del resumen 153 passed, 4 skipped.]
+```bash
+python -m pytest -q -p no:cacheprovider
+```
+[Para capturar por separado las pruebas del agente, las aceptaciones y las fitness functions:]
+```bash
+python -m pytest -q -p no:cacheprovider agentes/pruebas_agente
+python -m pytest -q -p no:cacheprovider tests/test_issue_01.py tests/test_issue_02.py tests/test_issue_03.py
+python -m pytest -q -p no:cacheprovider tests/test_fitness.py
+```
+[Figura 20. Colocar una captura del ADR-010 y de la nueva sección del README. Abrir ambos archivos en el editor o usar:]
+```bash
+cat docs/architecture/adr/010-sistema-agentico.md
+sed -n '/^## Sistemas agénticos (Lab 10)/,$p' README.md
+```
+La entrega queda identificada por la etiqueta local v1.0-agentes sobre el commit del aporte B2. La publicación remota y el envío al Aula Virtual deben verificarse por separado; no se afirma que ya se hayan realizado ni que la entrega haya ocurrido antes del plazo.
+
+[Figura 21. Colocar una captura que muestre la etiqueta local y su commit.]
+```bash
+git log -1 --oneline
+git show --no-patch v1.0-agentes
+git status --short
+```
+
+II. CUESTIONARIO — RESPUESTAS PARA COMPLETAR
+7. Explique el exceso de agencia y cómo lo evitaron con el mínimo privilegio por rol.
+El exceso de agencia ocurre cuando se conceden al agente más herramientas, permisos o autonomía de los necesarios. En EcoRecicla AQP sería permitir al revisor editar las pruebas para ocultar un fallo o dar al planificador un shell general. Se limitaron los permisos por rol: el planificador solo propone el plan; el ejecutor puede leer, proponer cambios en src/ y comprobarlos; los revisores inspeccionan código, diff y pruebas prefijadas sin escribir. El contrato valida la decisión antes de actuar, la política protege rutas y la persona autoriza la edición. También se fijaron presupuestos de pasos y dos rondas. La mayoría de votos no sustituye la aceptación exitosa. Estos controles reducen el alcance de errores, aunque no constituyen un aislamiento completo del sistema operativo.
+
+8. ¿En qué rol humano dejaría hoy a su agente y qué evidencia necesitaría para avanzar al siguiente?
+Dejaría a la persona como revisor. El agente puede investigar y proponer el cambio, pero requiere aprobación explícita antes de editar y una evaluación humana de la evidencia antes de integrar. Las tres aceptaciones pasan, pero la revisión histórica tuvo errores de permisos y las corridas nuevas usan decisiones grabadas del mismo asistente. Para avanzar a colaborador necesitaríamos varias tareas representativas con pruebas completas y revisión propia exitosa, trazas sin intentos fuera del alcance, recuperación correcta ante bloqueos y capacidad de revertir cambios. También habría que medir si la revisión adicional detecta defectos que un agente único omite y si su costo se justifica. Una sola corrida aprobada o una votación simulada no es evidencia suficiente para ampliar la autonomía.
+
+III. CONCLUSIONES PARA AÑADIR
+• La aprobación por consola permitió comprobar que una decisión inválida o un rechazo no provoca escritura, mientras que una edición permitida y autorizada sí se aplica. La evidencia automatizada fue identificada como simulación y se proporcionó un modo humano para repetirla.
+• La coordinación democrática funcionó con mayoría estricta, registro de votos y prueba de aceptación obligatoria. En el Issue 02 incrementó las acciones de 9 a 14 sin revelar otro defecto del selector, por lo que el revisor único resulta suficiente para este caso acotado.
+• Las trazas permitieron distinguir resultados del programa de afirmaciones del agente. El APROBADO histórico coexistía con errores de permisos; por ello se documentó la limitación y se añadió una comprobación obligatoria a la variante nueva.
+• La entrega integra delegación, observación, bitácora, ADR-010, README y evidencias reproducibles. La suite local terminó con 153 pruebas aprobadas y cuatro omitidas por requerir PostgreSQL; la publicación remota y el envío académico se verifican como pasos independientes.
+
+NOTAS OPERATIVAS PARA DIEGO — NO PEGAR COMO RESULTADO YA REALIZADO
+Después de revisar los cambios, publicar la rama y la etiqueta desde tu terminal con conexión a GitHub:
+```bash
+git push -u origin diego/lab10-b2
+git push origin v1.0-agentes
+```
+Luego crear el PR de diego/lab10-b2 hacia main, esperar el CI y coordinar su integración con el equipo. El tag local identifica el commit del aporte; si el equipo exige que la etiqueta esté en el merge final de main, deben acordarlo antes de publicar la etiqueta. Pegar el enlace del repositorio/tag en el Aula Virtual y comprobar la recepción. No se enviaron comentarios, aprobaciones ni mensajes a compañeros desde esta sesión.

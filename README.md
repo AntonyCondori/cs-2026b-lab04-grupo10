@@ -271,3 +271,77 @@ Resultado local: 92 aprobadas y 4 omitidas (integración PostgreSQL sin DSN); 25
 - [Proceso y responsables de E1 a E8](docs/design/lab09-integracion.md)
 
 Entrega a Bryan: revisar el PR de Antony y continuar con docstrings (E4), complementar E5, configurar el workflow `prompts.yml` para ambas tareas y consolidar E8, incluidos los PR revisados y la etiqueta `v0.9-prompts`. La revisión humana y esos entregables no se dan por completados en este aporte.
+
+
+## Sistemas agénticos (Lab 10)
+
+EcoRecicla AQP usa ReAct para investigar issues, contratos JSON antes de actuar,
+políticas por rol, herramientas y memoria de notas. El humano permanece como revisor:
+la política del ejecutor llama a `aprobar_edicion`, que muestra el parche y exige `s`/`n`.
+
+### Máquina de estados y trayectoria
+
+![Máquina de estados](agentes/diseno/estados.png)
+
+Fuente PlantUML: [estados.puml](agentes/diseno/estados.puml).
+
+![Trayectoria con contrato, bloqueos y aprobación](agentes/trazas/gobernanza_e6.png)
+
+Fuentes y trazas: [gobernanza_e6.mmd](agentes/trazas/gobernanza_e6.mmd),
+[e6/ejecutor.jsonl](agentes/trazas/e6/ejecutor.jsonl).
+
+### Métricas de E7
+
+| Ejecución | Decisiones (incl. final) | Acciones | Rondas | Contrato inválido | Bloqueos | Límite | Contexto registrado (car.) | Tiempo (s) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Issue 01 · E2 histórico | 8 | 7 | 1 | 0 | 0 | 0 | 2994 | 257.322 |
+| Issue 03 · E4 histórico | 12 | 11 | 1 | 0 | 0 | 0 | 4328 | 185.938 |
+| Issue 02 · E5 actor-crítico histórico | 16 | 13 | 1 | 0 | 0 | 0 | 5599 | 283.62 |
+| E6 · simulación de aprobación | 6 | 5 | 1 | 1 | 2 | 0 | 262 | 0.0 |
+| Issue 02 · reto uno (grabado) | 12 | 9 | 1 | 0 | 0 | 0 | 3424 | 0.464 |
+| Issue 02 · reto tres (grabado) | 19 | 14 | 1 | 0 | 0 | 0 | 5505 | 0.664 |
+
+Contexto registrado = suma de observaciones truncadas a 600 caracteres; no es el contexto
+real del modelo. Tiempo histórico incluye espera humana; tiempo grabado solo ejecución local.
+Las corridas nuevas usan decisiones grabadas de Codex y autorización simulada explícita.
+El PDF cita el agente único de Issue 02, pero su JSONL no se encuentra en este clon.
+
+### Reproducción
+
+Desde la raíz del repositorio:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-lab10.txt
+python -m pytest -q -p no:cacheprovider
+```
+
+En esta copia `.venv` ya contiene pytest y jsonschema reutilizados del entorno local de Lab 09;
+la instalación por red no estuvo disponible. `import-linter` no está instalado en esta copia.
+
+```bash
+# E6 con una persona: introducir una entrada inválida, n y s.
+python -m agentes.ejecutar_e6 --salida /tmp/ecorecicla-e6-humano
+# E6 con entradas programadas y sin afirmar aprobación humana.
+python -m agentes.ejecutar_e6 --simular --salida /tmp/ecorecicla-e6-demo
+# Reto con decisiones grabadas y herramientas reales en una copia temporal.
+python -m agentes.orquestador_democratico --modo grabado --revisores uno --simular-aprobacion --salida /tmp/ecorecicla-un-revisor
+python -m agentes.orquestador_democratico --modo grabado --revisores tres --simular-aprobacion --salida /tmp/ecorecicla-tres-revisores
+# Modo interactivo con decisiones de un asistente y aprobación humana real.
+python -m agentes.orquestador_democratico --modo interactivo --revisores tres --salida /tmp/ecorecicla-interactivo
+# Métricas y PNG desde las trazas conservadas (requiere Graphviz: dot).
+python -m agentes.consolidar
+```
+
+Usar otra carpeta de salida para una nueva corrida del reto: no se sobreescriben resultados.
+La mayoría de 2/3 no sustituye la prueba de aceptación exitosa; máximo dos rondas.
+No se hicieron llamadas a un proveedor LLM ni se demuestra independencia entre tres modelos.
+Los revisores no pueden editar ni ejecutar comandos arbitrarios. El experimento conserva src/.
+
+Documentación: [delegación](agentes/delegacion.md), [observación](agentes/observacion.md),
+[bitácora](agentes/bitacora-ia.md), [ADR-010](docs/architecture/adr/010-sistema-agentico.md),
+[revisión local](agentes/revision-integracion.md) e [informe para Diego](agentes/informe-diego.txt).
+Validación: [resultado completo](agentes/validacion.txt). Las cuatro pruebas de PostgreSQL
+requieren configurar `ECORECICLA_POSTGRES_DSN`; sin servicio se omiten.
+La etiqueta `v1.0-agentes` identifica la entrega local; publicación y Aula Virtual son pasos aparte.

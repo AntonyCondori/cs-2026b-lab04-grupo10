@@ -1,0 +1,126 @@
+{
+  "Issue 01 · E2 histórico": {
+    "decisiones": 8,
+    "acciones": 7,
+    "rondas": 1,
+    "herramientas": [
+      "editar_archivo",
+      "ejecutar_comando",
+      "leer_archivo"
+    ],
+    "contrato": 0,
+    "bloqueos": 0,
+    "limites": 0,
+    "contexto_registrado": 2994,
+    "segundos": 257.322,
+    "archivos": [
+      "agentes/trazas/issue_01.jsonl"
+    ]
+  },
+  "Issue 03 · E4 histórico": {
+    "decisiones": 12,
+    "acciones": 11,
+    "rondas": 1,
+    "herramientas": [
+      "anotar",
+      "editar_archivo",
+      "ejecutar_comando",
+      "leer_archivo",
+      "mapa_repo"
+    ],
+    "contrato": 0,
+    "bloqueos": 0,
+    "limites": 0,
+    "contexto_registrado": 4328,
+    "segundos": 185.938,
+    "archivos": [
+      "agentes/trazas/issue_03.jsonl"
+    ]
+  },
+  "Issue 02 · E5 actor-crítico histórico": {
+    "decisiones": 16,
+    "acciones": 13,
+    "rondas": 1,
+    "herramientas": [
+      "anotar",
+      "editar_archivo",
+      "ejecutar_comando",
+      "ejecutar_pruebas",
+      "leer_archivo",
+      "mapa_repo",
+      "ver_cambios"
+    ],
+    "contrato": 0,
+    "bloqueos": 0,
+    "limites": 0,
+    "contexto_registrado": 5599,
+    "segundos": 283.62,
+    "archivos": [
+      "agentes/trazas/planificador.jsonl",
+      "agentes/trazas/ejecutor.jsonl",
+      "agentes/trazas/revisor.jsonl"
+    ]
+  },
+  "E6 · simulación de aprobación": {
+    "decisiones": 6,
+    "acciones": 5,
+    "rondas": 1,
+    "herramientas": [
+      "editar_archivo",
+      "leer_archivo"
+    ],
+    "contrato": 1,
+    "bloqueos": 2,
+    "limites": 0,
+    "contexto_registrado": 262,
+    "segundos": 0.0,
+    "archivos": [
+      "agentes/trazas/e6/ejecutor.jsonl"
+    ]
+  },
+  "Issue 02 · reto uno (grabado)": {
+    "decisiones": 12,
+    "acciones": 9,
+    "rondas": 1,
+    "herramientas": [
+      "editar_archivo",
+      "leer_archivo",
+      "pruebas_issue",
+      "ver_cambios"
+    ],
+    "contrato": 0,
+    "bloqueos": 0,
+    "limites": 0,
+    "contexto_registrado": 3424,
+    "segundos": 0.464,
+    "archivos": [
+      "agentes/trazas/reto_uno/trazas/ejecutor_r1.jsonl",
+      "agentes/trazas/reto_uno/trazas/planificador_r1.jsonl",
+      "agentes/trazas/reto_uno/trazas/revisor_correccion_r1.jsonl"
+    ]
+  },
+  "Issue 02 · reto tres (grabado)": {
+    "decisiones": 19,
+    "acciones": 14,
+    "rondas": 1,
+    "herramientas": [
+      "editar_archivo",
+      "leer_archivo",
+      "pruebas_issue",
+      "pruebas_politica",
+      "ver_cambios"
+    ],
+    "contrato": 0,
+    "bloqueos": 0,
+    "limites": 0,
+    "contexto_registrado": 5505,
+    "segundos": 0.664,
+    "archivos": [
+      "agentes/trazas/reto_tres/trazas/ejecutor_r1.jsonl",
+      "agentes/trazas/reto_tres/trazas/planificador_r1.jsonl",
+      "agentes/trazas/reto_tres/trazas/revisor_correccion_r1.jsonl",
+      "agentes/trazas/reto_tres/trazas/revisor_diseno_r1.jsonl",
+      "agentes/trazas/reto_tres/trazas/revisor_seguridad_r1.jsonl"
+    ]
+  }
+}

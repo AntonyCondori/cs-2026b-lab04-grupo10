@@ -1,0 +1,14 @@
+digraph trayectoria {
+rankdir=TB; bgcolor="white"; node [shape=box, style="rounded,filled", fillcolor="#eef4fb", fontname="DejaVu Sans", fontsize=12];
+n1 [label="ejecutor | 1 | CONTRATO_INVALIDO\n(ninguna)"];
+n2 [label="ejecutor | 2 | BLOQUEADO\neditar_archivo"];
+n1 -> n2;
+n3 [label="ejecutor | 3 | BLOQUEADO\neditar_archivo"];
+n2 -> n3;
+n4 [label="ejecutor | 4 | OBSERVANDO\neditar_archivo"];
+n3 -> n4;
+n5 [label="ejecutor | 5 | OBSERVANDO\nleer_archivo"];
+n4 -> n5;
+n6 [label="ejecutor | 6 | FINALIZADO\nFin de la demostración. Consulte las observaciones y el archivo final."];
+n5 -> n6;
+}

@@ -1,0 +1,45 @@
+[
+  {
+    "pensamiento": "Detectar un incumplimiento del contrato",
+    "accion": "leer_archivo",
+    "args": "src/ejemplo.py"
+  },
+  {
+    "pensamiento": "Comprobar la protección de pruebas",
+    "accion": "editar_archivo",
+    "args": {
+      "ruta": "tests/test_issue_02.py",
+      "antes": "a",
+      "despues": "b"
+    }
+  },
+  {
+    "pensamiento": "Proponer una edición acotada y solicitar aprobación",
+    "accion": "editar_archivo",
+    "args": {
+      "ruta": "src/ejemplo.py",
+      "antes": "valor = 1\n",
+      "despues": "valor = 2\n"
+    }
+  },
+  {
+    "pensamiento": "Proponer una edición acotada y solicitar aprobación",
+    "accion": "editar_archivo",
+    "args": {
+      "ruta": "src/ejemplo.py",
+      "antes": "valor = 1\n",
+      "despues": "valor = 2\n"
+    }
+  },
+  {
+    "pensamiento": "Leer el resultado de las decisiones de autorización",
+    "accion": "leer_archivo",
+    "args": {
+      "ruta": "src/ejemplo.py"
+    }
+  },
+  {
+    "pensamiento": "Finalizar demostración de gobernanza",
+    "final": "Fin de la demostración. Consulte las observaciones y el archivo final."
+  }
+]

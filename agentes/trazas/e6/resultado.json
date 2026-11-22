@@ -1,0 +1,14 @@
+{
+  "modo": "simulado",
+  "aprobaciones": [
+    {
+      "ruta": "src/ejemplo.py",
+      "aprobada": false
+    },
+    {
+      "ruta": "src/ejemplo.py",
+      "aprobada": true
+    }
+  ],
+  "contenido_final": "valor = 2\n"
+}
