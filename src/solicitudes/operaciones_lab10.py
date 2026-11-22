@@ -18,8 +18,15 @@ class SaldoVecinos:
 
 
 def seleccionar_para_ruta(solicitudes):
-    return list(solicitudes)
+    from src.solicitudes.estados import Cancelado
+
+    return [solicitud for solicitud in solicitudes if solicitud.estado != Cancelado.nombre]
 
 
 def calcular_puntos_distrito(fabrica, material, distrito):
-    return fabrica.crear(material).calcular()
+    from src.solicitudes.decoradores import ConBonoFijo
+
+    calculadora = fabrica.crear(material)
+    if material == "PLASTICO" and distrito == "D01":
+        calculadora = ConBonoFijo(calculadora, 5)
+    return calculadora.calcular()

@@ -1,5 +1,7 @@
 """Herramientas del agente. Cada una es una función pequeña, con descripción y parámetros explícitos.
 Todas operan DENTRO del directorio de trabajo (sandbox)."""
+import ast
+import os
 import pathlib, subprocess, re
 
 
@@ -24,9 +26,71 @@ class Herramientas:
             "editar_archivo": "editar_archivo(ruta, antes, despues): reemplaza un fragmento exacto (una sola vez)",
             "ver_cambios": "ver_cambios(): muestra el diff respecto de la versión original",
             "ejecutar_comando": "ejecutar_comando(comando): ejecuta un comando de shell (sujeto a la política)",
+            "mapa_repo": (
+                "mapa_repo(): analiza archivos Python con AST y devuelve un resumen por archivo "
+                "con nombres de clases, firmas de funciones y números de línea, "
+                "sin incluir el contenido completo de los archivos"
+            ),
+            "anotar": "anotar(texto): agrega una nota de hasta 500 caracteres",
+            "leer_notas": "leer_notas(): devuelve el contenido de agentes/notas.md",
         }
 
     # --- herramientas ---
+    def mapa_repo(self):
+        mapa = []
+        ignoradas = {".git", "__pycache__", ".venv", "venv", ".env", "env", "virtualenv"}
+        tipos = (ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)
+        for carpeta, subcarpetas, archivos in os.walk(self.raiz):
+            base = pathlib.Path(carpeta)
+            subcarpetas[:] = sorted(
+                nombre for nombre in subcarpetas
+                if nombre.casefold() not in ignoradas
+                and not (base / nombre / "pyvenv.cfg").is_file()
+            )
+            for nombre in sorted(archivos):
+                if not nombre.endswith(".py"):
+                    continue
+                ruta = (base / nombre).relative_to(self.raiz).as_posix()
+                mapa.append(f"{ruta}:")
+                try:
+                    arbol = ast.parse(self._ruta(ruta).read_bytes(), filename=ruta)
+                except SyntaxError as error:
+                    mapa.append(f"  Error de sintaxis (línea {error.lineno}): {error.msg}")
+                    continue
+                except OSError as error:
+                    mapa.append(f"  No se pudo leer: {error}")
+                    continue
+                simbolos = sorted(
+                    (nodo for nodo in ast.walk(arbol) if isinstance(nodo, tipos)),
+                    key=lambda nodo: nodo.lineno,
+                )
+                for nodo in simbolos:
+                    if isinstance(nodo, ast.ClassDef):
+                        simbolo = f"clase {nodo.name}"
+                    else:
+                        simbolo = f"función {nodo.name}({ast.unparse(nodo.args)})"
+                    mapa.append(f"  {simbolo} (línea {nodo.lineno})")
+        return "\n".join(mapa)
+
+    def anotar(self, texto):
+        nota = re.sub(r"\r\n|[\n\r\v\f\x1c-\x1e\x85\u2028\u2029]", " ", texto)[:500]
+        ruta = self._ruta("agentes/notas.md")
+        ruta.parent.mkdir(parents=True, exist_ok=True)
+        with ruta.open("a+b") as archivo:
+            separador = b""
+            if archivo.tell():
+                archivo.seek(-1, os.SEEK_END)
+                if archivo.read(1) != b"\n":
+                    separador = b"\n"
+            archivo.write(separador + f"{nota}\n".encode("utf-8"))
+        return "OK: nota agregada"
+
+    def leer_notas(self):
+        try:
+            return self._ruta("agentes/notas.md").read_text(encoding="utf-8")
+        except FileNotFoundError:
+            return ""
+
     def listar_archivos(self, carpeta="."):
         base = self._ruta(carpeta)
         return "\n".join(sorted(str(p.relative_to(self.raiz)) for p in base.rglob("*")

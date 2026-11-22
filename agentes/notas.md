@@ -1,0 +1,1 @@
+Revisados issues/ISSUE-02.md, src/solicitudes/operaciones_lab10.py y src/solicitudes/estados.py, además de la prueba visible en el fallo de pytest. La ruta devuelve [201, 202] en vez de [201]. Hipótesis confirmada en código: el selector copia todas las candidatas sin filtrar. Solicitud.estado expone el nombre del estado y Cancelado.nombre define el valor que debe excluirse.
