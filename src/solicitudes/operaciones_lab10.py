@@ -18,7 +18,9 @@ class SaldoVecinos:
 
 
 def seleccionar_para_ruta(solicitudes):
-    return list(solicitudes)
+    from src.solicitudes.estados import Cancelado
+
+    return [solicitud for solicitud in solicitudes if solicitud.estado != Cancelado.nombre]
 
 
 def calcular_puntos_distrito(fabrica, material, distrito):

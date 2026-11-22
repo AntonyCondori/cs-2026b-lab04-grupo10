@@ -1,0 +1,81 @@
+[
+ {
+  "pensamiento": "Primero reviso los criterios de aceptación.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "issues/ISSUE-02.md"
+  }
+ },
+ {
+  "pensamiento": "Ubico el selector y la prueba en el repositorio.",
+  "accion": "mapa_repo",
+  "args": {}
+ },
+ {
+  "pensamiento": "La prueba existente permite reproducir el defecto.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "python -m pytest -q tests/test_issue_02.py"
+  }
+ },
+ {
+  "pensamiento": "Reviso cómo el selector construye la ruta.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "src/solicitudes/operaciones_lab10.py"
+  }
+ },
+ {
+  "pensamiento": "Verifico cómo el dominio expone el estado cancelado.",
+  "accion": "leer_archivo",
+  "args": {
+   "ruta": "src/solicitudes/estados.py"
+  }
+ },
+ {
+  "pensamiento": "Registro la causa probable y los archivos revisados.",
+  "accion": "anotar",
+  "args": {
+   "texto": "Revisados issues/ISSUE-02.md, src/solicitudes/operaciones_lab10.py y src/solicitudes/estados.py, además de la prueba visible en el fallo de pytest. La ruta devuelve [201, 202] en vez de [201]. Hipótesis confirmada en código: el selector copia todas las candidatas sin filtrar. Solicitud.estado expone el nombre del estado y Cancelado.nombre define el valor que debe excluirse."
+  }
+ },
+ {
+  "pensamiento": "Filtro el estado cancelado conservando el orden de entrada.",
+  "accion": "editar_archivo",
+  "args": {
+   "ruta": "src/solicitudes/operaciones_lab10.py",
+   "antes": "def seleccionar_para_ruta(solicitudes):\n    return list(solicitudes)",
+   "despues": "def seleccionar_para_ruta(solicitudes):\n    from src.solicitudes.estados import Cancelado\n\n    return [solicitud for solicitud in solicitudes if solicitud.estado != Cancelado.nombre]"
+  }
+ },
+ {
+  "pensamiento": "Repito la prueba de regresión con el filtro aplicado.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "python -m pytest -q tests/test_issue_02.py"
+  }
+ },
+ {
+  "pensamiento": "Ejecuto la suite completa para comprobar el comportamiento del repositorio.",
+  "accion": "ejecutar_pruebas",
+  "args": {}
+ },
+ {
+  "pensamiento": "Reintento la suite con un directorio temporal propio del repositorio.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "python -m pytest -q --basetemp .pytest_cache/issue-02-verificacion"
+  }
+ },
+ {
+  "pensamiento": "Reviso el diff final para confirmar el alcance de la corrección.",
+  "accion": "ejecutar_comando",
+  "args": {
+   "comando": "git diff -- src/"
+  }
+ },
+ {
+  "pensamiento": "La regresión y la suite completa verifican la corrección.",
+  "final": "Corregí ISSUE-02 en src/solicitudes/operaciones_lab10.py. El selector excluye las solicitudes con estado Cancelado y conserva el orden de las demás. La regresión existente pasó y confirma que la ruta devuelve únicamente la solicitud 201. La suite completa terminó con 107 pruebas aprobadas y 4 omitidas al usar un directorio temporal del repositorio tras un error de permisos. El diff confirma que la corrección se limita al selector en src/."
+ }
+]
